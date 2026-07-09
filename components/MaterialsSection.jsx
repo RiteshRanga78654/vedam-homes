@@ -8,7 +8,7 @@ import "swiper/css";
 
 export default function MaterialsSection() {
   return (
-    <section id="partners" className="bg-background pt-16 pb-24">
+    <section id="partners" className="bg-background py-16">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <p className="text-center text-xs font-semibold tracking-[0.25em] text-primary">
           MATERIALS USED
