@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 
 export default function ProjectSection() {
   return (
-    <section id="projects" className="bg-white py-24">
+    <section id="projects" className="bg-white py-14">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

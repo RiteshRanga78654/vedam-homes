@@ -5,7 +5,7 @@ import gallery from "@/data/gallery";
 
 export default function GallerySection() {
   return (
-    <section id="gallery" className="py-24">
+    <section id="gallery" className="pt-12">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
         <p className="text-xs font-semibold tracking-[0.25em] text-primary">GALLERY</p>
         <h2 className="font-display mt-3 text-3xl sm:text-4xl font-semibold text-dark">

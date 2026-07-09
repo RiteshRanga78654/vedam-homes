@@ -6,7 +6,7 @@ import amenities from "@/data/amenities";
 
 export default function AmenitiesSection() {
   return (
-    <section id="amenities" className="py-24">
+    <section id="amenities" className="py-14">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
         <p className="text-xs font-semibold tracking-[0.25em] text-primary">AMENITIES</p>
         <h2 className="font-display mt-3 text-3xl sm:text-4xl font-semibold text-dark">
@@ -21,7 +21,7 @@ export default function AmenitiesSection() {
             hidden: {},
             visible: { transition: { staggerChildren: 0.08 } },
           }}
-          className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-5"
+          className="mt-12 grid grid-cols-2 sm:grid-cols-8 gap-5"
         >
           {amenities.map((a) => {
             const Icon = PiIcons[a.icon];
@@ -36,7 +36,7 @@ export default function AmenitiesSection() {
                 transition={{ duration: 0.4 }}
                 className="flex flex-col items-center gap-3 rounded-2xl border border-black/5 bg-white px-4 py-8 shadow-sm hover:shadow-md hover:border-primary/30 transition"
               >
-                {Icon && <Icon size={28} className="text-primary" />}
+                {Icon && <Icon size={38} className="text-primary" />}
                 <p className="text-sm font-medium text-dark">{a.title}</p>
               </motion.div>
             );

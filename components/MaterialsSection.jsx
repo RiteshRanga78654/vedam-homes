@@ -2,13 +2,24 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import materials from "@/data/materials";
 
 import "swiper/css";
 
+// Local inline JSON data array
+const materialsData = [
+  { id: "ultratech", name: "UltraTech", logo: "/logo/ultra.webp" },
+  { id: "tata-tiscon", name: "Tata Tiscon", logo: "/logo/tatatis.jpg" },
+  { id: "jsw", name: "JSW Steel", logo: "/logo/jsw.png" },
+  { id: "asian-paints", name: "Asian Paints", logo: "/logo/asian-paints.png" },
+  { id: "havells", name: "Havells", logo: "/logo/havells.jpg" },
+  { id: "finolex", name: "Finolex Pipes", logo: "/logo/Finolex-Pipes-Logo-Vector.svg-.png" },
+   { id: "jsw", name: "JSW Steel", logo: "/logo/jsw.png" },
+
+];
+
 export default function MaterialsSection() {
   return (
-    <section id="partners" className="bg-background py-16">
+    <section id="partners" className="bg-background py-10">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <p className="text-center text-xs font-semibold tracking-[0.25em] text-primary">
           MATERIALS USED
@@ -32,12 +43,15 @@ export default function MaterialsSection() {
               1024: { slidesPerView: 6 },
             }}
           >
-            {materials.map((m) => (
+            {materialsData.map((m) => (
               <SwiperSlide key={m.id}>
                 <div className="flex h-16 items-center justify-center rounded-xl bg-white shadow-sm px-4">
-                  <span className="font-display text-sm sm:text-base font-semibold text-dark text-center">
-                    {m.name}
-                  </span>
+                  {/* Swapped <span> for an <img> tag to correctly render image paths */}
+                  <img 
+                    src={m.logo} 
+                    alt={m.name} 
+                    className="max-h-12 max-w-full object-contain filter transition-all duration-300"
+                  />
                 </div>
               </SwiperSlide>
             ))}

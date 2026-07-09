@@ -6,7 +6,7 @@ import articles from "@/data/articles";
 
 export default function ArticlesSection() {
   return (
-    <section id="articles" className="bg-background py-24">
+    <section id="articles" className="bg-background py-14">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

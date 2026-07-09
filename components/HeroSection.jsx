@@ -2,11 +2,12 @@
 
 import { motion } from "framer-motion";
 import { PiMapPinLight, PiHammerLight, PiClockCountdownLight, PiPlayFill } from "react-icons/pi";
+import { FaPlayCircle } from "react-icons/fa";
 
 const FEATURES = [
-  { title: "Prime Locations", icon: PiMapPinLight },
-  { title: "Quality Construction", icon: PiHammerLight },
-  { title: "Timely Delivery", icon: PiClockCountdownLight },
+  { title: "Prime Locations", icon: PiMapPinLight ,subtitle:"Accross the City" },
+  { title: "Quality Construction", icon: PiHammerLight ,subtitle:"You Can Trust" },
+  { title: "Timely Delivery", icon: PiClockCountdownLight ,subtitle:"Our Commitment" },
 ];
 
 const fadeUp = {
@@ -20,7 +21,7 @@ const fadeUp = {
 
 export default function HeroSection() {
   return (
-    <section id="top" className="relative h-screen w-full overflow-hidden">
+    <section id="top" className="relative h-[90vh] w-full overflow-hidden">
       {/* Background video */}
       <video
         className="absolute inset-0 h-full w-full object-cover"
@@ -56,46 +57,55 @@ export default function HeroSection() {
           animate="visible"
           custom={1}
           variants={fadeUp}
-          className="mt-5 max-w-xl text-sm sm:text-base text-white/80"
+          className="mt-5 max-w-xl text-sm sm:text-base text-white/80 mb-5"
         >
           Thoughtfully designed homes in prime locations delivering quality
           construction and modern lifestyle.
         </motion.p>
-
+<FaPlayCircle className="text-white size-18 my-5"  />
         <motion.div
           initial="hidden"
           animate="visible"
           custom={2}
           variants={fadeUp}
-          className="mt-9 flex flex-wrap items-center justify-center gap-4"
+          className="mt-2 flex flex-wrap items-center justify-center gap-4"
         >
+          
           <button className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors">
+           
             <PiPlayFill size={16} />
             Watch Our Story
           </button>
-          <button className="inline-flex items-center rounded-2xl border border-white/70 px-6 py-3 text-sm font-semibold text-white hover:bg-white hover:text-dark transition-colors">
-            Explore Projects
-          </button>
+          
         </motion.div>
 
         {/* Glassmorphism feature cards */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          custom={3}
-          variants={fadeUp}
-          className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl"
-        >
-          {FEATURES.map(({ title, icon: Icon }) => (
-            <div
-              key={title}
-              className="flex items-center justify-center gap-3 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md px-5 py-5 text-white"
-            >
-              <Icon size={22} className="text-primary-light shrink-0" />
-              <p className="text-sm font-medium">{title}</p>
-            </div>
-          ))}
-        </motion.div>
+       <motion.div
+  initial="hidden"
+  animate="visible"
+  custom={3}
+  variants={fadeUp}
+  className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl mx-auto"
+>
+  {FEATURES.map(({ title, subtitle, icon: Icon }) => (
+    <div
+      key={title}
+      className="flex items-center gap-4 rounded-2xl px-5 py-5 text-white"
+    >
+      <Icon className="text-primary-light w-10 h-10 sm:w-12 sm:h-12 shrink-0" />
+
+      <div>
+        <h3 className="text-lg sm:text-xl lg:text-xl ">
+          {title}
+        </h3>
+
+        <p className="text-sm sm:text-base text-gray-300 mt-1 text-left">
+          {subtitle}
+        </p>
+      </div>
+    </div>
+  ))}
+</motion.div>
       </div>
     </section>
   );
