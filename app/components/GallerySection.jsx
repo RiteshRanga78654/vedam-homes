@@ -25,19 +25,6 @@ export default function GallerySection() {
     setSelectedImg(galleryData[prevIndex]);
   };
 
-  // Swiper क्लिक को हैंडल करने के लिए फंक्शन
-  const handleSwiperClick = (swiper) => {
-    // clickedIndex से पता चलता है कि किस स्लाइड पर क्लिक हुआ है (यह clones को भी संभाल लेता है)
-    const clickedIdx = swiper.clickedIndex;
-    if (clickedIdx !== undefined) {
-      // realIndex का उपयोग करके हम ओरिजिनल डेटा से सही इमेज निकालते हैं
-      const realImg = galleryData[swiper.realIndex];
-      if (realImg) {
-        setSelectedImg(realImg);
-      }
-    }
-  };
-
   return (
     <section id="gallery" className=" bg-[#FAF7F2]">
       <div className="max-w-7xl mx-auto px-6">
@@ -66,18 +53,20 @@ export default function GallerySection() {
             nextEl: '.gallery-next',
             prevEl: '.gallery-prev',
           }}
-          // यहाँ हमने Swiper का inbuilt onClick इवेंट जोड़ दिया है
-          onClick={handleSwiperClick} 
           breakpoints={{
             768: { slidesPerView: 3 },
             1024: { slidesPerView: 5 },
           }}
           className="!pb-2"
         >
-          {galleryData.map((img) => (
+          {galleryData.map((img, index) => (
             <SwiperSlide key={img.id}>
-              {/* यहाँ से onClick={() => setSelectedImg(img)} हटा दिया गया है */}
-              <div className="relative overflow-hidden rounded-2xl h-80 group cursor-pointer shadow-sm">
+              {/* Added onClick directly here. By passing the explicit img object, 
+                  we ensure the correct image state is loaded regardless of loop cloning. */}
+              <div 
+                onClick={() => setSelectedImg(img)}
+                className="relative overflow-hidden rounded-2xl h-80 group cursor-pointer shadow-sm"
+              >
                 <img
                   src={img.url}
                   alt="Architectural space detail"

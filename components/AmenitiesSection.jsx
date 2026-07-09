@@ -6,7 +6,7 @@ import amenities from "@/data/amenities";
 
 export default function AmenitiesSection() {
   return (
-    <section id="amenities" className="py-24">
+    <section id="amenities" className="py-16">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
         <p className="text-xs font-semibold tracking-[0.25em] text-primary">AMENITIES</p>
         <h2 className="font-display mt-3 text-3xl sm:text-4xl font-semibold text-dark">
