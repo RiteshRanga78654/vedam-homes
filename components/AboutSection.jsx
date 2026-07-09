@@ -29,7 +29,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-gradient-to-b from-transparent via-black/[0.01] to-transparent py-15 sm:py-18"
+      className="relative overflow-hidden bg-gradient-to-b from-transparent via-black/[0.01] to-transparent py-15 sm:py-12"
     >
       {/* Optional Soft Background Decorative Ambient Orbs */}
       <div className="absolute top-1/4 left-0 -z-10 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />

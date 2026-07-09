@@ -6,26 +6,24 @@ import articles from "@/data/articles";
 
 export default function ArticlesSection() {
   return (
-    <section id="articles" className="bg-background py-14">
+    <section id="articles" className="bg-background py-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="flex items-end justify-between flex-wrap gap-4 mb-10"
+          className="flex items-end justify-center flex-wrap gap-4 mb-10"
         >
           <div>
-            <p className="text-xs font-semibold tracking-[0.25em] text-primary">
+            <p className="text-xs font-semibold tracking-[0.25em] text-primary text-center">
               ARTICLES &amp; INSIGHTS
             </p>
             <h2 className="font-display mt-3 text-3xl sm:text-4xl font-semibold text-dark">
               Latest Updates &amp; Insights
             </h2>
           </div>
-          <button className="rounded-2xl border border-primary/50 px-5 py-2.5 text-xs font-semibold tracking-wide text-dark hover:bg-primary hover:text-white hover:border-primary transition-colors">
-            VIEW ALL ARTICLES
-          </button>
+          
         </motion.div>
 
         <motion.div
@@ -74,7 +72,13 @@ export default function ArticlesSection() {
             </motion.a>
           ))}
         </motion.div>
+      <div className="mt-10 flex justify-center">
+  <button className="rounded-2xl border border-primary/50 px-6 py-2.5 text-xs font-semibold tracking-wide text-dark hover:bg-primary hover:text-white hover:border-primary transition-colors">
+    VIEW ALL ARTICLES
+  </button>
+</div>
       </div>
+      
     </section>
   );
 }

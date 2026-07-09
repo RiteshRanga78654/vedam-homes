@@ -7,6 +7,8 @@ const amenities = [
   { id: "cctv", title: "CCTV Surveillance", icon: "PiVideoCameraLight" },
   { id: "clubhouse", title: "Club House", icon: "PiBuildingsLight" },
   { id: "garden", title: "Landscape Garden", icon: "PiTreeLight" },
+    { id: "clubhouse", title: "Club House", icon: "PiBuildingsLight" },
+  { id: "garden", title: "Landscape Garden", icon: "PiTreeLight" },
 ];
 
 export default amenities;

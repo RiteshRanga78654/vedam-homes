@@ -13,13 +13,13 @@ const materialsData = [
   { id: "asian-paints", name: "Asian Paints", logo: "/logo/asian-paints.png" },
   { id: "havells", name: "Havells", logo: "/logo/havells.jpg" },
   { id: "finolex", name: "Finolex Pipes", logo: "/logo/Finolex-Pipes-Logo-Vector.svg-.png" },
-   { id: "jsw", name: "JSW Steel", logo: "/logo/jsw.png" },
+  { id: "jsw", name: "JSW Steel", logo: "/logo/jsw.png" },
 
 ];
 
 export default function MaterialsSection() {
   return (
-    <section id="partners" className="bg-background py-10">
+    <section id="partners" className="bg-background ">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <p className="text-center text-xs font-semibold tracking-[0.25em] text-primary">
           MATERIALS USED
