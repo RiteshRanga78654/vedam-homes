@@ -1,29 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   PiFacebookLogoLight,
   PiInstagramLogoLight,
   PiLinkedinLogoLight,
-  PiYoutubeLogoLight,
-  PiPhoneLight,
-  PiEnvelopeLight,
-  PiMapPinLight,
-  PiArrowRightLight,
+  PiArrowUpRightLight,
+  PiArrowUpLight,
+  PiSparkleFill,
+  PiCheckCircleFill,
 } from "react-icons/pi";
+import Reveal from "@/components/Reveal";
 
-const QUICK_LINKS = [
-  { label: "Projects", href: "#projects" },
-  { label: "Amenities", href: "#amenities" },
-  { label: "Articles", href: "#articles" },
-  { label: "Partners", href: "#partners" },
-];
-
-const SOCIALS = [
-  { label: "Facebook", icon: PiFacebookLogoLight },
-  { label: "Instagram", icon: PiInstagramLogoLight },
-  { label: "LinkedIn", icon: PiLinkedinLogoLight },
-  { label: "YouTube", icon: PiYoutubeLogoLight },
+const COLUMNS = [
+  {
+    title: "Portfolio",
+    links: [
+      { label: "Selected Works", href: "#projects" },
+      { label: "Studio Philosophy", href: "#philosophy" },
+      { label: "Living Amenities", href: "#amenities" },
+      { label: "Visual Gallery", href: "#gallery" },
+      { label: "Architectural Journal", href: "#journal" },
+    ],
+  },
+  {
+    title: "Studio",
+    links: [
+      { label: "About Vedam", href: "#about" },
+      { label: "Partners & Materials", href: "#partners" },
+      { label: "Interactive 3D CAD", href: "#interactive" },
+      { label: "Client Words", href: "#testimonials" },
+      { label: "Direct Inquiries", href: "#contact" },
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -37,112 +47,169 @@ export default function Footer() {
     setEmail("");
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer id="csr" className="bg-dark text-white/60">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <div>
-          <div className="flex items-center gap-3">
-            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" className="text-primary-light">
-              <path d="M20 3 L36 15 V36 H4 V15 Z" stroke="currentColor" strokeWidth="2" fill="none" />
-              <path d="M14 36 V22 H26 V36" stroke="currentColor" strokeWidth="2" fill="none" />
-              <path d="M9 15 L20 7 L31 15" stroke="currentColor" strokeWidth="2" fill="none" />
-            </svg>
-            <div className="leading-tight">
-              <p className="font-display text-base font-semibold text-white">VEDAM</p>
-              <p className="text-[9px] tracking-[0.3em] -mt-1">HOMES</p>
+    <footer className="relative overflow-hidden bg-[#070709] pt-16 pb-8 text-ivory/70 selection:bg-amber-300 selection:text-charcoal lg:pt-20">
+      {/* Studio Radial Ambient Glow */}
+      <div className="pointer-events-none absolute -left-48 bottom-0 h-[450px] w-[450px] rounded-full bg-amber-600/10 blur-[150px]" />
+      <div className="pointer-events-none absolute -right-48 top-0 h-[450px] w-[450px] rounded-full bg-stone-500/10 blur-[150px]" />
+
+      <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+        {/* Top Header: Brand Tag & Back to Top */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-6">
+          <div className="flex items-center gap-2.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-amber-200/80">
+              Est. 2014 — Visakhapatnam
+            </span>
+          </div>
+
+          <button
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className="group flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-widest text-ivory backdrop-blur-md transition-all duration-300 hover:border-amber-400/50 hover:bg-amber-400 hover:text-charcoal"
+          >
+            <span>Top</span>
+            <PiArrowUpLight
+              className="transition-transform duration-300 group-hover:-translate-y-0.5"
+              size={12}
+            />
+          </button>
+        </div>
+
+        {/* Scaled-Down Architectural Headline */}
+        <div className="py-10 sm:py-12">
+          <Reveal y={25} duration={0.8}>
+            <h2 className="font-display text-4xl font-light leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Built around{" "}
+              <span className="italic font-light text-white/50">
+                the way you live.
+              </span>
+            </h2>
+          </Reveal>
+        </div>
+
+        {/* 4-Column Navigation & Newsletter Grid */}
+        <div className="grid grid-cols-1 gap-10 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+          {/* Col 1: Studio Info */}
+          <div className="lg:col-span-4">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-400 font-display text-xs font-semibold text-charcoal">
+                V
+              </div>
+              <span className="font-display text-xl font-light tracking-wide text-white">
+                Vedam Homes
+              </span>
+            </div>
+
+            <p className="mt-3.5 max-w-sm font-light text-xs leading-relaxed text-ivory/60">
+              An architect-led studio crafting bespoke residential landmarks where
+              material honesty, light, and timeless living converge across
+              Visakhapatnam.
+            </p>
+
+            {/* Social Icons */}
+            <div className="mt-6 flex items-center gap-2.5">
+              {[
+                { icon: PiInstagramLogoLight, href: "#", label: "Instagram" },
+                { icon: PiLinkedinLogoLight, href: "#", label: "LinkedIn" },
+                { icon: PiFacebookLogoLight, href: "#", label: "Facebook" },
+              ].map((item, i) => (
+                <a
+                  key={i}
+                  href={item.href}
+                  aria-label={item.label}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/5 text-ivory/70 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:bg-amber-400 hover:text-charcoal"
+                >
+                  <item.icon size={15} />
+                </a>
+              ))}
             </div>
           </div>
-          <p className="mt-4 text-sm max-w-[220px]">
-            Building better spaces, enriching lives — premium residential
-            developments in prime locations.
-          </p>
-          <div className="mt-5 flex gap-3">
-            {SOCIALS.map(({ label, icon: Icon }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 hover:bg-primary hover:text-white transition-colors"
-              >
-                <Icon size={16} />
-              </a>
-            ))}
+
+          {/* Col 2 & 3: Nav Columns */}
+          {COLUMNS.map((col) => (
+            <div key={col.title} className="lg:col-span-2">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300/80">
+                {col.title}
+              </p>
+              <ul className="mt-4 space-y-2.5 text-xs font-light">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      className="group inline-flex items-center gap-1.5 text-ivory/70 transition-colors duration-300 hover:text-white"
+                    >
+                      <span>{l.label}</span>
+                      <PiArrowUpRightLight
+                        size={11}
+                        className="opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:text-amber-300"
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Col 4: Newsletter */}
+          <div className="lg:col-span-4">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
+              <div className="flex items-center gap-1.5">
+                <PiSparkleFill className="text-[10px] text-amber-300" />
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ivory/90">
+                  Private Dispatch
+                </p>
+              </div>
+
+              <p className="mt-2 text-xs font-light leading-relaxed text-ivory/60">
+                Quarterly monographs on spatial design, site releases, and
+                architectural essays.
+              </p>
+
+              <form onSubmit={handleSubmit} className="relative mt-4">
+                <div className="flex items-center rounded-full border border-white/15 bg-white/5 p-1 backdrop-blur-md transition-all focus-within:border-amber-400/50 focus-within:bg-white/10">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full bg-transparent px-3 py-1.5 font-mono text-xs text-ivory placeholder:text-ivory/30 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Subscribe to newsletter"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-400 text-charcoal transition-transform duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <PiArrowUpRightLight size={13} />
+                  </button>
+                </div>
+              </form>
+
+              {submitted && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-2.5 flex items-center gap-1.5 font-mono text-[11px] text-amber-300"
+                >
+                  <PiCheckCircleFill size={13} />
+                  <span>Added to private registry.</span>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
 
-        <div>
-          <p className="text-sm font-semibold text-white tracking-wide">QUICK LINKS</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
-            {QUICK_LINKS.map((l) => (
-              <li key={l.label}>
-                <a href={l.href} className="hover:text-primary-light transition-colors">
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold text-white tracking-wide">CONTACT US</p>
-          <ul className="mt-4 space-y-3 text-sm">
-            <li className="flex items-start gap-2">
-              <PiPhoneLight size={16} className="mt-0.5 shrink-0" />
-              <a href="tel:+919090960413" className="hover:text-primary-light transition-colors">
-                +91 90909 60413
-              </a>
-            </li>
-            <li className="flex items-start gap-2">
-              <PiEnvelopeLight size={16} className="mt-0.5 shrink-0" />
-              <a href="mailto:info@vedamhomes.com" className="hover:text-primary-light transition-colors">
-                info@vedamhomes.com
-              </a>
-            </li>
-            <li className="flex items-start gap-2">
-              <PiMapPinLight size={16} className="mt-0.5 shrink-0" />
-              <span>
-                D No. 10-3-44/2, 3rd Floor, Opp. Diamond Park, Dwaraka Nagar,
-                Visakhapatnam, Andhra Pradesh 530016
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold text-white tracking-wide">NEWSLETTER</p>
-          <p className="mt-4 text-sm">
-            Subscribe for the latest project updates and offers.
+        {/* Bottom Legal & Geo Coordinates */}
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 font-mono text-[11px] text-ivory/40 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Vedam Homes Studio. All rights reserved.</p>
+          <p className="max-w-md text-left sm:text-right">
+            D No. 10-3-44/2, Dwaraka Nagar, Visakhapatnam, AP 530016 · +91 90909 60413
           </p>
-          <form onSubmit={handleSubmit} className="mt-4 flex">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full rounded-l-xl bg-white/10 px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-primary"
-            />
-            <button
-              type="submit"
-              aria-label="Subscribe"
-              className="rounded-r-xl bg-primary px-4 text-white hover:bg-primary-light transition-colors"
-            >
-              <PiArrowRightLight size={18} />
-            </button>
-          </form>
-          {submitted && (
-            <p className="mt-2 text-xs text-primary-light">Thanks for subscribing!</p>
-          )}
-        </div>
-      </div>
-
-      <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <p>© 2024 Vedam Homes. All Rights Reserved.</p>
-          <div className="flex gap-5">
-            <a href="#" className="hover:text-primary-light transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary-light transition-colors">Terms &amp; Conditions</a>
-          </div>
         </div>
       </div>
     </footer>

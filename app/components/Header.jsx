@@ -1,206 +1,144 @@
-'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from 'framer-motion';
-import { navigationLinks } from '../data/mockData';
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { PiListBold, PiXBold, PiArrowUpRightLight } from "react-icons/pi";
 
-const PHONE_DISPLAY = '+1 (234) 56789';
-const PHONE_HREF = 'tel:+123456789';
+const NAV_LINKS = [
+  { label: "Projects", href: "#projects" },
+  { label: "Philosophy", href: "#philosophy" },
+  { label: "Amenities", href: "#amenities" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Insights", href: "#journal" },
+  { label: "Contact", href: "#contact" },
+];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeItem, setActiveItem] = useState(navigationLinks?.[0]?.name ?? 'About Us');
-
-  const prefersReducedMotion = useReducedMotion();
-
-  // Slim gold progress line — tracks how far the visitor has scrolled.
-  const { scrollYProgress } = useScroll();
-  const scrollProgress = useSpring(scrollYProgress, {
-    stiffness: 300,
-    damping: 40,
-    restDelta: 0.001,
-  });
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Lock body scroll + allow Escape to close while the mobile menu is open.
-  useEffect(() => {
-    if (!isOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const handleKey = (e) => e.key === 'Escape' && setIsOpen(false);
-    window.addEventListener('keydown', handleKey);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKey);
-    };
-  }, [isOpen]);
-
-  const handleLinkClick = useCallback((name) => {
-    setActiveItem(name);
-    setIsOpen(false);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      {/* Scroll progress indicator */}
-      <motion.div
-        style={{ scaleX: scrollProgress }}
-        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#B88A44] via-[#D9B76A] to-[#B88A44] origin-left z-[60]"
-      />
-
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out ${
-          isScrolled
-            ? 'bg-white/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(17,17,17,0.06),0_10px_30px_-15px_rgba(17,17,17,0.15)] py-3'
-            : 'bg-white py-5 md:py-6'
+        className={`fixed top-0 z-50 w-full transition-colors duration-500 ${
+          scrolled ? "bg-ivory/95 backdrop-blur-md border-b border-line" : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:h-24 lg:px-10">
           {/* Logo */}
-          <a
-            href="#"
-            className="group flex items-baseline gap-[2px] text-xl md:text-2xl font-bold tracking-[0.2em] text-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A44] focus-visible:ring-offset-4 rounded-sm"
-          >
-            <span>ESTATE</span>
-            <span className="text-[#B88A44] font-serif italic font-medium tracking-normal">
-              Avant
-            </span>
+          <a href="#top" className="flex items-center gap-3 shrink-0" data-cursor="">
+            <div className="leading-none">
+              <p
+                className={`font-display text-lg tracking-[0.02em] transition-colors duration-500 lg:text-xl ${
+                  scrolled ? "text-charcoal" : "text-ivory"
+                }`}
+              >
+                Vedam
+              </p>
+              <p
+                className={`mt-0.5 text-[9px] tracking-[0.4em] transition-colors duration-500 ${
+                  scrolled ? "text-stone" : "text-ivory/60"
+                }`}
+              >
+                HOMES
+              </p>
+            </div>
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
-            {navigationLinks.map((link) => {
-              const isActive = activeItem === link.name;
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => handleLinkClick(link.name)}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`relative px-4 py-2 text-[13px] uppercase tracking-[0.12em] font-medium rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A44] focus-visible:ring-offset-2 ${
-                    isActive
-                      ? 'text-[#111111]'
-                      : 'text-[#4a4a4a] hover:text-[#111111]'
-                  }`}
-                >
-                  <span className="relative z-10">{link.name}</span>
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      transition={
-                        prefersReducedMotion
-                          ? { duration: 0 }
-                          : { type: 'spring', stiffness: 380, damping: 32 }
-                      }
-                      className="absolute inset-0 rounded-full bg-[#F6F1E7] border border-[#B88A44]/25"
-                    />
-                  )}
-                </a>
-              );
-            })}
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-9 lg:flex">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className={`link-arrow transition-colors duration-500 ${
+                  scrolled ? "text-charcoal/75 hover:text-charcoal" : "text-ivory/80 hover:text-ivory"
+                }`}
+              >
+                <span>{link.label}</span>
+              </a>
+            ))}
           </nav>
 
-          {/* Action Call Button & Hamburger */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-5">
             <a
-              href={PHONE_HREF}
-              className="hidden md:flex items-center gap-2 bg-[#111111] text-white pl-5 pr-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-[#B88A44] hover:pr-3 hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A44] focus-visible:ring-offset-2"
+              href="#contact"
+              className={`hidden items-center gap-2 border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-500 sm:inline-flex ${
+                scrolled
+                  ? "border-charcoal text-charcoal hover:bg-charcoal hover:text-ivory"
+                  : "border-ivory/60 text-ivory hover:bg-ivory hover:text-charcoal"
+              }`}
             >
-              <Phone size={16} strokeWidth={2.2} />
-              <span>Connect Now</span>
+              View Properties
             </a>
-
             <button
-              onClick={() => setIsOpen((v) => !v)}
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-              className="lg:hidden relative w-11 h-11 flex items-center justify-center text-[#111111] rounded-full hover:bg-[#F6F1E7] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B88A44]"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className={`p-2 transition-colors duration-500 lg:hidden ${
+                scrolled ? "text-charcoal" : "text-ivory"
+              }`}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={isOpen ? 'close' : 'open'}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute"
-                >
-                  {isOpen ? <X size={24} /> : <Menu size={24} />}
-                </motion.span>
-              </AnimatePresence>
+              <PiListBold size={24} />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Fullscreen Mobile Slide Menu */}
+      {/* Fullscreen mobile / overlay menu */}
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
-            id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            initial={{ clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)' }}
-            exit={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { type: 'tween', duration: 0.45, ease: [0.65, 0, 0.35, 1] }
-            }
-            className="fixed inset-0 z-40 bg-white pt-28 px-6 flex flex-col justify-between pb-10 lg:hidden"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[70] flex flex-col bg-charcoal"
           >
-            <nav className="flex flex-col divide-y divide-[#111111]/8" aria-label="Mobile">
-              {navigationLinks.map((link, idx) => (
+            <div className="flex h-20 items-center justify-between px-6 lg:h-24 lg:px-10">
+              <span className="font-display text-lg text-ivory">Vedam Homes</span>
+              <button onClick={() => setOpen(false)} className="p-2 text-ivory" aria-label="Close menu">
+                <PiXBold size={24} />
+              </button>
+            </div>
+
+            <motion.nav
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } } }}
+              className="flex flex-1 flex-col justify-center gap-1 px-6 lg:px-10"
+            >
+              {NAV_LINKS.map((link, i) => (
                 <motion.a
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: prefersReducedMotion ? 0 : 0.12 + idx * 0.06,
-                    duration: 0.4,
-                  }}
-                  key={link.name}
+                  key={link.label}
                   href={link.href}
-                  onClick={() => handleLinkClick(link.name)}
-                  className="group flex items-center justify-between py-5 text-[28px] font-medium tracking-tight text-[#111111]"
+                  onClick={() => setOpen(false)}
+                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="group flex items-baseline gap-4 border-b border-line-dark py-4 sm:py-5"
                 >
-                  <span className="group-hover:text-[#B88A44] transition-colors duration-300">
-                    {link.name}
+                  <span className="font-sans text-xs text-stone">0{i + 1}</span>
+                  <span className="font-display text-3xl text-ivory transition-colors group-hover:text-bronze-light sm:text-5xl">
+                    {link.label}
                   </span>
-                  <ArrowUpRight
-                    size={22}
-                    className="text-[#B88A44] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                  />
+                  <PiArrowUpRightLight className="ml-auto text-ivory/40 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" size={22} />
                 </motion.a>
               ))}
-            </nav>
+            </motion.nav>
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: prefersReducedMotion ? 0 : 0.35, duration: 0.4 }}
-              className="w-full space-y-3"
-            >
-              <p className="text-xs uppercase tracking-[0.2em] text-[#8a8a8a]">
-                Speak with our concierge desk
-              </p>
-              <a
-                href={PHONE_HREF}
-                className="flex items-center justify-center gap-2 w-full bg-[#111111] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#B88A44] transition-colors duration-300"
-              >
-                <Phone size={20} />
-                <span>{PHONE_DISPLAY}</span>
-              </a>
-            </motion.div>
+            <div className="flex flex-col gap-4 border-t border-line-dark px-6 py-8 text-sm text-ivory/60 sm:flex-row sm:items-center sm:justify-between lg:px-10">
+              <p>+91 90909 60413 &nbsp;·&nbsp; info@vedamhomes.com</p>
+              <div className="flex gap-5">
+                <a href="#" className="hover:text-ivory transition-colors">Instagram</a>
+                <a href="#" className="hover:text-ivory transition-colors">LinkedIn</a>
+                <a href="#" className="hover:text-ivory transition-colors">Facebook</a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

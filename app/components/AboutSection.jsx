@@ -30,7 +30,7 @@ export default function AboutSection() {
           <img
             src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80"
             alt="Luxury Architecture"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-300 border-1 border-solid border-black object-cover transition-transform duration-700 group-hover:scale-105"
           />
         </motion.div>
 

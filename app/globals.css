@@ -1,48 +1,243 @@
 @import "tailwindcss";
 
+/* ===================================================================
+   VEDAM HOMES — DESIGN SYSTEM
+   Ivory / charcoal / stone architectural palette. One restrained
+   bronze accent used only for active/interactive states.
+=================================================================== */
+
 :root {
-  --background: #FAF7F2;
-  --foreground: #111111;
-  --primary: #B88A44;
-  --primary-light: #D4AC72;
-  --dark: #111111;
-  --light: #FFFFFF;
+  --ivory: #f5f1e8;
+  --paper: #fbf9f4;
+  --charcoal: #15140f;
+  --charcoal-soft: #221f18;
+  --stone: #948a76;
+  --stone-light: #cdc4b2;
+  --line: rgba(21, 20, 15, 0.12);
+  --line-dark: rgba(245, 241, 232, 0.14);
+  --bronze: #6e5a3c;
+  --bronze-light: #a68a5c;
+  --white: #ffffff;
+
+  --background: var(--ivory);
+  --foreground: var(--charcoal);
 }
 
 @theme inline {
+  --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-soft: var(--charcoal-soft);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+  --color-bronze: var(--bronze);
+  --color-bronze-light: var(--bronze-light);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light);
-  --color-dark: var(--dark);
-  --color-light: var(--light);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --color-dark: var(--charcoal);
+  --color-light: var(--white);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-manrope);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 .font-display {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-display), Georgia, serif;
 }
 
-/* Swiper pagination bullet theming */
+::selection {
+  background: var(--charcoal);
+  color: var(--ivory);
+}
+
+/* ---------- Custom cursor (desktop only) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-ready,
+  .cursor-ready * {
+    cursor: none !important;
+  }
+}
+
+/* ---------- Eyebrow / label ---------- */
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* ---------- Hairline rule ---------- */
+.hairline {
+  height: 1px;
+  background: var(--line);
+}
+.hairline-dark {
+  height: 1px;
+  background: var(--line-dark);
+}
+
+/* ---------- Editorial link / button with animated underline ---------- */
+.link-arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.link-arrow .arrow-icon {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-arrow:hover .arrow-icon {
+  transform: translateX(6px);
+}
+.link-arrow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.5;
+}
+.link-arrow:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s;
+  white-space: nowrap;
+}
+.btn-light {
+  color: var(--ivory);
+  border-color: rgba(245, 241, 232, 0.5);
+}
+.btn-light:hover {
+  background: var(--ivory);
+  color: var(--charcoal);
+}
+.btn-dark {
+  color: var(--charcoal);
+  border-color: var(--charcoal);
+}
+.btn-dark:hover {
+  background: var(--charcoal);
+  color: var(--ivory);
+}
+.btn-solid {
+  color: var(--ivory);
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+}
+.btn-solid:hover {
+  background: var(--bronze);
+  border-color: var(--bronze);
+}
+
+/* ---------- Image hover reveal treatment ---------- */
+.image-hover {
+  position: relative;
+  overflow: hidden;
+}
+.image-hover img {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.image-hover:hover img {
+  transform: scale(1.06);
+}
+
+/* ---------- Marquee ---------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+
+/* ---------- Swiper theming ---------- */
 .swiper-pagination-bullet {
-  background: var(--primary) !important;
-  opacity: 0.35 !important;
+  background: var(--stone-light) !important;
+  opacity: 1 !important;
+  width: 6px !important;
+  height: 6px !important;
 }
 .swiper-pagination-bullet-active {
-  opacity: 1 !important;
+  background: var(--bronze) !important;
 }
 .swiper-button-next,
 .swiper-button-prev {
-  color: var(--primary) !important;
+  display: none !important;
 }
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 18px !important;
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--stone-light);
+}
+
+/* ---------- Focus states ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--bronze);
+  outline-offset: 3px;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
 }
