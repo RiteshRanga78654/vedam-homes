@@ -34,13 +34,8 @@ export default function HorizontalShowcaseGSAP() {
           end: () => `+=${track.scrollWidth}`,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            // Update progress bar
             if (progressBarRef.current) {
-              gsap.to(progressBarRef.current, {
-                width: `${self.progress * 100}%`,
-                duration: 0.1,
-                ease: "none",
-              });
+              progressBarRef.current.style.width = `${self.progress * 100}%`;
             }
           },
         },

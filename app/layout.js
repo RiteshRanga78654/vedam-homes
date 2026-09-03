@@ -1,7 +1,8 @@
 import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
+// import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/components/PageLoader";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -86,16 +87,19 @@ export const metadata = {
   },
 };
 
+// app/layout.jsx
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${manrope.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
+      className={`${fraunces.variable} ${manrope.variable} ${jetbrainsMono.variable} antialiased`}
     >
-      <body className="flex min-h-screen flex-col bg-[#faf8f5] text-[#14120f] selection:bg-[#14120f] selection:text-[#faf8f5]">
-        <PageLoader />
-        <CustomCursor />
-        <main className="flex-1">{children}</main>
+      <body className="flex min-h-screen flex-col bg-[#f5f1e8] text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8]">
+        <SmoothScroll>
+          <PageLoader />
+          {/* <CustomCursor /> */}
+          <main className="flex-1">{children}</main>
+        </SmoothScroll>
       </body>
     </html>
   );

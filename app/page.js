@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ProjectSection from "@/components/ProjectSection";
-import ProjectSlider from "@/components/ProjectSlider";
+// import ProjectSlider from "@/components/ProjectSlider";
 import HorizontalShowcase from "@/components/HorizontalShowcase";
 import PhilosophySection from "@/components/PhilosophySection";
 import InteractiveVisual from "@/components/InteractiveVisual";
@@ -22,7 +22,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ProjectSection />
-        <ProjectSlider />
+        {/* <ProjectSlider /> */}
         <PhilosophySection />
         <HorizontalShowcase />
         <InteractiveVisual />

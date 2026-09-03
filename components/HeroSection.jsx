@@ -1,82 +1,152 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { 
-  PiArrowUpRightLight, 
-  PiSparkleFill, 
-  PiSpeakerHighLight, 
-  PiSpeakerSlashLight 
-} from "react-icons/pi";
+import { PiArrowUpRightLight, PiSparkleFill } from "react-icons/pi";
+
+// Configuration matching your assets
+const FRAME_COUNT = 140;
+
+// Path mapping for .png
+const getFramePath = (index) =>
+  `/keyframes/ezgif-frame-${String(index).padStart(3, "0")}.png`;
 
 export default function HeroSection() {
   const containerRef = useRef(null);
-  const videoRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const canvasRef = useRef(null);
+  const [images, setImages] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Scroll tracking across extended viewport (200vh container for scroll room)
+  // Scroll tracking (Container 350vh for extra smooth playback)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
+    stiffness: 100,
+    damping: 30,
     restDelta: 0.001,
   });
 
-  // 1. Initial State: Clean image -> On Scroll: Text emerges smoothly
-  const contentY = useTransform(smoothProgress, [0.08, 0.65], ["70px", "0px"]);
-  const contentOpacity = useTransform(smoothProgress, [0.05, 0.45], [0, 1]);
+  // 1. Frame sequence runs from 0% to 80% of scroll
+  // (Frames will complete before the text fully locks in)
+  const frameIndex = useTransform(smoothProgress, [0, 0.85], [0, FRAME_COUNT - 1]);
 
-  // 2. Video Parallax & Depth
-  const videoScale = useTransform(smoothProgress, [0, 1], [1, 1.15]);
-  const overlayDarkness = useTransform(smoothProgress, [0, 0.5], [0.35, 0.75]);
+  // 2. TEXT DELAY: Text emerges LATE (Between 65% and 92% scroll)
+  const contentY = useTransform(smoothProgress, [0.65, 0.92], ["80px", "0px"]);
+  const contentOpacity = useTransform(smoothProgress, [0.65, 0.88], [0, 1]);
 
-  // 3. Scroll hint indicator fades OUT once scrolling starts
-  const hintOpacity = useTransform(smoothProgress, [0, 0.18], [1, 0]);
+  // Dark overlay appears along with the text to keep it readable
+  const overlayDarkness = useTransform(smoothProgress, [0.55, 0.85], [0.15, 0.75]);
 
-  const toggleSound = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
+  // Scroll prompt indicator disappears early
+  const hintOpacity = useTransform(smoothProgress, [0, 0.12], [1, 0]);
+
+  // Preload PNG frames
+  useEffect(() => {
+    let loadedCount = 0;
+    const loadedImages = [];
+
+    for (let i = 1; i <= FRAME_COUNT; i++) {
+      const img = new Image();
+      img.src = getFramePath(i);
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === FRAME_COUNT) {
+          setIsLoaded(true);
+        }
+      };
+      loadedImages.push(img);
     }
-  };
+    setImages(loadedImages);
+  }, []);
+
+  // Draw image to canvas
+  const renderFrame = useCallback(
+    (index) => {
+      const canvas = canvasRef.current;
+      if (!canvas || !images.length) return;
+
+      const ctx = canvas.getContext("2d");
+      const targetIndex = Math.min(
+        Math.max(Math.round(index), 0),
+        FRAME_COUNT - 1
+      );
+      const img = images[targetIndex];
+      if (!img || !img.complete) return;
+
+      const { width, height } = canvas;
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const canvasRatio = width / height;
+
+      let drawWidth = width;
+      let drawHeight = height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (canvasRatio > imgRatio) {
+        drawHeight = width / imgRatio;
+        offsetY = (height - drawHeight) / 2;
+      } else {
+        drawWidth = height * imgRatio;
+        offsetX = (width - drawWidth) / 2;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    },
+    [images]
+  );
+
+  // Resize handler
+  useEffect(() => {
+    const handleResize = () => {
+      if (!canvasRef.current) return;
+      const dpr = window.devicePixelRatio || 1;
+      canvasRef.current.width = window.innerWidth * dpr;
+      canvasRef.current.height = window.innerHeight * dpr;
+      renderFrame(frameIndex.get());
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [renderFrame, frameIndex]);
+
+  // Frame update subscription
+  useEffect(() => {
+    const unsubscribe = frameIndex.on("change", (latest) => {
+      requestAnimationFrame(() => renderFrame(latest));
+    });
+
+    if (isLoaded) {
+      renderFrame(0);
+    }
+
+    return () => unsubscribe();
+  }, [frameIndex, renderFrame, isLoaded]);
 
   return (
-    <div ref={containerRef} className="relative h-[200vh] w-full bg-[#0a0a0c]">
-      {/* Pinned 100vh Hero Screen */}
+    <div ref={containerRef} className="relative h-[350vh] w-full bg-[#0a0a0c]">
+      {/* Pinned 100vh Screen */}
       <section
         id="top"
         className="sticky top-0 h-[100svh] w-full overflow-hidden text-ivory select-none"
       >
-        {/* Background Video / Image Layer */}
-        <motion.div
-          style={{ scale: videoScale }}
-          className="absolute inset-0 h-full w-full will-change-transform"
-        >
-          <video
-            ref={videoRef}
-            className="h-full w-full object-cover object-center filter brightness-[0.9] contrast-[1.05]"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/hero.png"
-          >
-            <source src="/videos/hero.mp4" type="video/mp4" />
-          </video>
-        </motion.div>
+        {/* Keyframe Canvas */}
+        <div className="absolute inset-0 h-full w-full">
+          <canvas ref={canvasRef} className="h-full w-full object-cover" />
+        </div>
 
-        {/* Dynamic Vignette that deepens when text reveals */}
+        {/* Dynamic Vignette / Dimmer */}
         <motion.div
           style={{ opacity: overlayDarkness }}
           className="absolute inset-0 bg-[#0a0a0c] pointer-events-none"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-transparent to-[#0a0a0c]/80 pointer-events-none" />
 
-        {/* Foreground Content - Emerges ONLY on Scroll */}
+        {/* Text / Foreground Content (Appears only after keyframe tour) */}
         <motion.div
           style={{
             y: contentY,
@@ -85,46 +155,35 @@ export default function HeroSection() {
           className="relative z-10 flex h-full flex-col justify-between px-6 pb-12 pt-28 sm:pb-16 sm:pt-32 lg:px-12 lg:pb-20"
         >
           {/* Top Strip */}
-          <div className="mx-auto w-full max-w-[1600px] flex items-center justify-between">
+          <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between">
             <div className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-black/50 px-4 py-1.5 backdrop-blur-md">
-              <PiSparkleFill className="text-amber-300 text-xs animate-pulse" />
-              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-ivory/90 sm:text-xs">
+              <PiSparkleFill className="animate-pulse text-xs text-amber-300" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/90 sm:text-xs">
                 Architectural Studio — Est. 2014
               </span>
             </div>
-
-            {/* Sound Toggle */}
-            <button
-              onClick={toggleSound}
-              aria-label={isMuted ? "Unmute video" : "Mute video"}
-              className="group hidden sm:flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3.5 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-white/10"
-            >
-              {isMuted ? (
-                <PiSpeakerSlashLight className="text-ivory/60 transition-colors group-hover:text-white" size={16} />
-              ) : (
-                <PiSpeakerHighLight className="text-amber-300" size={16} />
-              )}
-              <span className="font-mono text-[10px] uppercase tracking-widest text-ivory/60 transition-colors group-hover:text-white">
-                {isMuted ? "Sound Off" : "Sound On"}
-              </span>
-            </button>
           </div>
 
-          {/* Main Headline & CTAs */}
+          {/* Main Headline */}
           <div className="mx-auto w-full max-w-[1600px]">
             <div className="max-w-5xl">
-              <h1 className="font-display text-[12vw] leading-[0.92] tracking-tight text-white sm:text-[8vw] lg:text-[6.2vw] font-normal">
+              <h1 className="font-display text-[12vw] font-normal leading-[0.92] tracking-tight text-white sm:text-[8vw] lg:text-[6.2vw]">
                 Spaces designed
                 <br />
-                for <span className="italic font-light text-amber-200/90">exceptional</span> living.
+                for{" "}
+                <span className="italic font-light text-amber-200/90">
+                  exceptional
+                </span>{" "}
+                living.
               </h1>
             </div>
 
-            {/* Bottom Info & Action Links */}
-            <div className="mt-8 sm:mt-12 flex flex-col gap-8 border-t border-white/15 pt-8 sm:pt-10 lg:flex-row lg:items-end lg:justify-between">
-              <p className="max-w-md font-light text-sm leading-relaxed text-ivory/70 sm:text-base">
-                Curating deliberate, architect-led residences where light, material honesty, 
-                and effortless modern luxury endure across Visakhapatnam.
+            {/* Bottom Info & CTAs */}
+            <div className="mt-8 flex flex-col gap-8 border-t border-white/15 pt-8 sm:mt-12 sm:pt-10 lg:flex-row lg:items-end lg:justify-between">
+              <p className="max-w-md text-sm font-light leading-relaxed text-ivory/70 sm:text-base">
+                Curating deliberate, architect-led residences where light,
+                material honesty, and effortless modern luxury endure across
+                Visakhapatnam.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
@@ -134,7 +193,7 @@ export default function HeroSection() {
                 >
                   <span>Explore Properties</span>
                   <PiArrowUpRightLight
-                    className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+                    className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
                     size={16}
                   />
                 </a>
@@ -145,7 +204,7 @@ export default function HeroSection() {
                 >
                   <span>The Studio</span>
                   <PiArrowUpRightLight
-                    className="transition-transform duration-300 group-hover:rotate-45 text-ivory/60 group-hover:text-white"
+                    className="text-ivory/60 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white"
                     size={14}
                   />
                 </a>
@@ -154,7 +213,7 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Initial Scroll Prompt (Fades out when user starts scrolling) */}
+        {/* Initial Scroll Indicator */}
         <motion.div
           style={{ opacity: hintOpacity }}
           className="pointer-events-none absolute inset-x-0 bottom-10 z-20 flex flex-col items-center justify-center gap-3"
@@ -162,10 +221,14 @@ export default function HeroSection() {
           <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-ivory/60">
             Scroll to Explore
           </span>
-          <div className="h-9 w-[1px] bg-white/20 overflow-hidden relative">
+          <div className="relative h-9 w-[1px] overflow-hidden bg-white/20">
             <motion.div
               animate={{ y: ["-100%", "100%"] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 1.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="h-1/2 w-full bg-amber-400"
             />
           </div>

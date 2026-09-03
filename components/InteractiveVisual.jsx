@@ -77,8 +77,8 @@ export default function InteractiveVisual() {
   return (
     <section className="relative overflow-hidden bg-[#0a0a0c] py-28 text-ivory selection:bg-amber-300 selection:text-charcoal lg:py-40">
       {/* Ambient background lighting */}
-      <div className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full bg-amber-600/10 blur-[160px]" />
-      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[600px] w-[600px] rounded-full bg-stone-500/10 blur-[160px]" />
+      <div className="pointer-events-none absolute -top-40 -left-40 h-[400px] w-[400px] rounded-full bg-amber-600/10 blur-[100px] ambient-orb" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-stone-500/10 blur-[100px] ambient-orb" />
 
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         {/* Section Header */}

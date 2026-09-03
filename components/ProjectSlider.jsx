@@ -1,210 +1,239 @@
-"use client";
+// "use client";
 
-import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectFade, Mousewheel, Autoplay } from "swiper/modules";
-import { motion, AnimatePresence } from "framer-motion";
-import { PiArrowLeftLight, PiArrowRightLight, PiArrowUpRightLight, PiSparkleFill } from "react-icons/pi";
-import projects from "@/data/projects";
+// import { useState, useRef, useEffect } from "react";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { EffectFade, Mousewheel, Autoplay, Keyboard } from "swiper/modules";
+// import { motion, AnimatePresence } from "framer-motion";
+// import { 
+//   PiArrowUpRightLight, 
+//   PiCaretLeftLight, 
+//   PiCaretRightLight,
+//   PiCompassLight,
+// } from "react-icons/pi";
+// import projects from "@/data/projects";
 
-import "swiper/css";
-import "swiper/css/effect-fade";
+// import "swiper/css";
+// import "swiper/css/effect-fade";
 
-export default function ProjectSlider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [swiperInstance, setSwiperInstance] = useState(null);
+// export default function ProjectSlider() {
+//   const [activeIndex, setActiveIndex] = useState(0);
+//   const [swiperInstance, setSwiperInstance] = useState(null);
+//   const [progress, setProgress] = useState(0);
+//   const progressTimerRef = useRef(null);
 
-  const currentProject = projects[activeIndex] || projects[0];
+//   const currentProject = projects[activeIndex] || projects[0];
+//   const AUTOPLAY_DELAY = 6500;
 
-  return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#0a0a0c] text-ivory select-none">
-      {/* 1. Main Background Visual Engine */}
-      <Swiper
-        modules={[Navigation, EffectFade, Mousewheel, Autoplay]}
-        effect="fade"
-        fadeEffect={{ crossFade: true }}
-        speed={1400}
-        mousewheel={{
-          forceToAxis: true,
-          sensitivity: 1,
-          releaseOnEdges: true,
-        }}
-        onSwiper={setSwiperInstance}
-        onSlideChange={(s) => setActiveIndex(s.realIndex)}
-        className="h-full w-full"
-      >
-        {projects.map((p, i) => (
-          <SwiperSlide key={p.id} className="relative h-full w-full overflow-hidden">
-            {/* Cinematic Zoom / Ken Burns Effect on Active Slide */}
-            <div
-              className={`h-full w-full transition-transform duration-[2200ms] ease-out ${
-                activeIndex === i ? "scale-105 filter brightness-[0.88]" : "scale-100 filter brightness-50"
-              }`}
-            >
-              <img
-                src={p.image}
-                alt={p.name}
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
+//   // Continuous micro-progress bar driver for active slide
+//   useEffect(() => {
+//     setProgress(0);
+//     const start = Date.now();
+//     clearInterval(progressTimerRef.current);
 
-            {/* Multitier Luxury Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/40 to-[#0a0a0c]/20" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0c]/90 via-[#0a0a0c]/30 to-transparent" />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+//     progressTimerRef.current = setInterval(() => {
+//       const elapsed = Date.now() - start;
+//       const pct = Math.min((elapsed / AUTOPLAY_DELAY) * 100, 100);
+//       setProgress(pct);
+//       if (pct >= 100) clearInterval(progressTimerRef.current);
+//     }, 40);
 
-      {/* 2. Architectural Watermark Background Counter */}
-      <div className="pointer-events-none absolute right-8 top-12 z-10 hidden overflow-hidden lg:block">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={currentProject.id}
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 0.06 }}
-            exit={{ y: -80, opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display block text-[16rem] font-bold leading-none tracking-tighter text-white"
-          >
-            0{activeIndex + 1}
-          </motion.span>
-        </AnimatePresence>
-      </div>
+//     return () => clearInterval(progressTimerRef.current);
+//   }, [activeIndex]);
 
-      {/* 3. Foreground Content Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-16">
+//   return (
+//     <section className="relative h-screen w-full bg-[#08080a] text-[#f4f2ed] select-none overflow-hidden font-sans">
+      
+//       {/* 1. Cinematic Background Layer with Smooth Subtle Scale */}
+//       <div className="absolute inset-0 z-0">
+//         <Swiper
+//           modules={[EffectFade, Mousewheel, Autoplay, Keyboard]}
+//           effect="fade"
+//           fadeEffect={{ crossFade: true }}
+//           speed={1800}
+//           keyboard={{ enabled: true }}
+//           mousewheel={{ forceToAxis: true, releaseOnEdges: true }}
+//           autoplay={{ delay: AUTOPLAY_DELAY, disableOnInteraction: false }}
+//           onSwiper={setSwiperInstance}
+//           onSlideChange={(s) => setActiveIndex(s.realIndex)}
+//           className="h-full w-full"
+//         >
+//           {projects.map((p, i) => (
+//             <SwiperSlide key={p.id} className="relative h-full w-full overflow-hidden">
+//               <div
+//                 className={`h-full w-full transition-transform duration-[4500ms] ease-out will-change-transform ${
+//                   activeIndex === i ? "scale-105" : "scale-100"
+//                 }`}
+//               >
+//                 <img
+//                   src={p.image}
+//                   alt={p.name}
+//                   className="h-full w-full object-cover filter brightness-[0.72] contrast-[1.1]"
+//                 />
+//               </div>
+
+//               {/* Seamless Vignette & Dark Backing */}
+//               <div className="absolute inset-0 bg-gradient-to-t from-[#08080a] via-[#08080a]/40 to-[#08080a]/60 pointer-events-none" />
+//               <div className="absolute inset-0 bg-gradient-to-r from-[#08080a]/85 via-transparent to-[#08080a]/50 pointer-events-none" />
+//             </SwiperSlide>
+//           ))}
+//         </Swiper>
+//       </div>
+
+//       {/* 2. Precision Framing Hairlines */}
+//       <div className="pointer-events-none absolute inset-0 z-10 border-x border-white/[0.06] mx-6 sm:mx-12 lg:mx-20" />
+//       <div className="pointer-events-none absolute inset-x-0 top-20 z-10 border-t border-white/[0.06]" />
+//       <div className="pointer-events-none absolute inset-x-0 bottom-24 z-10 border-b border-white/[0.06]" />
+
+//       {/* 3. Main Foreground Stage */}
+//       <div className="relative z-20 flex h-full flex-col justify-between px-8 sm:px-14 lg:px-24 py-8">
         
-        {/* Top Floating Badge Bar */}
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between">
-          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-black/40 px-4 py-2 backdrop-blur-xl">
-            <PiSparkleFill className="text-amber-300 text-xs animate-pulse" />
-            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-ivory/80">
-              Selected Showcase
-            </span>
-          </div>
+//         {/* Top Minimal Telemetry Strip */}
+//         <header className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 pt-1">
+//           <div className="flex items-center gap-3">
+//             <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+//             <span className="text-white/80">Archival Series</span>
+//             <span className="text-white/20">/</span>
+//             <span>Index 2014—2026</span>
+//           </div>
 
-          <div className="hidden font-mono text-xs tracking-widest text-ivory/50 sm:block">
-            SCROLL DOWN / DRAG TO EXPLORE
-          </div>
-        </div>
+//           <div className="flex items-center gap-2">
+//             <PiCompassLight size={13} className="text-amber-300" />
+//             <span className="hidden sm:inline">Visakhapatnam, AP</span>
+//             <span className="text-white/30 hidden sm:inline">•</span>
+//             <span>17.6868° N, 83.2185° E</span>
+//           </div>
+//         </header>
 
-        {/* Bottom Hero Information Grid */}
-        <div className="mx-auto w-full max-w-[1600px]">
-          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
+//         {/* Central Content Area (Clean Split) */}
+//         <main className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end my-auto py-8">
+          
+//           {/* Left Column: Project Identity & Specs */}
+//           <div className="lg:col-span-8 space-y-5">
+//             <AnimatePresence mode="wait">
+//               <motion.div
+//                 key={currentProject.id}
+//                 initial={{ opacity: 0, y: 25 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 exit={{ opacity: 0, y: -20 }}
+//                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+//               >
+//                 {/* Micro Category Tag */}
+//                 <div className="flex items-center gap-3 font-mono text-xs text-amber-300 tracking-[0.25em] uppercase">
+//                   <span>Plate 0{activeIndex + 1}</span>
+//                   <span className="h-px w-8 bg-amber-300/40" />
+//                   <span className="text-white/60">{currentProject.location}</span>
+//                 </div>
+
+//                 {/* Main Headline */}
+//                 <h1 className="font-display mt-4 text-5xl sm:text-7xl lg:text-[5.5rem] font-light tracking-tight text-white leading-[0.98]">
+//                   {currentProject.name}
+//                 </h1>
+
+//                 {/* Subtitle / Excerpt */}
+//                 <p className="mt-5 max-w-xl text-sm sm:text-base font-light leading-relaxed text-white/65">
+//                   {currentProject.description}
+//                 </p>
+
+//                 {/* Integrated Architectural Specs */}
+//                 <div className="mt-8 flex flex-wrap items-center gap-8 border-t border-white/10 pt-6 font-mono text-[11px] uppercase tracking-wider text-white/50">
+//                   <div>
+//                     <span className="block text-[9px] text-white/30 tracking-[0.3em]">Typology</span>
+//                     <span className="text-white/90 mt-0.5 block">{currentProject.type || "Private Residence"}</span>
+//                   </div>
+//                   <div className="h-6 w-px bg-white/10" />
+//                   <div>
+//                     <span className="block text-[9px] text-white/30 tracking-[0.3em]">Status</span>
+//                     <span className="text-white/90 mt-0.5 block">{currentProject.status || "Commissioned"}</span>
+//                   </div>
+//                   <div className="h-6 w-px bg-white/10 hidden sm:block" />
+//                   <div className="hidden sm:block">
+//                     <span className="block text-[9px] text-white/30 tracking-[0.3em]">Scope</span>
+//                     <span className="text-white/90 mt-0.5 block">Full Architecture &amp; Interior</span>
+//                   </div>
+//                 </div>
+//               </motion.div>
+//             </AnimatePresence>
+//           </div>
+
+//           {/* Right Column: Discrete Controls & Primary CTA */}
+//           <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-end gap-6">
             
-            {/* Left Column: Animated Text Details */}
-            <div className="lg:col-span-8">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentProject.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  {/* Location & Category Eyebrow */}
-                  <div className="flex items-center gap-3">
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                    <p className="font-mono text-xs uppercase tracking-[0.3em] text-amber-200/80">
-                      {currentProject.location} — {currentProject.type || "Residence"}
-                    </p>
-                  </div>
+//             {/* Primary Action Button */}
+//             <a
+//               href={`#${currentProject.id}`}
+//               className="group inline-flex items-center gap-4 rounded-full border border-white/20 bg-white/5 px-8 py-4 font-mono text-xs font-medium uppercase tracking-[0.2em] text-white backdrop-blur-md transition-all duration-500 hover:border-amber-300 hover:bg-amber-300 hover:text-[#08080a]"
+//             >
+//               <span>Explore Residence</span>
+//               <PiArrowUpRightLight 
+//                 size={15} 
+//                 className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
+//               />
+//             </a>
 
-                  {/* Main Title */}
-                  <h2 className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                    {currentProject.name}
-                  </h2>
+//             {/* Stepper Navigation Pod */}
+//             <div className="flex items-center gap-3 border border-white/10 rounded-full bg-black/40 p-1.5 backdrop-blur-md">
+//               <button
+//                 onClick={() => swiperInstance?.slidePrev()}
+//                 aria-label="Previous plate"
+//                 className="flex h-10 w-10 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/10 hover:text-white active:scale-95"
+//               >
+//                 <PiCaretLeftLight size={17} />
+//               </button>
 
-                  {/* Description Paragraph */}
-                  <p className="mt-5 max-w-xl text-base leading-relaxed text-ivory/70 font-light drop-shadow-sm">
-                    {currentProject.description}
-                  </p>
+//               <div className="font-mono text-xs tracking-widest text-white/80 px-3">
+//                 <span>0{activeIndex + 1}</span>
+//                 <span className="mx-1 text-white/25">/</span>
+//                 <span className="text-white/40">0{projects.length}</span>
+//               </div>
 
-                  {/* Magnetic Style CTA */}
-                  <div className="mt-8">
-                    <a
-                      href={`#${currentProject.id}`}
-                      className="group pointer-events-auto relative inline-flex items-center gap-4 overflow-hidden rounded-full border border-white/20 bg-white/10 px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md transition-all duration-500 hover:border-amber-300 hover:bg-amber-300 hover:text-charcoal hover:shadow-[0_0_35px_rgba(252,211,77,0.3)]"
-                    >
-                      <span>Explore Residence</span>
-                      <PiArrowUpRightLight
-                        size={18}
-                        className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-                      />
-                    </a>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+//               <button
+//                 onClick={() => swiperInstance?.slideNext()}
+//                 aria-label="Next plate"
+//                 className="flex h-10 w-10 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/10 hover:text-white active:scale-95"
+//               >
+//                 <PiCaretRightLight size={17} />
+//               </button>
+//             </div>
 
-            {/* Right Column: Mini Interactive Navigation Deck */}
-            <div className="pointer-events-auto flex flex-col items-start lg:items-end gap-6 lg:col-span-4">
-              
-              {/* Numeric Indicator */}
-              <div className="flex items-baseline gap-2 font-mono">
-                <span className="font-display text-4xl text-white">0{activeIndex + 1}</span>
-                <span className="text-sm text-ivory/40">/ 0{projects.length}</span>
-              </div>
+//           </div>
+//         </main>
 
-              {/* Glassmorphism Control Buttons */}
-              <div className="flex items-center gap-3">
-                <button
-                  aria-label="Previous property"
-                  onClick={() => swiperInstance?.slidePrev()}
-                  className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/5 text-ivory backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-white/40 hover:bg-white hover:text-charcoal active:scale-95"
-                >
-                  <PiArrowLeftLight size={20} className="transition-transform duration-300 group-hover:-translate-x-0.5" />
-                </button>
-                <button
-                  aria-label="Next property"
-                  onClick={() => swiperInstance?.slideNext()}
-                  className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/5 text-ivory backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-white/40 hover:bg-white hover:text-charcoal active:scale-95"
-                >
-                  <PiArrowRightLight size={20} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-                </button>
-              </div>
-            </div>
+//         {/* Bottom Architectural Timeline Strip */}
+//         <footer className="w-full">
+//           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6 border-t border-white/[0.08] pt-4">
+//             {projects.map((p, idx) => {
+//               const isCurrent = idx === activeIndex;
+//               return (
+//                 <button
+//                   key={p.id}
+//                   onClick={() => swiperInstance?.slideToLoop(idx)}
+//                   className="group text-left focus:outline-none"
+//                 >
+//                   <div className="relative h-[2px] w-full bg-white/10 overflow-hidden">
+//                     {isCurrent ? (
+//                       <motion.div
+//                         className="h-full bg-amber-400"
+//                         style={{ width: `${progress}%` }}
+//                       />
+//                     ) : (
+//                       <div className="h-full w-0 bg-white/40 transition-all duration-300 group-hover:w-full" />
+//                     )}
+//                   </div>
+//                   <div className="mt-2 flex items-center justify-between font-mono text-[10px] tracking-wider">
+//                     <span className={isCurrent ? "text-amber-300 font-semibold" : "text-white/30 group-hover:text-white/60"}>
+//                       0{idx + 1}
+//                     </span>
+//                     <span className={`truncate max-w-[120px] ${isCurrent ? "text-white" : "text-white/25 group-hover:text-white/50"}`}>
+//                       {p.name}
+//                     </span>
+//                   </div>
+//                 </button>
+//               );
+//             })}
+//           </div>
+//         </footer>
 
-          </div>
-
-          {/* 4. Luxury Segmented Timeline Track */}
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 border-t border-white/10 pt-6">
-            {projects.map((p, i) => (
-              <button
-                key={p.id}
-                aria-label={`Jump to ${p.name}`}
-                onClick={() => swiperInstance?.slideToLoop(i)}
-                className="group pointer-events-auto text-left transition-all focus:outline-none"
-              >
-                <div className="relative h-[2px] w-full overflow-hidden bg-white/15">
-                  <span
-                    className={`block h-full bg-gradient-to-r from-amber-200 to-amber-400 transition-all duration-700 ease-out ${
-                      i === activeIndex ? "w-full" : "w-0 group-hover:w-1/3"
-                    }`}
-                  />
-                </div>
-                <div className="mt-2 flex items-center justify-between">
-                  <span
-                    className={`font-mono text-[10px] tracking-wider transition-colors duration-300 ${
-                      i === activeIndex ? "text-amber-300 font-semibold" : "text-ivory/40 group-hover:text-ivory/70"
-                    }`}
-                  >
-                    0{i + 1}
-                  </span>
-                  <span
-                    className={`hidden truncate text-[11px] font-medium tracking-wide sm:block transition-colors duration-300 ${
-                      i === activeIndex ? "text-white" : "text-ivory/30 group-hover:text-ivory/60"
-                    }`}
-                  >
-                    {p.name}
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
+//       </div>
+//     </section>
+//   );
+// }

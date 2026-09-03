@@ -6,16 +6,16 @@ const articles = [
     title: "Why Location Matters When Buying a Home",
     excerpt:
       "The neighborhood you choose shapes daily life as much as the home itself — here's what to weigh before you decide.",
-    image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1400&auto=format&fit=crop",
+    image: "/article2.png",
   },
   {
     id: "checklist-before-buying",
     date: "20 May 2024",
     category: "Investment",
-    title: "Top Five Things to Check Before Buying a Property",
+    title: "5 Things to Verify Before Buying a Residential Plot",
     excerpt:
       "From legal titles to construction quality, a quick checklist that can save buyers from costly surprises.",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
+    image: "/article1.png",
   },
   {
     id: "vizag-trends-2024",

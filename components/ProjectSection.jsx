@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { PiArrowUpRightLight, PiSparkleFill } from "react-icons/pi";
 import Reveal from "@/components/Reveal";
-import projects from "@/data/projects";
+import projects2 from "@/data/project2";
 
 function ProjectCard({ p, index, total, isMobile }) {
   const containerRef = useRef(null);
@@ -26,17 +26,15 @@ function ProjectCard({ p, index, total, isMobile }) {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
+    stiffness: 200,
+    damping: 35,
     restDelta: 0.001,
   });
 
-  // Scale down and dim slightly as next card covers it
-  const scale = useTransform(smoothProgress, [0, 1], prefersReducedMotion ? [1, 1] : [1, 0.92]);
-  const opacity = useTransform(smoothProgress, [0, 0.8, 1], prefersReducedMotion ? [1, 1, 1] : [1, 0.95, 0.6]);
-  const imageScale = useTransform(smoothProgress, [0, 1], [1, 1.15]);
+  const scale = useTransform(smoothProgress, [0, 1], prefersReducedMotion ? [1, 1] : [1, 0.94]);
+  const opacity = useTransform(smoothProgress, [0, 0.8, 1], prefersReducedMotion ? [1, 1, 1] : [1, 0.96, 0.65]);
+  const imageScale = useTransform(smoothProgress, [0, 1], [1, 1.12]);
 
-  // Card sticky top offset
   const topOffset = isMobile ? 80 + index * 16 : 100 + index * 24;
 
   const handleMouseMove = (e) => {
@@ -61,7 +59,7 @@ function ProjectCard({ p, index, total, isMobile }) {
       className="sticky w-full flex items-start justify-center pb-24 lg:pb-32"
       style={{
         top: `${topOffset}px`,
-        zIndex: index + 1, // Higher index cards will slide OVER previous cards
+        zIndex: index + 1,
       }}
     >
       <motion.div
@@ -76,106 +74,91 @@ function ProjectCard({ p, index, total, isMobile }) {
           willChange: "transform, opacity",
           transformPerspective: 1200,
         }}
-        className="group relative w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#121316] p-6 sm:p-8 lg:p-12 shadow-[0_30px_100px_rgba(0,0,0,0.9)] backdrop-blur-2xl transition-all duration-700 hover:border-amber-400/40"
+        className="group relative w-full overflow-hidden rounded-[32px] border border-[#15140f]/10 bg-[#fbf9f4]/90 p-6 sm:p-8 lg:p-12 shadow-[0_25px_80px_rgba(21,20,15,0.08)] transition-all duration-700 hover:border-[#6e5a3c]/30"
       >
-        {/* Ambient Radial Hover Glow */}
-        <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-amber-500/15 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
-        <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-stone-500/10 blur-3xl" />
-
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-14">
-          
-          {/* Visual Showcase Card */}
           <a
             href={`#${p.id}`}
             aria-label={`Explore ${p.name}`}
-            className="group/img relative aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-white/10 shadow-2xl lg:col-span-7 lg:aspect-[16/11]"
+            className="group/img relative aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-[#15140f]/10 shadow-lg lg:col-span-7 lg:aspect-[16/11]"
           >
             <motion.div style={{ scale: imageScale }} className="absolute inset-0 h-full w-full">
               <img
                 src={p.image}
                 alt={p.name}
-                className="h-full w-full object-cover filter brightness-[0.88] contrast-[1.05] transition-transform duration-1000 ease-out group-hover/img:scale-105"
+                className="h-full w-full object-cover filter brightness-[0.96] contrast-[1.03] transition-transform duration-1000 ease-out group-hover/img:scale-105"
               />
             </motion.div>
 
-            {/* Cinematic Gradient Mask */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c]/90 via-[#0a0a0c]/30 to-transparent opacity-85 transition-opacity duration-700 group-hover/img:opacity-95" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#15140f]/85 via-[#15140f]/20 to-transparent opacity-90 transition-opacity duration-700" />
 
-            {/* Status Floating Pill */}
-            <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 py-1.5 backdrop-blur-md">
-              <PiSparkleFill className="text-amber-300 text-[10px] animate-pulse" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ivory">
+            <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 backdrop-blur-md">
+              <PiSparkleFill className="text-[#a68a5c] text-[10px] animate-pulse" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#f5f1e8]">
                 {p.status || "Exclusive"}
               </span>
             </div>
 
-            {/* Architectural Watermark Number */}
             <span
               aria-hidden="true"
-              className="font-display pointer-events-none absolute right-4 -bottom-6 select-none text-[7rem] font-bold leading-none tracking-tighter text-white/[0.05] sm:text-[9rem] lg:text-[11rem]"
+              className="font-display pointer-events-none absolute right-4 -bottom-6 select-none text-[7rem] font-bold leading-none tracking-tighter text-white/[0.08] sm:text-[9rem] lg:text-[11rem]"
             >
               0{index + 1}
             </span>
 
-            {/* Internal Image Banner Data */}
-            <div className="absolute inset-x-6 bottom-6 flex items-end justify-between text-ivory">
+            <div className="absolute inset-x-6 bottom-6 flex items-end justify-between text-white">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-amber-300">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#a68a5c]">
                   {p.type} — {p.location}
                 </p>
                 <h3 className="font-display mt-1 text-2xl sm:text-4xl text-white font-medium drop-shadow-sm">
                   {p.name}
                 </h3>
               </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-500 group-hover/img:scale-110 group-hover/img:bg-amber-400 group-hover/img:text-charcoal group-hover/img:border-amber-400">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-500 group-hover/img:scale-110 group-hover/img:bg-[#6e5a3c] group-hover/img:text-white group-hover/img:border-[#6e5a3c]">
                 <PiArrowUpRightLight size={22} />
               </div>
             </div>
           </a>
 
-          {/* Editorial Content Column */}
-          <div className="flex flex-col justify-between lg:col-span-5 py-2 text-ivory">
+          <div className="flex flex-col justify-between lg:col-span-5 py-2 text-[#15140f]">
             <div>
-              {/* Counter Header */}
-              <div className="flex items-center justify-between pb-6 border-b border-white/10">
+              <div className="flex items-center justify-between pb-6 border-b border-[#15140f]/10">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-display text-4xl font-normal text-white">0{index + 1}</span>
-                  <span className="text-xs uppercase tracking-widest text-ivory/40 font-mono">/ 0{total}</span>
+                  <span className="font-display text-4xl font-normal text-[#15140f]">0{index + 1}</span>
+                  <span className="text-xs uppercase tracking-widest text-[#948a76] font-mono">/ 0{total}</span>
                 </div>
-                <span className="text-xs font-mono tracking-widest text-amber-300/80 uppercase">
+                <span className="text-xs font-mono tracking-widest text-[#6e5a3c] uppercase">
                   {p.location}
                 </span>
               </div>
 
-              {/* Title & Description */}
               <div className="mt-8">
-                <h4 className="font-display text-3xl sm:text-4xl font-light text-white tracking-tight">
+                <h4 className="font-display text-3xl sm:text-4xl font-light text-[#15140f] tracking-tight">
                   {p.name}
                 </h4>
-                <p className="mt-4 text-base leading-relaxed text-ivory/70 font-light">
+                <p className="mt-4 text-base leading-relaxed text-[#15140f]/70 font-light">
                   {p.description}
                 </p>
               </div>
 
-              {/* Specs Grid */}
-              <div className="mt-8 grid grid-cols-2 gap-3 border-t border-white/10 pt-6">
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5 backdrop-blur-md">
-                  <span className="block font-mono text-[9px] uppercase tracking-widest text-ivory/40">Typology</span>
-                  <span className="font-medium text-sm text-white mt-0.5 block">{p.type}</span>
+              <div className="mt-8 grid grid-cols-2 gap-3 border-t border-[#15140f]/10 pt-6">
+                <div className="rounded-xl border border-[#15140f]/10 bg-white p-3.5 shadow-sm">
+                  <span className="block font-mono text-[9px] uppercase tracking-widest text-[#948a76]">Typology</span>
+                  <span className="font-medium text-sm text-[#15140f] mt-0.5 block">{p.type}</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5 backdrop-blur-md">
-                  <span className="block font-mono text-[9px] uppercase tracking-widest text-ivory/40">Status</span>
-                  <span className="font-medium text-sm text-white mt-0.5 block">{p.status}</span>
+                <div className="rounded-xl border border-[#15140f]/10 bg-white p-3.5 shadow-sm">
+                  <span className="block font-mono text-[9px] uppercase tracking-widest text-[#948a76]">Status</span>
+                  <span className="font-medium text-sm text-[#15140f] mt-0.5 block">{p.status}</span>
                 </div>
               </div>
             </div>
 
-            {/* Interactive Call to Action */}
             <div className="mt-10 pt-4">
               <a
                 href={`#${p.id}`}
                 id={p.id}
-                className="group/btn relative inline-flex items-center gap-4 overflow-hidden rounded-full border border-white/20 bg-white/5 px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md transition-all duration-500 hover:border-amber-400 hover:bg-amber-400 hover:text-charcoal hover:shadow-[0_0_35px_rgba(252,211,77,0.3)]"
+                className="group/btn relative inline-flex items-center gap-4 overflow-hidden rounded-full border border-[#15140f] bg-[#15140f] px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#f5f1e8] transition-all duration-500 hover:bg-[#6e5a3c] hover:border-[#6e5a3c]"
               >
                 <span>Explore Residence</span>
                 <PiArrowUpRightLight
@@ -203,36 +186,31 @@ export default function ProjectSection() {
   }, []);
 
   return (
-    <section id="projects" className="relative bg-[#0a0a0c] py-24 lg:py-36 text-ivory selection:bg-amber-300 selection:text-charcoal overflow-visible">
-      {/* Background Ambient Glows */}
-      <div className="pointer-events-none fixed -left-40 top-1/4 h-[600px] w-[600px] rounded-full bg-amber-600/10 blur-[160px]" />
-      <div className="pointer-events-none fixed -right-40 bottom-1/4 h-[600px] w-[600px] rounded-full bg-stone-500/10 blur-[160px]" />
-
+    <section id="projects2" className="relative bg-[#f5f1e8] py-24 lg:py-36 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] overflow-visible">
       <div className="relative mx-auto max-w-[1550px] px-6 lg:px-12">
-        {/* Curated Header */}
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between mb-24 border-b border-white/10 pb-12">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between mb-24 border-b border-[#15140f]/10 pb-12">
           <Reveal y={40} duration={0.9}>
             <div className="flex items-center gap-2 mb-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
-              <span className="eyebrow text-amber-200/80 font-mono uppercase tracking-[0.35em] text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#6e5a3c] animate-pulse" />
+              <span className="eyebrow text-[#948a76] font-mono uppercase tracking-[0.35em] text-xs">
                 Portfolio Archive
               </span>
             </div>
-            <h2 className="font-display max-w-3xl text-5xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+            <h2 className="font-display max-w-3xl text-5xl leading-[1.05] tracking-tight text-[#15140f] sm:text-6xl lg:text-7xl">
               Curated living spaces.
               <br />
-              <span className="italic font-light text-white/60">Uncompromised vision.</span>
+              <span className="italic font-light text-[#15140f]/60">Uncompromised vision.</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.15} y={40} duration={0.9}>
             <div className="flex flex-col items-start lg:items-end gap-3">
-              <span className="text-xs font-mono uppercase tracking-widest text-ivory/40">
-                Total Works: {projects.length}
+              <span className="text-xs font-mono uppercase tracking-widest text-[#948a76]">
+                Total Works: {projects2.length}
               </span>
               <a
                 href="#journal"
-                className="group inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 font-mono text-xs uppercase tracking-widest text-ivory backdrop-blur-md transition-all duration-300 hover:border-amber-400 hover:bg-amber-400 hover:text-charcoal"
+                className="group inline-flex items-center gap-3 rounded-full border border-[#15140f]/20 bg-white px-6 py-3 font-mono text-xs uppercase tracking-widest text-[#15140f] transition-all duration-300 hover:border-[#15140f] hover:bg-[#15140f] hover:text-[#f5f1e8]"
               >
                 <span>View Index</span>
                 <PiArrowUpRightLight className="transition-transform group-hover:rotate-45" size={16} />
@@ -241,14 +219,13 @@ export default function ProjectSection() {
           </Reveal>
         </div>
 
-        {/* Stacking Stack Viewport */}
         <div className="relative flex flex-col">
-          {projects.map((p, i) => (
+          {projects2.map((p, i) => (
             <ProjectCard
               key={p.id}
               p={p}
               index={i}
-              total={projects.length}
+              total={projects2.length}
               isMobile={isMobile}
             />
           ))}

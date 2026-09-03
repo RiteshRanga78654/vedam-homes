@@ -45,8 +45,13 @@
   box-sizing: border-box;
 }
 
+/* 
+  CRITICAL LAG FIX: 
+  'scroll-behavior: smooth' removed. Yeh GSAP ScrollTrigger aur 
+  Framer Motion scroll physics ke saath clash karta hai jab fast scroll kiya jaye.
+*/
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -55,6 +60,30 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* ---------- Hardware Acceleration — Targeted Only ---------- */
+/* Only promote elements that actually animate on scroll. The old broad
+   [class*="backdrop-blur"] rule promoted EVERY blur element to its own
+   GPU layer, creating too many composited layers and hurting perf. */
+.showcase-img,
+.project-card,
+.will-change-transform {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ambient blur orbs — keep these on their own layer for GPU compositing,
+   but only the small decorative ones, NOT large backdrop-filter regions */
+.ambient-orb {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+img, video {
+  content-visibility: auto;
 }
 
 .font-display {
@@ -190,6 +219,7 @@ body {
 }
 .marquee-track {
   animation: marquee 32s linear infinite;
+  will-change: transform;
 }
 
 /* ---------- Swiper theming ---------- */
@@ -240,4 +270,18 @@ textarea:focus-visible {
   .marquee-track {
     animation: none !important;
   }
+}
+
+/* Add to globals.css if not already present */
+@keyframes marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 36s linear infinite;
 }

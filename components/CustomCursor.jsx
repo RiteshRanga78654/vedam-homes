@@ -17,20 +17,30 @@ export default function CustomCursor() {
     document.body.classList.add("cursor-ready");
 
     let x = 0, y = 0, rx = 0, ry = 0;
+    let rafId = null;
+
     const move = (e) => {
       x = e.clientX;
       y = e.clientY;
       if (dotRef.current) dotRef.current.style.transform = `translate(${x}px, ${y}px)`;
+      // Ensure RAF loop is running when mouse moves
+      if (!rafId) rafId = requestAnimationFrame(loop);
     };
-    let raf;
+
     const loop = () => {
       rx += (x - rx) * 0.18;
       ry += (y - ry) * 0.18;
       if (ringRef.current) ringRef.current.style.transform = `translate(${rx}px, ${ry}px)`;
-      raf = requestAnimationFrame(loop);
+      // Keep looping until ring has settled and mouse is stationary
+      const settled = Math.abs(rx - x) < 0.3 && Math.abs(ry - y) < 0.3;
+      if (settled) {
+        rafId = null;
+        return;
+      }
+      rafId = requestAnimationFrame(loop);
     };
-    window.addEventListener("mousemove", move);
-    raf = requestAnimationFrame(loop);
+    window.addEventListener("mousemove", move, { passive: true });
+    rafId = requestAnimationFrame(loop);
 
     const onOver = (e) => {
       const target = e.target.closest("[data-cursor]");
@@ -41,7 +51,7 @@ export default function CustomCursor() {
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", onOver);
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafId);
       document.body.classList.remove("cursor-ready");
     };
   }, []);

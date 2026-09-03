@@ -60,27 +60,21 @@ export default function Header() {
             }`}
           >
             {/* Architectural Brand Identity */}
-            <a href="#top" className="group flex items-center gap-3" aria-label="Vedam Homes Home">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/20 bg-charcoal text-ivory transition-transform duration-500 group-hover:scale-105 group-hover:rotate-45">
-                <span className="font-display text-sm">V</span>
-              </div>
-              <div className="leading-tight">
-                <p
-                  className={`font-display text-lg tracking-tight font-medium transition-colors duration-500 ${
-                    scrolled ? "text-charcoal" : "text-ivory"
-                  }`}
-                >
-                  Vedam
-                </p>
-                <span
-                  className={`block font-mono text-[8px] tracking-[0.35em] uppercase transition-colors duration-500 ${
-                    scrolled ? "text-charcoal/50" : "text-ivory/60"
-                  }`}
-                >
-                  Homes
-                </span>
-              </div>
-            </a>
+            <a 
+  href="#top" 
+  className="group flex items-center gap-3 transition-opacity duration-300 hover:opacity-90" 
+  aria-label="Vedam Homes Home"
+>
+  <img
+    src="/logo/vedam-homes.png"
+    alt="Vedam Homes Logo"
+    className={`h-9 sm:h-11 w-auto object-contain transition-all duration-500 group-hover:scale-105 ${
+      scrolled 
+        ? "filter brightness-100 contrast-[1.05]" 
+        : "filter brightness-110 drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]"
+    }`}
+  />
+</a>
 
             {/* Desktop Navigation Links */}
             <div className="hidden items-center gap-1 rounded-full border border-charcoal/5 bg-charcoal/[0.03] p-1.5 backdrop-blur-md lg:flex">
@@ -141,8 +135,8 @@ export default function Header() {
             className="fixed inset-0 z-[100] flex flex-col justify-between bg-[#0e0f12] text-ivory selection:bg-amber-300 selection:text-charcoal"
           >
             {/* Ambient Background Lights */}
-            <div className="pointer-events-none absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-amber-600/10 blur-[150px]" />
-            <div className="pointer-events-none absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-stone-500/10 blur-[160px]" />
+            <div className="pointer-events-none absolute -top-40 -right-40 h-[400px] w-[400px] rounded-full bg-amber-600/10 blur-[100px] ambient-orb" />
+            <div className="pointer-events-none absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-stone-500/10 blur-[100px] ambient-orb" />
 
             {/* Menu Header Bar */}
             <div className="relative mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-6 lg:px-12 lg:py-8 border-b border-white/10">

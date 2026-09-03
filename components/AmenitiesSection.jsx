@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { PiArrowUpRightLight, PiSparkleFill } from "react-icons/pi";
+import { PiArrowUpRightLight, PiSparkleFill, PiCheckCircleFill } from "react-icons/pi";
+import Reveal from "@/components/Reveal";
 import amenities from "@/data/amenities";
 
 export default function AmenitiesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const itemRefs = useRef([]);
 
-  // Scroll observer: List item center me aate hi image switch hogi
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -24,7 +24,7 @@ export default function AmenitiesSection() {
       },
       {
         root: null,
-        rootMargin: "-45% 0px -45% 0px",
+        rootMargin: "-40% 0px -40% 0px",
         threshold: 0.1,
       }
     );
@@ -41,54 +41,50 @@ export default function AmenitiesSection() {
   return (
     <section
       id="amenities"
-      className="relative bg-[#0a0a0c] text-ivory selection:bg-amber-300 selection:text-charcoal"
+      className="relative bg-[#f5f1e8] text-[#15140f] py-15 lg:py-12 selection:bg-[#15140f] selection:text-[#f5f1e8]"
     >
-      {/* Background Ambient Glow */}
-      <div className="pointer-events-none fixed left-0 top-1/4 h-[500px] w-[500px] rounded-full bg-amber-600/10 blur-[160px]" />
-      <div className="pointer-events-none fixed bottom-1/4 right-0 h-[500px] w-[500px] rounded-full bg-stone-500/10 blur-[160px]" />
+      <div className="pointer-events-none absolute left-0 top-1/4 h-[400px] w-[400px] rounded-full bg-[#948a76]/10 blur-[120px] ambient-orb" />
+      <div className="pointer-events-none absolute bottom-1/4 right-0 h-[400px] w-[400px] rounded-full bg-[#6e5a3c]/10 blur-[120px] ambient-orb" />
 
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* LEFT: FIXED / STICKY IMAGE SCREEN */}
+          {/* Sticky Image Viewport */}
           <div className="lg:col-span-6 lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center py-12 lg:py-0 z-20">
-            <div className="relative w-full max-w-[540px] aspect-[4/3] sm:aspect-[16/11] mx-auto overflow-hidden rounded-[32px] border border-white/15 bg-white/5 p-2 shadow-[0_30px_90px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+            <div className="relative w-full max-w-[540px] aspect-[4/3] sm:aspect-[16/11] mx-auto overflow-hidden rounded-[32px] border border-[#15140f]/15 bg-white/70 p-2 shadow-[0_20px_60px_rgba(21,20,15,0.08)] backdrop-blur-xl">
               <div className="relative h-full w-full overflow-hidden rounded-[24px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={active.id}
-                    initial={{ opacity: 0, scale: 1.1 }}
+                    initial={{ opacity: 0, scale: 1.08 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.94 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="absolute inset-0 h-full w-full"
                   >
                     <img
                       src={active.image}
                       alt={active.title}
-                      className="h-full w-full object-cover filter brightness-[0.88] contrast-[1.05]"
+                      className="h-full w-full object-cover filter brightness-[0.95] contrast-[1.03]"
                     />
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Ambient Shadow Vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c]/90 via-transparent to-[#0a0a0c]/40 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#15140f]/90 via-[#15140f]/20 to-transparent pointer-events-none" />
 
-                {/* Top Badge */}
                 <div className="absolute top-6 left-6">
-                  <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 py-1.5 backdrop-blur-md">
-                    <PiSparkleFill className="text-amber-300 text-[10px]" />
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-ivory">
-                      0{activeIndex + 1} / Feature In View
+                  <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 backdrop-blur-md">
+                    <PiSparkleFill className="text-[#a68a5c] text-[10px]" />
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-[#f5f1e8]">
+                      0{activeIndex + 1} / Specification In View
                     </span>
                   </div>
                 </div>
 
-                {/* Bottom Overlay Info */}
-                <div className="absolute inset-x-6 bottom-6 flex items-end justify-between text-ivory">
+                <div className="absolute inset-x-6 bottom-6 flex items-end justify-between text-[#f5f1e8]">
                   <div>
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-amber-300">
-                      Standard Living Feature
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#a68a5c]">
+                      Standard Amenity
                     </span>
                     <h3 className="font-display mt-1 text-2xl sm:text-3xl text-white font-medium drop-shadow-sm">
                       {active.title}
@@ -97,7 +93,7 @@ export default function AmenitiesSection() {
 
                   <a
                     href={`#amenity-${active.id}`}
-                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 hover:bg-amber-400 hover:text-charcoal hover:border-amber-400"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white transition-all duration-300 hover:scale-110 hover:bg-[#6e5a3c] hover:border-[#6e5a3c]"
                   >
                     <PiArrowUpRightLight size={20} />
                   </a>
@@ -106,7 +102,7 @@ export default function AmenitiesSection() {
             </div>
           </div>
 
-          {/* RIGHT: CLEAN & SIMPLE SCROLLABLE LIST */}
+          {/* Clean Scrollable List */}
           <div className="lg:col-span-6 flex flex-col pl-0 lg:pl-12">
             {amenities.map((a, i) => {
               const isActive = activeIndex === i;
@@ -118,27 +114,23 @@ export default function AmenitiesSection() {
                   data-index={i}
                   className="min-h-[80vh] lg:min-h-screen flex flex-col justify-center py-16 scroll-mt-24"
                 >
-                  <div className={`transition-all duration-700 ${isActive ? "opacity-100 translate-x-0" : "opacity-25 translate-x-2"}`}>
+                  <div className={`transition-all duration-700 ${isActive ? "opacity-100 translate-x-0" : "opacity-30 translate-x-2"}`}>
                     
-                    {/* Index & Active Accent */}
                     <div className="flex items-center gap-4">
-                      <span className={`font-mono text-sm tracking-widest font-semibold ${isActive ? "text-amber-300" : "text-ivory/40"}`}>
+                      <span className={`font-mono text-sm tracking-widest font-semibold ${isActive ? "text-[#6e5a3c]" : "text-[#948a76]"}`}>
                         0{i + 1}
                       </span>
-                      <div className={`h-px transition-all duration-500 ${isActive ? "w-12 bg-amber-400" : "w-6 bg-white/20"}`} />
+                      <div className={`h-px transition-all duration-500 ${isActive ? "w-12 bg-[#6e5a3c]" : "w-6 bg-[#15140f]/20"}`} />
                     </div>
 
-                    {/* Title */}
-                    <h3 className="font-display mt-4 text-4xl sm:text-6xl font-light tracking-tight text-white">
+                    <h3 className="font-display mt-4 text-4xl sm:text-6xl font-light tracking-tight text-[#15140f]">
                       {a.title}
                     </h3>
 
-                    {/* Clean Description */}
-                    <p className="mt-6 text-base sm:text-lg font-light leading-relaxed text-ivory/70 max-w-xl">
+                    <p className="mt-6 text-base sm:text-lg font-light leading-relaxed text-[#15140f]/70 max-w-xl">
                       {a.desc}
                     </p>
 
-                    {/* Simple Clickable Action */}
                     <button
                       onClick={() => {
                         document.getElementById(`amenity-${a.id}`)?.scrollIntoView({
@@ -146,9 +138,9 @@ export default function AmenitiesSection() {
                           block: "center",
                         });
                       }}
-                      className="group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-300 hover:text-amber-200"
+                      className="group mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#6e5a3c] hover:text-[#15140f]"
                     >
-                      <span>Explore Feature</span>
+                      <span>Explore Detail</span>
                       <PiArrowUpRightLight className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" size={15} />
                     </button>
 

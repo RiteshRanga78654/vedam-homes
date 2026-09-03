@@ -90,8 +90,8 @@ export default function PhilosophySection() {
       className="relative overflow-hidden bg-[#0e0f12] py-28 text-ivory lg:py-40 selection:bg-amber-300 selection:text-charcoal"
     >
       {/* Ambient Luxury Background Light Orbs */}
-      <div className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full bg-amber-600/5 blur-[140px]" />
-      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[600px] w-[600px] rounded-full bg-amber-400/5 blur-[160px]" />
+      <div className="pointer-events-none absolute -top-40 -left-40 h-[400px] w-[400px] rounded-full bg-amber-600/5 blur-[100px] ambient-orb" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-amber-400/5 blur-[100px] ambient-orb" />
 
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         {/* Header Section */}

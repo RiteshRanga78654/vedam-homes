@@ -25,7 +25,7 @@ const projects = [
       "A slender high-rise of full-floor apartments, each wrapped in glass to hold an uninterrupted line to the bay.",
     price: "On Request",
     image:
-      "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1800&auto=format&fit=crop",
+      "/dlf2.jpeg",
     gallery: [
       "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
@@ -41,12 +41,14 @@ const projects = [
       "Twenty-four residences arranged around a private courtyard, built for households who value quiet over scale.",
     price: "On Request",
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop",
+      "/dlf2.png",
     gallery: [
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=1200&auto=format&fit=crop",
     ],
   },
+
+
   {
     id: "vedam-urban",
     name: "Vedam Urban",
@@ -57,7 +59,7 @@ const projects = [
       "Compact, well-lit residential floors designed for the working city — five-minute proximity to transit and schools.",
     price: "On Request",
     image:
-      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1800&auto=format&fit=crop",
+      "/dlf3.png",
     gallery: [
       "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
@@ -73,7 +75,7 @@ const projects = [
       "Larger plots at the edge of the city, where every residence keeps a working view of open farmland to the west.",
     price: "On Request",
     image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
+      "/dlf4.png",
     gallery: [
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",

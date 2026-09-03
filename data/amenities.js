@@ -3,7 +3,7 @@ const amenities = [
     id: "pool",
     title: "Infinity Pool",
     desc: "An edgeless deck that appears to meet the skyline.",
-    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop",
+    image: "/amenities-swimming.png",
   },
   {
     id: "clubhouse",
@@ -15,19 +15,19 @@ const amenities = [
     id: "garden",
     title: "Landscaped Gardens",
     desc: "Native planting designed with a resident landscape architect.",
-    image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=1200&auto=format&fit=crop",
+    image: "/amenities-landscape.png",
   },
   {
     id: "fitness",
     title: "Fitness Centre",
     desc: "Full equipment floor with natural light on three sides.",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop",
+    image: "/amenities-gym.png",
   },
   {
     id: "security",
     title: "24×7 Security",
     desc: "Manned gates, CCTV coverage and app-based visitor access.",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=1200&auto=format&fit=crop",
+    image: "/amenities-security.png",
   },
   {
     id: "smart-home",
