@@ -1599,7 +1599,7 @@ const VedamPage = () => {
           <section className="scene11-infra absolute top-0 h-full w-full z-[40] flex items-center justify-end pr-4 md:pr-8 lg:pr-12 bg-[#050505]">
             <Image src="/flower-valley/building.png" alt="Infrastructure" fill className="object-cover opacity-85" priority />
             <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent pointer-events-none"></div>
-            <h1 className="text-white text-[48px] md:text-[64px] font-light leading-none text-right uppercase z-10 drop-shadow-2xl inline-block w-[450px] font-serif">
+<h1 className="text-white text-[48px] md:text-[64px] font-light leading-none text-right uppercase z-10 drop-shadow-2xl inline-block w-[450px] mr-[80px] font-serif">
               Infrastructure
             </h1>
           </section>
