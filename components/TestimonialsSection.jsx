@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
       id="testimonials"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative overflow-hidden bg-[#fbf9f4] py-24 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] lg:py-36"
+      className="relative overflow-hidden bg-[#fbf9f4] py-20 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] lg:py-20"
     >
       <div className="relative mx-auto max-w-5xl px-6 text-center lg:px-12">
         <Reveal y={20}>

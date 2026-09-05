@@ -186,7 +186,7 @@ export default function ProjectSection() {
   }, []);
 
   return (
-    <section id="projects2" className="relative bg-[#f5f1e8] py-24 lg:py-36 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] overflow-visible">
+    <section id="projects2" className="relative bg-[#f5f1e8] py-24 lg:py-20 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] overflow-visible">
       <div className="relative mx-auto max-w-[1550px] px-6 lg:px-12">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between mb-24 border-b border-[#15140f]/10 pb-12">
           <Reveal y={40} duration={0.9}>

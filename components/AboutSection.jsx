@@ -71,8 +71,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-[#faf8f5] py-24 text-[#15140f] selection:bg-[#15140f] selection:text-[#faf8f5] lg:py-36"
-    >
+      className="relative overflow-hidden bg-[#faf8f5] py-24 text-[#15140f] selection:bg-[#15140f] selection:text-[#faf8f5] lg:py-20" >
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">

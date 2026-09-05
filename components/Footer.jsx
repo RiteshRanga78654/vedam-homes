@@ -28,7 +28,7 @@ const COLUMNS = [
     title: "Studio",
     links: [
       { label: "About Vedam", href: "#about" },
-      { label: "Partners & Materials", href: "#partners" },
+      { label: "Partners & Materials", href: "/vedam-landscaped" },
       { label: "Interactive Visual", href: "#interactive" },
       { label: "Client Words", href: "#testimonials" },
       { label: "Direct Inquiries", href: "#contact" },

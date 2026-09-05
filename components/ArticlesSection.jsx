@@ -98,7 +98,7 @@ export default function ArticlesSection() {
     <section
       id="journal"
       ref={containerRef}
-      className="relative overflow-hidden bg-[#0a0a0c] py-24 text-ivory selection:bg-amber-300 selection:text-charcoal lg:py-36"
+      className="relative overflow-hidden bg-[#0a0a0c] py-24 text-ivory selection:bg-amber-300 selection:text-charcoal lg:py-20"
     >
       {/* Studio Radial Background Orbs */}
       <div className="pointer-events-none absolute -left-40 -top-40 h-[400px] w-[400px] rounded-full bg-amber-600/10 blur-[100px] ambient-orb" />
