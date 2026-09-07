@@ -1,153 +1,203 @@
-'use client';
+"use client";
 
-import { Mail, Phone, MapPin, ArrowUpRight, Instagram, Linkedin, Facebook, Youtube } from 'lucide-react';
-import { navigationLinks } from '../data/mockData';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  PiFacebookLogoLight,
+  PiInstagramLogoLight,
+  PiLinkedinLogoLight,
+  PiArrowUpRightLight,
+  PiArrowUpLight,
+  PiSparkleFill,
+  PiCheckCircleFill,
+} from "react-icons/pi";
+import Reveal from "@/app/homepage/components/Reveal";
+
+const COLUMNS = [
+  {
+    title: "Portfolio",
+    links: [
+      { label: "Selected Works", href: "#projects" },
+      { label: "Studio Philosophy", href: "#philosophy" },
+      { label: "Living Amenities", href: "#amenities" },
+      { label: "Visual Gallery", href: "#gallery" },
+      { label: "Architectural Journal", href: "#journal" },
+    ],
+  },
+  {
+    title: "Studio",
+    links: [
+      { label: "About Vedam", href: "#about" },
+      { label: "Partners & Materials", href: "/vedam-landscaped" },
+      { label: "Interactive Visual", href: "#interactive" },
+      { label: "Client Words", href: "#testimonials" },
+      { label: "Direct Inquiries", href: "#contact" },
+    ],
+  },
+];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitted(true);
+    setEmail("");
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="relative bg-[#0A0A0A] text-white pt-24 overflow-hidden">
-
-      {/* Giant background wordmark */}
-      <div className="absolute top-8 left-0 w-full flex justify-center pointer-events-none select-none">
-        <span className="text-[18vw] leading-none font-bold tracking-tighter text-white/[0.03] whitespace-nowrap">
-          ESTATEAVANT
-        </span>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6">
-
-        {/* Hero CTA row */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-16">
-          <div className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#B88A44] mb-5 font-medium">
-              Estateavant &mdash; 2026
-            </p>
-            <h2 className="text-4xl md:text-6xl font-light tracking-tight leading-[1.05]">
-              Redefining <span className="italic text-[#D9B877]">luxury</span><br />
-              living, one skyline at a time.
-            </h2>
-          </div>
-
-          <a
-            href="#contact"
-            className="group shrink-0 flex items-center justify-between gap-8 w-full lg:w-72 border border-white/15 rounded-2xl px-6 py-5 hover:border-[#B88A44] hover:bg-[#B88A44]/10 transition-all duration-300"
-          />
-            <div>
-              <div className="text-sm font-medium text-white">Book a Consultation</div>
-              <div className="text-xs text-white/40 font-light mt-1">Response within 24 hours</div>
-            </div>
-            <span className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-[#B88A44] text-black group-hover:rotate-45 transition-transform duration-300">
-              <ArrowUpRight size={18} />
+    <footer className="relative overflow-hidden bg-[#15140f] pt-16 pb-8 text-[#f5f1e8]/70 selection:bg-[#f5f1e8] selection:text-[#15140f] lg:pt-20">
+      <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+        <div className="flex items-center justify-between border-b border-white/10 pb-6">
+          <div className="flex items-center gap-2.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#a68a5c] animate-pulse" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#cdc4b2]">
+              © 2021, Vedam Homes LLP. Real Estate Builder
             </span>
-          </a>
+          </div>
+
+          <button
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className="group flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#f5f1e8] backdrop-blur-md transition-all duration-300 hover:border-[#a68a5c] hover:bg-[#a68a5c] hover:text-white"
+          >
+            <span>Top</span>
+            <PiArrowUpLight
+              className="transition-transform duration-300 group-hover:-translate-y-0.5"
+              size={12}
+            />
+          </button>
         </div>
 
-        {/* Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="py-10 sm:py-12">
+          <Reveal y={25} duration={0.8}>
+            <h2 className="font-display text-4xl font-light leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Built around{" "}
+              <span className="italic font-light text-white/50">
+                the way you live.
+              </span>
+            </h2>
+          </Reveal>
+        </div>
 
-        {/* Content grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 py-16">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <img
+              src="/logo/vedam-homes.png"
+              alt="Vedam Homes Logo"
+              className="h-9 w-auto object-contain transition-all duration-500 sm:h-11"
+            />
 
-          {/* Nav links spread horizontally */}
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-8 gap-x-6">
-              <div>
-                <h4 className="text-xs uppercase tracking-widest font-semibold text-white/40 mb-5">Explore</h4>
-                <ul className="space-y-3">
-                  {navigationLinks.map((link) => (
-                    <li key={link.name}>
-                      <a href={link.href} className="text-sm text-white/70 hover:text-[#B88A44] transition-colors font-light">
-                        {link.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <p className="mt-3.5 max-w-sm font-light text-xs leading-relaxed text-[#f5f1e8]/60">
+              Unit 1225, 12th Floor, JMD Megapolis, Sector 48, Gurugram, Haryana – 122018
+              D-42, First Floor, Central Park Flower Valley, South of Gurugram
+              (+91) 9871534959 / 7838239239
+              Info@vedamhomes.com
+            </p>
 
-              <div>
-                <h4 className="text-xs uppercase tracking-widest font-semibold text-white/40 mb-5">Company</h4>
-                <ul className="space-y-3">
-                  {['About Us', 'Careers', 'Press', 'Sustainability'].map((item) => (
-                    <li key={item}>
-                      <a href="#" className="text-sm text-white/70 hover:text-[#B88A44] transition-colors font-light">
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-xs uppercase tracking-widest font-semibold text-white/40 mb-5">Follow</h4>
-                <ul className="space-y-3">
-                  {[
-                    { name: 'Instagram', icon: Instagram },
-                    { name: 'LinkedIn', icon: Linkedin },
-                    { name: 'Facebook', icon: Facebook },
-                    { name: 'YouTube', icon: Youtube },
-                  ].map(({ name, icon: Icon }) => (
-                    <li key={name}>
-                      <a href="#" className="flex items-center gap-2 text-sm text-white/70 hover:text-[#B88A44] transition-colors font-light">
-                        <Icon size={14} />
-                        {name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className="mt-6 flex items-center gap-2.5">
+              {[
+                { icon: PiInstagramLogoLight, href: "#", label: "Instagram" },
+                { icon: PiLinkedinLogoLight, href: "#", label: "LinkedIn" },
+                { icon: PiFacebookLogoLight, href: "#", label: "Facebook" },
+              ].map((item, i) => (
+                <a
+                  key={i}
+                  href={item.href}
+                  aria-label={item.label}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/5 text-[#f5f1e8]/70 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-[#a68a5c] hover:bg-[#a68a5c] hover:text-white"
+                >
+                  <item.icon size={15} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Glass contact card */}
-          <div className="lg:col-span-5">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 h-full flex flex-col justify-between">
-              <div>
-                <h4 className="text-xs uppercase tracking-widest font-semibold text-[#B88A44] mb-6">Contact Desk</h4>
-                <ul className="space-y-5">
-                  <li>
-                    <a href="tel:+1234567890" className="flex items-center gap-4 group">
-                      <span className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 group-hover:border-[#B88A44] group-hover:bg-[#B88A44]/10 transition-all shrink-0">
-                        <Phone size={15} className="text-[#B88A44]" />
-                      </span>
-                      <div>
-                        <div className="text-xs text-white/40 font-light">Call us</div>
-                        <div className="text-sm text-white group-hover:text-[#B88A44] transition-colors">+1 (234) 567-890</div>
-                      </div>
+          {COLUMNS.map((col) => (
+            <div key={col.title} className="lg:col-span-2">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#a68a5c]">
+                {col.title}
+              </p>
+              <ul className="mt-4 space-y-2.5 text-xs font-light">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      className="group inline-flex items-center gap-1.5 text-[#f5f1e8]/70 transition-colors duration-300 hover:text-white"
+                    >
+                      <span>{l.label}</span>
+                      <PiArrowUpRightLight
+                        size={11}
+                        className="opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:text-[#a68a5c]"
+                      />
                     </a>
                   </li>
-                  <li>
-                    <a href="mailto:concierge@estateavant.com" className="flex items-center gap-4 group">
-                      <span className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 group-hover:border-[#B88A44] group-hover:bg-[#B88A44]/10 transition-all shrink-0">
-                        <Mail size={15} className="text-[#B88A44]" />
-                      </span>
-                      <div>
-                        <div className="text-xs text-white/40 font-light">Email us</div>
-                        <div className="text-sm text-white group-hover:text-[#B88A44] transition-colors">concierge@estateavant.com</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <span className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 shrink-0">
-                      <MapPin size={15} className="text-[#B88A44]" />
-                    </span>
-                    <div>
-                      <div className="text-xs text-white/40 font-light">Visit us</div>
-                      <div className="text-sm text-white leading-snug mt-0.5">742 Premium Corporate Skytower, Financial Plaza, Core District</div>
-                    </div>
-                  </li>
-                </ul>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="lg:col-span-4">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
+              <div className="flex items-center gap-1.5">
+                <PiSparkleFill className="text-[10px] text-[#a68a5c]" />
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white">
+                  Private Dispatch
+                </p>
               </div>
+
+              <p className="mt-2 text-xs font-light leading-relaxed text-[#f5f1e8]/60">
+                Quarterly monographs on spatial design, site releases, and
+                architectural essays.
+              </p>
+
+              <form onSubmit={handleSubmit} className="relative mt-4">
+                <div className="flex items-center rounded-full border border-white/15 bg-white/5 p-1 backdrop-blur-md transition-all focus-within:border-[#a68a5c]/50 focus-within:bg-white/10">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full bg-transparent px-3 py-1.5 font-mono text-xs text-[#f5f1e8] placeholder:text-[#f5f1e8]/30 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Subscribe to newsletter"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f5f1e8] text-[#15140f] transition-transform duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <PiArrowUpRightLight size={13} />
+                  </button>
+                </div>
+              </form>
+
+              {submitted && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-2.5 flex items-center gap-1.5 font-mono text-[11px] text-[#a68a5c]"
+                >
+                  <PiCheckCircleFill size={13} />
+                  <span>Added to private registry.</span>
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/10 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40 font-light">
-          <div>&copy; 2026 ESTATEAVANT Development Enterprise. All Architectural Rights Reserved.</div>
-          <div className="flex space-x-6">
-            <a href="#" className="hover:text-[#B88A44] transition-colors">Privacy Framework</a>
-            <a href="#" className="hover:text-[#B88A44] transition-colors">Terms of Operations</a>
-          </div>
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 font-mono text-[11px] text-[#f5f1e8]/40 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Vedam Homes Studio. All rights reserved.</p>
+          <p className="max-w-md text-left sm:text-right text-[13px] bold">
+            POWERED BY <a href="https://www.ireedindia.com/" target="_blank">
+              IREED Media
+            </a>
+          </p>
         </div>
       </div>
     </footer>

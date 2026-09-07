@@ -7,8 +7,9 @@ import {
   PiSparkleFill,
   PiXLight,
   PiArrowsOutSimpleLight,
+  PiCaretDownLight,
 } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 import gallery from "@/data/gallery";
 
 const CATEGORIES = ["All", "Exteriors", "Interiors", "Details"];
@@ -32,7 +33,7 @@ function GalleryCard({ item, index, onSelect }) {
   };
 
   return (
-    <div className="mb-6 break-inside-avoid">
+    <div className="mb-0">
       <Reveal delay={(index % 4) * 0.06}>
         <div
           ref={cardRef}
@@ -50,7 +51,7 @@ function GalleryCard({ item, index, onSelect }) {
               <img
                 src={item.src}
                 alt={item.title}
-                className="w-full h-auto object-cover filter brightness-[0.96] contrast-[1.03] transition-all duration-1000 ease-out group-hover:scale-105 group-hover:brightness-100"
+                className="h-72 w-full object-cover sm:h-80 md:h-96 filter brightness-[0.96] contrast-[1.03] transition-all duration-1000 ease-out group-hover:scale-105 group-hover:brightness-100"
                 loading="lazy"
               />
             </motion.div>
@@ -92,16 +93,23 @@ function GalleryCard({ item, index, onSelect }) {
 export default function GallerySection() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const INITIAL_COUNT = 4;
 
   const filteredGallery = gallery.filter((item) => {
     if (activeCategory === "All") return true;
     return item.category?.toLowerCase() === activeCategory.toLowerCase();
   });
 
+  const visibleGallery = showAll
+    ? filteredGallery
+    : filteredGallery.slice(0, INITIAL_COUNT);
+  const hasMore = filteredGallery.length > INITIAL_COUNT;
+
   return (
     <section
       id="gallery"
-      className="relative overflow-hidden bg-[#f5f1e8] pt-7 pb-24 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] sm:pt-16 lg:pt-16 lg:pb-36"
+      className="relative overflow-hidden bg-[#f5f1e8] pt-7 pb-7 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] sm:pt-16 lg:pt-10 lg:pb-16"
     >
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 lg:mb-12 border-b border-[#15140f]/10 pb-8">
@@ -123,7 +131,10 @@ export default function GallerySection() {
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => {
+                    setActiveCategory(cat);
+                    setShowAll(false);
+                  }}
                   className={`rounded-full px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${
                     activeCategory === cat
                       ? "bg-[#15140f] text-[#f5f1e8] font-semibold shadow-sm"
@@ -137,9 +148,9 @@ export default function GallerySection() {
           </Reveal>
         </div>
 
-        <div className="columns-1 gap-6 sm:columns-2 md:columns-3 lg:columns-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <AnimatePresence>
-            {filteredGallery.map((g, i) => (
+            {visibleGallery.map((g, i) => (
               <GalleryCard
                 key={g.src || g.title}
                 item={g}
@@ -149,6 +160,40 @@ export default function GallerySection() {
             ))}
           </AnimatePresence>
         </div>
+
+        {hasMore && !showAll && (
+          <Reveal delay={0.1} y={10}>
+            <div className="mt-12 flex justify-center">
+              <button
+                onClick={() => setShowAll(true)}
+                className="group flex items-center gap-3 rounded-full border border-[#15140f]/15 bg-white/70 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-[#15140f] backdrop-blur-md transition-all duration-300 hover:border-[#6e5a3c]/40 hover:bg-[#15140f] hover:text-[#f5f1e8] hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)]"
+              >
+                See More
+                <PiCaretDownLight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-y-0.5"
+                />
+              </button>
+            </div>
+          </Reveal>
+        )}
+
+        {showAll && (
+          <Reveal delay={0.1} y={10}>
+            <div className="mt-12 flex justify-center">
+              <button
+                onClick={() => setShowAll(false)}
+                className="group flex items-center gap-3 rounded-full border border-[#15140f]/15 bg-white/70 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-[#15140f] backdrop-blur-md transition-all duration-300 hover:border-[#6e5a3c]/40 hover:bg-[#15140f] hover:text-[#f5f1e8] hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)]"
+              >
+                <PiCaretDownLight
+                  size={14}
+                  className="rotate-180 transition-transform duration-300 group-hover:-translate-y-0.5"
+                />
+                See Less
+              </button>
+            </div>
+          </Reveal>
+        )}
       </div>
 
       <AnimatePresence>

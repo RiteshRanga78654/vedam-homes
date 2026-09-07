@@ -1,7 +1,7 @@
 "use client";
 
 import { PiArrowUpRightLight, PiPhoneCallLight, PiSparkleFill } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 
 export default function CTASection() {
   return (

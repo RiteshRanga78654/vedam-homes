@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { PiArrowUpRightLight, PiSparkleFill } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 import projects2 from "@/data/project2";
 
 function ProjectCard({ p, index, total, isMobile }) {

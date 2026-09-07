@@ -15,9 +15,9 @@ const NAV_LINKS = [
   { label: "Projects", href: "#projects", count: "05 Properties" },
   { label: "Philosophy", href: "#philosophy", count: "04 Principles" },
   { label: "Amenities", href: "#amenities", count: "Full Suite" },
-  { label: "Gallery", href: "#gallery", count: "Visual Journal" },
+  { label: "Gallery", href: "./gallery", count: "Visual Journal" },
   { label: "Insights", href: "#journal", count: "Editorial" },
-  { label: "Contact", href: "#contact", count: "Get in Touch" },
+  { label: "Contact", href: "./contact", count: "Get in Touch" },
 ];
 
 export default function Header() {
@@ -61,13 +61,14 @@ export default function Header() {
           >
             {/* Architectural Brand Identity */}
             <a 
-  href="#top" 
+  href="/" 
   className="group flex items-center gap-3 transition-opacity duration-300 hover:opacity-90" 
   aria-label="Vedam Homes Home"
 >
   <img
     src="/logo/vedam-homes.png"
     alt="Vedam Homes Logo"
+    href="./"
     className={`h-9 sm:h-11 w-auto object-contain transition-all duration-500 group-hover:scale-105 ${
       scrolled 
         ? "filter brightness-100 contrast-[1.05]" 

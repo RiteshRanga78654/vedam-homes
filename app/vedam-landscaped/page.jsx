@@ -7,8 +7,8 @@ import Lenis from 'lenis';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Header';
-import Footer from '@/components/Footer';
+import Navbar from '@/app/homepage/components/Header';
+import Footer from '@/app/homepage/components/Footer';
 
 const VedamPage = () => {
   const router = useRouter();

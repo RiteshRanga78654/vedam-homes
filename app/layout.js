@@ -1,8 +1,8 @@
 import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 // import CustomCursor from "@/components/CustomCursor";
-import PageLoader from "@/components/PageLoader";
-import SmoothScroll from "@/components/SmoothScroll";
+import PageLoader from "@/app/homepage/components/PageLoader";
+import SmoothScroll from "@/app/homepage/components/SmoothScroll";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",

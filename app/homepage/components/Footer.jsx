@@ -11,7 +11,7 @@ import {
   PiSparkleFill,
   PiCheckCircleFill,
 } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 
 const COLUMNS = [
   {
@@ -52,13 +52,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-[#15140f] pt-16 pb-8 text-[#f5f1e8]/70 selection:bg-[#f5f1e8] selection:text-[#15140f] lg:pt-20">
+    <footer className="relative overflow-hidden bg-[#15140f] pt-6 pb-8 text-[#f5f1e8]/70 selection:bg-[#f5f1e8] selection:text-[#15140f] lg:pt-20">
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="flex items-center justify-between border-b border-white/10 pb-6">
           <div className="flex items-center gap-2.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[#a68a5c] animate-pulse" />
             <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#cdc4b2]">
-              Est. 2014 — Visakhapatnam
+              © 2021, Vedam Homes LLP. Real Estate Builder
             </span>
           </div>
 
@@ -86,21 +86,21 @@ export default function Footer() {
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+        <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#a68a5c] font-display text-xs font-semibold text-[#15140f]">
-                V
-              </div>
-              <span className="font-display text-xl font-light tracking-wide text-white">
-                Vedam Homes
-              </span>
-            </div>
+            <img
+              src="/logo/vedam-homes.png"
+              alt="Vedam Homes Logo"
+              className="h-9 w-auto object-contain transition-all duration-500 sm:h-11"
+            />
 
             <p className="mt-3.5 max-w-sm font-light text-xs leading-relaxed text-[#f5f1e8]/60">
-              An architect-led studio crafting bespoke residential landmarks where
-              material honesty, light, and timeless living converge across
-              Visakhapatnam.
+              Unit 1225, 12th Floor, JMD Megapolis, Sector 48, Gurugram, Haryana – 122018
+              D-42, First Floor, Central Park Flower Valley, South of Gurugram
+              <br/>
+              (+91) 9871534959 / 7838239239
+              <br/>
+              Info@vedamhomes.com
             </p>
 
             <div className="mt-6 flex items-center gap-2.5">

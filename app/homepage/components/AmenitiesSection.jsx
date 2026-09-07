@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PiArrowUpRightLight, PiSparkleFill, PiCheckCircleFill } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 import amenities from "@/data/amenities";
 
 export default function AmenitiesSection() {

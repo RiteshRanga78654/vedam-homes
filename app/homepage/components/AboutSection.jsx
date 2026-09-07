@@ -15,7 +15,7 @@ import {
   PiSealCheckFill,
   PiCompassLight,
 } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 import { stats } from "@/data/stats";
 
 function Counter({ value, suffix }) {

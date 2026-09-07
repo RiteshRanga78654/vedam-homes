@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PiArrowLeftLight, PiArrowRightLight, PiQuotesFill, PiSparkleFill } from "react-icons/pi";
 import testimonials from "@/data/testimonials";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 
 export default function TestimonialsSection() {
   const [i, setI] = useState(0);

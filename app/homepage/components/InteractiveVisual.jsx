@@ -8,7 +8,7 @@ import {
   PiScanLight, 
   PiCrosshairLight 
 } from "react-icons/pi";
-import Reveal from "@/components/Reveal";
+import Reveal from "@/app/homepage/components/Reveal";
 
 const HOTSPOTS = [
   {
