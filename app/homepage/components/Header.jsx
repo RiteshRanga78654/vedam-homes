@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { 
   PiListBold, 
@@ -12,11 +13,11 @@ import {
 } from "react-icons/pi";
 
 const NAV_LINKS = [
-  { label: "Projects", href: "#projects", count: "05 Properties" },
+  { label: "Projects", href: "./project", count: "05 Properties" },
   { label: "Philosophy", href: "#philosophy", count: "04 Principles" },
   { label: "Amenities", href: "#amenities", count: "Full Suite" },
   { label: "Gallery", href: "./gallery", count: "Visual Journal" },
-  { label: "Insights", href: "#journal", count: "Editorial" },
+  { label: "Articles", href: "./article", count: "Editorial" },
   { label: "Contact", href: "./contact", count: "Get in Touch" },
 ];
 
@@ -24,6 +25,9 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
+  const pathname = usePathname();
+
+  const isTransparent = pathname === "/" && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -48,15 +52,15 @@ export default function Header() {
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-700 ease-out ${
-          scrolled ? "py-3 sm:py-4" : "py-6 sm:py-8"
+          isTransparent ? "py-6 sm:py-8" : "py-3 sm:py-4"
         }`}
       >
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <nav
             className={`flex items-center justify-between rounded-full transition-all duration-500 ${
-              scrolled
-                ? "border border-white/60 bg-[#f9f7f2]/85 px-6 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl"
-                : "bg-transparent px-2 py-0"
+              isTransparent
+                ? "bg-transparent px-2 py-0"
+                : "border border-white/60 bg-[#f9f7f2]/85 px-6 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl"
             }`}
           >
             {/* Architectural Brand Identity */}
@@ -68,11 +72,11 @@ export default function Header() {
   <img
     src="/logo/vedam-homes.png"
     alt="Vedam Homes Logo"
-    href="./"
+    href="/"
     className={`h-9 sm:h-11 w-auto object-contain transition-all duration-500 group-hover:scale-105 ${
-      scrolled 
-        ? "filter brightness-100 contrast-[1.05]" 
-        : "filter brightness-110 drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]"
+      isTransparent 
+        ? "filter brightness-110 drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]" 
+        : "filter brightness-100 contrast-[1.05]"
     }`}
   />
 </a>
@@ -84,9 +88,9 @@ export default function Header() {
                   key={link.label}
                   href={link.href}
                   className={`relative rounded-full px-5 py-2 font-mono text-xs uppercase tracking-widest transition-colors duration-300 ${
-                    scrolled
-                      ? "text-charcoal/70 hover:text-charcoal"
-                      : "text-ivory/80 hover:text-white"
+                    isTransparent
+                      ? "text-ivory/80 hover:text-white"
+                      : "text-charcoal/70 hover:text-charcoal"
                   }`}
                 >
                   {link.label}
@@ -99,9 +103,9 @@ export default function Header() {
               <a
                 href="#contact"
                 className={`group relative hidden items-center gap-2 overflow-hidden rounded-full px-6 py-2.5 font-mono text-xs font-medium uppercase tracking-widest transition-all duration-500 sm:inline-flex ${
-                  scrolled
-                    ? "bg-charcoal text-ivory hover:bg-amber-800 hover:shadow-lg"
-                    : "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal hover:border-white"
+                  isTransparent
+                    ? "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal hover:border-white"
+                    : "bg-charcoal text-ivory hover:bg-amber-800 hover:shadow-lg"
                 }`}
               >
                 <span>Reserve Visit</span>
@@ -113,9 +117,9 @@ export default function Header() {
                 onClick={() => setOpen(true)}
                 aria-label="Open navigation menu"
                 className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
-                  scrolled
-                    ? "border-charcoal/10 bg-charcoal/5 text-charcoal hover:bg-charcoal hover:text-ivory"
-                    : "border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
+                  isTransparent
+                    ? "border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
+                    : "border-charcoal/10 bg-charcoal/5 text-charcoal hover:bg-charcoal hover:text-ivory"
                 }`}
               >
                 <PiListBold size={20} />
