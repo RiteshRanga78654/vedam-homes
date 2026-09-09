@@ -14,7 +14,7 @@ import Footer from "@/app/homepage/components/Footer";
 
 export default function HomePage() {
   return (
-    <div className="bg-[#f5f1e8] text-[#15140f]">
+    <div className="bg-canvas text-ink">
   
       <main>
         <HeroSection />

@@ -63,7 +63,7 @@ export function SectionHeading({
   center = false,
   className = "",
 }) {
-  const base = dark ? "text-[#f4efe3]" : "text-[#0d2b22]";
+  const base = dark ? "text-[#f4efe3]" : "text-ink";
   const accentColor = "text-[#c6a15b]";
   return (
     <div className={center ? "text-center" : ""}>

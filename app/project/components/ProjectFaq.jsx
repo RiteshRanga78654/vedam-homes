@@ -2,60 +2,64 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { PiPlusLight } from "react-icons/pi";
+import { PiPlusLight, PiMinusLight } from "react-icons/pi";
 import { faqs } from "@/app/project/data";
-import { Reveal, SectionHeading } from "./common";
+import { Reveal, SectionHeading, easeOut } from "./common";
 
 export default function ProjectFaq() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="relative bg-[#0d2b22] py-24 text-[#f4efe3] sm:py-32">
+    <section id="faq" className="relative bg-canvas py-20 text-ink sm:py-24">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="grid gap-12 lg:grid-cols-12">
+          {/* Sticky intro */}
           <div className="lg:col-span-5">
-            <SectionHeading
-              dark
-              eyebrowText="Questions"
-              title="Asked often,"
-              accent="answered plainly."
-            />
-            <Reveal delay={0.18}>
-              <p className="mt-8 max-w-md font-light leading-relaxed text-[#f4efe3]/60">
-                Everything below is drawn from the verified project record. For
-                unit-specific numbers, speak with our sales desk.
-              </p>
-            </Reveal>
+            <div className="lg:sticky lg:top-28">
+              <SectionHeading
+                eyebrowText="Good to Know"
+                title="Questions,"
+                accent="answered."
+              />
+              <Reveal delay={0.16}>
+                <p className="mt-6 max-w-md font-light leading-relaxed text-ink/70">
+                  From RERA registration to possession timelines — the answers
+                  buyers most often ask, in plain language.
+                </p>
+              </Reveal>
+            </div>
           </div>
 
+          {/* Accordion */}
           <div className="lg:col-span-7">
-            <div className="divide-y divide-[#f4efe3]/12 border-t border-[#f4efe3]/12">
-              {faqs.map((f, i) => {
+            <div className="divide-y divide-ink/10 border-t border-ink/10">
+              {faqs.map((item, i) => {
                 const isOpen = open === i;
                 return (
-                  <Reveal key={f.q} delay={i * 0.04}>
-                    <div>
+                  <Reveal key={item.q} delay={i * 0.04}>
+                    <div className="group">
                       <button
                         type="button"
                         onClick={() => setOpen(isOpen ? -1 : i)}
                         className="flex w-full items-center justify-between gap-6 py-6 text-left"
                         aria-expanded={isOpen}
                       >
-                        <span className="flex items-baseline gap-4">
-                          <span className="font-mono text-[10px] tracking-[0.2em] text-[#c6a15b]">
-                            Q{i + 1}
-                          </span>
-                          <span className="font-display text-xl font-light text-[#f4efe3] sm:text-2xl">
-                            {f.q}
-                          </span>
-                        </span>
-                        <motion.span
-                          animate={{ rotate: isOpen ? 45 : 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="shrink-0 text-[#c6a15b]"
+                        <span
+                          className={`font-display text-lg font-light leading-snug transition-colors duration-300 sm:text-xl ${
+                            isOpen ? "text-[#c6a15b]" : "text-ink group-hover:text-[#c6a15b]"
+                          }`}
                         >
-                          <PiPlusLight size={22} />
-                        </motion.span>
+                          {item.q}
+                        </span>
+                        <span
+                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
+                            isOpen
+                              ? "border-[#c6a15b] bg-[#c6a15b] text-[#0a221b]"
+                              : "border-ink/15 bg-surface-2 text-ink group-hover:border-[#c6a15b]/50"
+                          }`}
+                        >
+                          {isOpen ? <PiMinusLight size={16} /> : <PiPlusLight size={16} />}
+                        </span>
                       </button>
                       <AnimatePresence initial={false}>
                         {isOpen && (
@@ -63,11 +67,11 @@ export default function ProjectFaq() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.45, ease: easeOut }}
                             className="overflow-hidden"
                           >
-                            <p className="pb-7 pl-9 pr-6 text-sm font-light leading-[1.85] text-[#f4efe3]/70">
-                              {f.a}
+                            <p className="pb-6 pr-6 text-sm font-light leading-[1.85] text-ink/65 sm:pr-16">
+                              {item.a}
                             </p>
                           </motion.div>
                         )}

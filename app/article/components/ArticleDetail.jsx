@@ -227,7 +227,7 @@ export default function ArticleDetail({ article, related = [] }) {
                 <div className="mt-3 flex items-center gap-2">
                   <button
                     onClick={handleCopy}
-                    className="flex h-10 items-center gap-2 border border-[#1b1917]/15 bg-white px-4 font-mono text-[10px] uppercase tracking-wider text-[#1b1917] transition-colors hover:bg-[#1b1917] hover:text-[#fbf9f5]"
+                    className="flex h-10 items-center gap-2 border border-[#1b1917]/15 bg-surface-2 px-4 font-mono text-[10px] uppercase tracking-wider text-[#1b1917] transition-colors hover:bg-[#1b1917] hover:text-[#fbf9f5] dark:hover:bg-amber-400! dark:hover:text-charcoal!"
                   >
                     {copied ? <PiCheckLight size={14} className="text-emerald-600" /> : <PiCopyLight size={14} />}
                     {copied ? "Copied" : "Copy URI"}
@@ -236,7 +236,7 @@ export default function ArticleDetail({ article, related = [] }) {
                     href={`https://wa.me/?text=${encodeURIComponent(`${article.title} - ${shareUrl}`)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex h-10 w-10 items-center justify-center border border-[#1b1917]/15 bg-white text-[#1b1917] transition-colors hover:bg-[#1b1917] hover:text-[#fbf9f5]"
+                    className="flex h-10 w-10 items-center justify-center border border-[#1b1917]/15 bg-surface-2 text-[#1b1917] transition-colors hover:bg-[#1b1917] hover:text-[#fbf9f5] dark:hover:bg-amber-400! dark:hover:text-charcoal!"
                     aria-label="Share via WhatsApp"
                   >
                     <PiWhatsappLogoLight size={16} />
@@ -245,7 +245,7 @@ export default function ArticleDetail({ article, related = [] }) {
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex h-10 w-10 items-center justify-center border border-[#1b1917]/15 bg-white text-[#1b1917] transition-colors hover:bg-[#1b1917] hover:text-[#fbf9f5]"
+                    className="flex h-10 w-10 items-center justify-center border border-[#1b1917]/15 bg-surface-2 text-[#1b1917] transition-colors hover:bg-[#1b1917] hover:text-[#fbf9f5] dark:hover:bg-amber-400! dark:hover:text-charcoal!"
                     aria-label="Share via LinkedIn"
                   >
                     <PiLinkedinLogoLight size={16} />

@@ -3,6 +3,7 @@ import "./globals.css";
 // import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/app/homepage/components/PageLoader";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";
+import { ThemeProvider } from "@/app/theme/ThemeProvider";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -82,7 +83,7 @@ export const metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logo/vedam-homes.png",
     apple: "/apple-touch-icon.png",
   },
 };
@@ -92,14 +93,24 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${fraunces.variable} ${manrope.variable} ${jetbrainsMono.variable} antialiased`}
     >
-      <body className="flex min-h-screen flex-col bg-[#f5f1e8] text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8]">
-        <SmoothScroll>
-          <PageLoader />
-          {/* <CustomCursor /> */}
-          <main className="flex-1">{children}</main>
-        </SmoothScroll>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('vedam-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}})()`,
+          }}
+        />
+      </head>
+      <body className="flex min-h-screen flex-col bg-canvas text-ink">
+        <ThemeProvider>
+          <SmoothScroll>
+            <PageLoader />
+            {/* <CustomCursor /> */}
+            <main className="flex-1">{children}</main>
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

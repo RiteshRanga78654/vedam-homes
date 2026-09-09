@@ -137,7 +137,7 @@ export default function ContactPage() {
     <SmoothScroll>
       <div
         className={`${fraunces.variable} ${workSans.variable} ${workSans.className} min-h-screen text-[#221D15] selection:bg-[#221D15] selection:text-[#EAE3D2]`}
-        style={{ backgroundColor: '#EAE3D2' }}
+        style={{ backgroundColor: 'var(--contact-canvas)' }}
       >
         <Navbar />
 

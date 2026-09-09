@@ -33,7 +33,7 @@ function BrandMark({ item }) {
       <img
         src={item.logo}
         alt={item.name}
-        className="max-h-8 sm:max-h-10 w-auto max-w-full object-contain filter grayscale opacity-40 transition-all duration-500 ease-out group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 mix-blend-multiply"
+        className="max-h-8 sm:max-h-10 w-auto max-w-full object-contain filter grayscale opacity-40 transition-all duration-500 ease-out group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 mix-blend-multiply dark:mix-blend-screen!"
         loading="lazy"
       />
     </div>
@@ -46,37 +46,37 @@ export default function MaterialsSection() {
   return (
     <section
       id="partners"
-      className="relative overflow-hidden border-y border-[#15140f]/10 bg-[#f5f1e8] py-20 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] lg:py-18"
+      className="relative overflow-hidden border-y border-border/10 bg-canvas py-20 text-ink selection:bg-[#15140f] selection:text-ivory lg:py-18"
     >
       {/* Studio Ambient Warm Orbs */}
-      <div className="pointer-events-none absolute -left-48 top-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full bg-[#948a76]/10 blur-[100px]" />
-      <div className="pointer-events-none absolute -right-48 top-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full bg-[#6e5a3c]/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -left-48 top-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full bg-muted/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -right-48 top-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full bg-accent/10 blur-[100px]" />
 
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12 mb-14">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 border-b border-[#15140f]/10 pb-10">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 border-b border-border/10 pb-10">
           <Reveal y={20}>
             <div className="flex items-center gap-2 mb-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#6e5a3c] animate-pulse" />
-              <span className="eyebrow text-[#948a76] font-mono text-xs uppercase tracking-[0.35em]">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="eyebrow text-muted font-mono text-xs uppercase tracking-[0.35em]">
                 Material Integrity
               </span>
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-[#15140f] font-light tracking-tight max-w-3xl">
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-ink font-light tracking-tight max-w-3xl">
               Architectural endurance,{" "}
-              <span className="italic font-light text-[#15140f]/60">built with zero compromise.</span>
+              <span className="italic font-light text-ink/60">built with zero compromise.</span>
             </h2>
           </Reveal>
 
           {/* Key Compliance Badges */}
           <Reveal delay={0.12} y={20}>
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 rounded-full border border-[#15140f]/15 bg-white/70 px-4 py-2 text-xs font-mono text-[#15140f]/80 shadow-sm backdrop-blur-md">
-                <PiShieldCheckLight className="text-[#6e5a3c] text-base" />
+              <div className="flex items-center gap-2 rounded-full border border-border/15 bg-surface-2/70 px-4 py-2 text-xs font-mono text-ink/80 shadow-sm backdrop-blur-md">
+                <PiShieldCheckLight className="text-accent text-base" />
                 <span>IS &amp; ASTM Compliant</span>
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-[#15140f]/15 bg-white/70 px-4 py-2 text-xs font-mono text-[#15140f]/80 shadow-sm backdrop-blur-md">
-                <PiCertificateLight className="text-[#6e5a3c] text-base" />
+              <div className="flex items-center gap-2 rounded-full border border-border/15 bg-surface-2/70 px-4 py-2 text-xs font-mono text-ink/80 shadow-sm backdrop-blur-md">
+                <PiCertificateLight className="text-accent text-base" />
                 <span>Tier-1 Direct Procured</span>
               </div>
             </div>
@@ -84,21 +84,21 @@ export default function MaterialsSection() {
         </div>
 
         {/* Material Quality Metric Strip */}
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 font-mono text-[10px] uppercase tracking-widest text-[#948a76]">
-          <div className="flex items-center gap-2 border-l border-[#15140f]/15 pl-3">
-            <PiCubeLight className="text-[#6e5a3c] text-sm" />
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 font-mono text-[10px] uppercase tracking-widest text-muted">
+          <div className="flex items-center gap-2 border-l border-border/15 pl-3">
+            <PiCubeLight className="text-accent text-sm" />
             <span>Non-Destructive Tested</span>
           </div>
-          <div className="flex items-center gap-2 border-l border-[#15140f]/15 pl-3">
-            <PiCheckCircleFill className="text-[#6e5a3c] text-xs" />
+          <div className="flex items-center gap-2 border-l border-border/15 pl-3">
+            <PiCheckCircleFill className="text-accent text-xs" />
             <span>Anti-Corrosive Slabs</span>
           </div>
-          <div className="flex items-center gap-2 border-l border-[#15140f]/15 pl-3">
-            <PiCheckCircleFill className="text-[#6e5a3c] text-xs" />
+          <div className="flex items-center gap-2 border-l border-border/15 pl-3">
+            <PiCheckCircleFill className="text-accent text-xs" />
             <span>Acoustically Rated</span>
           </div>
-          <div className="flex items-center gap-2 border-l border-[#15140f]/15 pl-3">
-            <PiCheckCircleFill className="text-[#6e5a3c] text-xs" />
+          <div className="flex items-center gap-2 border-l border-border/15 pl-3">
+            <PiCheckCircleFill className="text-accent text-xs" />
             <span>100% Traceable Origin</span>
           </div>
         </div>

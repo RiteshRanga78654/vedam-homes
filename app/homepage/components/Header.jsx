@@ -9,8 +9,11 @@ import {
   PiArrowUpRightLight, 
   PiSparkleFill, 
   PiPhoneCallLight, 
-  PiEnvelopeLight 
+  PiEnvelopeLight,
+  PiSun,
+  PiMoon
 } from "react-icons/pi";
+import { useTheme } from "@/app/theme/ThemeProvider";
 
 const NAV_LINKS = [
   { label: "Projects", href: "./project", count: "05 Properties" },
@@ -20,6 +23,35 @@ const NAV_LINKS = [
   { label: "Articles", href: "./article", count: "Editorial" },
   { label: "Contact", href: "./contact", count: "Get in Touch" },
 ];
+
+function ThemeToggle() {
+  const { mounted, theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+
+  if (!mounted) {
+    return <span aria-hidden="true" className="h-9 w-[68px] shrink-0" />;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-pressed={isDark}
+      className="relative flex h-9 w-[68px] shrink-0 cursor-pointer items-center rounded-full border border-charcoal/15 bg-charcoal/5 backdrop-blur-md transition-colors duration-500 dark:border-white/25! dark:bg-white/10!"
+    >
+      <span
+        className={`flex h-7 w-7 items-center justify-center rounded-full shadow-sm transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+          isDark
+            ? "translate-x-[32px] bg-amber-300 text-charcoal shadow-[0_2px_12px_rgba(252,211,77,0.45)]"
+            : "translate-x-0 bg-charcoal text-ivory"
+        }`}
+      >
+        {isDark ? <PiMoon size={13} /> : <PiSun size={13} />}
+      </span>
+    </button>
+  );
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -82,49 +114,51 @@ export default function Header() {
 </a>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden items-center gap-1 rounded-full border border-charcoal/5 bg-charcoal/[0.03] p-1.5 backdrop-blur-md lg:flex">
-              {NAV_LINKS.map((link) => (
+<div className="hidden items-center gap-1 rounded-full border border-charcoal/5 bg-charcoal/[0.03] p-1.5 backdrop-blur-md dark:border-white/5! dark:bg-white/[0.03]! lg:flex">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className={`relative rounded-full px-5 py-2 font-mono text-xs uppercase tracking-widest transition-colors duration-300 ${
+                      isTransparent
+                        ? "text-ivory/80 hover:text-white"
+                        : "text-ink/70 hover:text-ink"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
+
                 <a
-                  key={link.label}
-                  href={link.href}
-                  className={`relative rounded-full px-5 py-2 font-mono text-xs uppercase tracking-widest transition-colors duration-300 ${
+                  href="#contact"
+                  className={`group relative hidden items-center gap-2 overflow-hidden rounded-full px-6 py-2.5 font-mono text-xs font-medium uppercase tracking-widest transition-all duration-500 sm:inline-flex ${
                     isTransparent
-                      ? "text-ivory/80 hover:text-white"
-                      : "text-charcoal/70 hover:text-charcoal"
+                      ? "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal hover:border-white"
+                      : "bg-charcoal text-ivory hover:bg-amber-800 hover:shadow-lg dark:bg-ink! dark:text-night! dark:hover:bg-amber-400!"
                   }`}
                 >
-                  {link.label}
+                  <span>Reserve Visit</span>
+                  <PiArrowUpRightLight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" size={14} />
                 </a>
-              ))}
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-3">
-              <a
-                href="#contact"
-                className={`group relative hidden items-center gap-2 overflow-hidden rounded-full px-6 py-2.5 font-mono text-xs font-medium uppercase tracking-widest transition-all duration-500 sm:inline-flex ${
-                  isTransparent
-                    ? "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal hover:border-white"
-                    : "bg-charcoal text-ivory hover:bg-amber-800 hover:shadow-lg"
-                }`}
-              >
-                <span>Reserve Visit</span>
-                <PiArrowUpRightLight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" size={14} />
-              </a>
-
-              {/* Hamburger Toggle */}
-              <button
-                onClick={() => setOpen(true)}
-                aria-label="Open navigation menu"
-                className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
-                  isTransparent
-                    ? "border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
-                    : "border-charcoal/10 bg-charcoal/5 text-charcoal hover:bg-charcoal hover:text-ivory"
-                }`}
-              >
-                <PiListBold size={20} />
-              </button>
-            </div>
+                {/* Hamburger Toggle */}
+                <button
+                  onClick={() => setOpen(true)}
+                  aria-label="Open navigation menu"
+                  className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
+                    isTransparent
+                      ? "border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
+                      : "border-charcoal/10 bg-charcoal/5 text-charcoal hover:bg-charcoal hover:text-ivory dark:border-white/10! dark:bg-white/5! dark:text-ivory! dark:hover:bg-white! dark:hover:text-night!"
+                  }`}
+                >
+                  <PiListBold size={20} />
+                </button>
+              </div>
           </nav>
         </div>
       </header>

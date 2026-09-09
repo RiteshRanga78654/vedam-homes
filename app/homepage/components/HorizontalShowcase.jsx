@@ -80,7 +80,7 @@ export default function HorizontalShowcaseGSAP() {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen w-full overflow-hidden bg-[#f5f1e8] text-[#15140f] select-none"
+      className="relative h-screen w-full overflow-hidden bg-canvas text-ink select-none"
     >
       <div className="flex h-full flex-col justify-between py-10 lg:py-14">
         
@@ -88,27 +88,27 @@ export default function HorizontalShowcaseGSAP() {
         <div className="mx-auto flex w-full max-w-[1600px] items-end justify-between px-6 lg:px-12">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#6e5a3c] animate-pulse" />
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#948a76]">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
                 Selected Portfolio
               </span>
             </div>
-            <h2 className="font-display text-4xl leading-[1.05] tracking-tight text-[#15140f] sm:text-5xl lg:text-6xl">
+            <h2 className="font-display text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
               Cinematic curation,{" "}
-              <span className="italic font-light text-[#15140f]/60">scrolled sideways.</span>
+              <span className="italic font-light text-ink/60">scrolled sideways.</span>
             </h2>
           </div>
 
           {/* Progress Bar (Zero Layout Shift via scaleX) */}
           <div className="hidden flex-col items-end gap-3 sm:flex">
-            <span className="font-mono text-xs tracking-widest uppercase text-[#948a76]">
+            <span className="font-mono text-xs tracking-widest uppercase text-muted">
               Scroll to explore
             </span>
-            <div className="relative h-[2px] w-48 overflow-hidden bg-[#15140f]/10 rounded-full">
+            <div className="relative h-[2px] w-48 overflow-hidden bg-border/10 rounded-full">
               <div
                 ref={progressBarRef}
                 style={{ transformOrigin: "left", transform: "scaleX(0)" }}
-                className="h-full w-full bg-gradient-to-r from-[#6e5a3c] to-[#a68a5c] will-change-transform"
+                className="h-full w-full bg-gradient-to-r from-accent to-accent-soft will-change-transform"
               />
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function HorizontalShowcaseGSAP() {
               <a
                 key={project.id}
                 href={`#${project.id}`}
-                className="group relative h-[60vh] w-[85vw] shrink-0 overflow-hidden rounded-[28px] border border-[#15140f]/10 bg-white shadow-[0_12px_40px_rgba(21,20,15,0.05)] transition-all duration-500 hover:border-[#6e5a3c]/40 hover:shadow-[0_24px_50px_rgba(21,20,15,0.12)] sm:w-[50vw] lg:h-[64vh] lg:w-[32vw]"
+                className="group relative h-[60vh] w-[85vw] shrink-0 overflow-hidden rounded-[28px] border border-border/10 bg-surface-2 shadow-[0_12px_40px_rgba(21,20,15,0.05)] transition-all duration-500 hover:border-accent/40 hover:shadow-[0_24px_50px_rgba(21,20,15,0.12)] sm:w-[50vw] lg:h-[64vh] lg:w-[32vw]"
               >
                 {/* Parallax Image Target */}
                 <div className="absolute inset-0 h-full w-full overflow-hidden">
@@ -137,12 +137,12 @@ export default function HorizontalShowcaseGSAP() {
                 </div>
 
                 {/* Dark Contrast Gradient for Legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#15140f]/90 via-[#15140f]/25 to-transparent opacity-95 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/25 to-transparent opacity-95 pointer-events-none" />
 
                 {/* Top Badge */}
-                <div className="absolute inset-x-6 top-6 flex items-center justify-between text-[#f5f1e8]">
+                <div className="absolute inset-x-6 top-6 flex items-center justify-between text-ivory">
                   <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3.5 py-1.5 backdrop-blur-md">
-                    <PiSparkleFill className="text-[#a68a5c] text-[10px]" />
+                    <PiSparkleFill className="text-accent-soft text-[10px]" />
                     <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/90">
                       {project.type || "Architecture"}
                     </span>
@@ -154,8 +154,8 @@ export default function HorizontalShowcaseGSAP() {
                 </div>
 
                 {/* Content Details */}
-                <div className="absolute inset-x-6 bottom-6 flex flex-col justify-end text-[#f5f1e8]">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#a68a5c]">
+                <div className="absolute inset-x-6 bottom-6 flex flex-col justify-end text-ivory">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent-soft">
                     {project.location}
                   </span>
 
@@ -168,7 +168,7 @@ export default function HorizontalShowcaseGSAP() {
                       {project.description}
                     </p>
 
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/15 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-[#6e5a3c] group-hover:text-white group-hover:border-[#6e5a3c]">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-surface-2/15 backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-white group-hover:border-accent">
                       <PiArrowUpRightLight size={18} />
                     </div>
                   </div>
@@ -179,7 +179,7 @@ export default function HorizontalShowcaseGSAP() {
         </div>
 
         {/* Footer Index */}
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 lg:px-12 text-xs font-mono text-[#948a76]">
+        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 lg:px-12 text-xs font-mono text-muted">
           <span>01 / INDEX SEQUENCE</span>
           <span className="uppercase tracking-widest">{projects.length} Works Rendered</span>
         </div>

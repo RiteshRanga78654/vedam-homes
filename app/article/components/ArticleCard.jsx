@@ -80,13 +80,13 @@ export default function ArticleCard({ article, index = 0 }) {
         {/* Action Bar */}
         <div className="mt-6 flex items-center justify-between border-t border-[#1b1917]/10 pt-4">
           <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.25em] text-[#1b1917]/60">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[#1b1917]/15 bg-white">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[#1b1917]/15 bg-surface-2">
               <PiUserCircleLight size={14} className="text-[#967d53]" />
             </span>
             By {article.author}
           </div>
 
-          <span className="group/btn flex items-center gap-1.5 rounded-full border border-[#1b1917]/15 px-3.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-[#1b1917]/70 transition-all duration-300 group-hover:border-[#967d53] group-hover:bg-[#1b1917] group-hover:text-white">
+          <span className="group/btn flex items-center gap-1.5 rounded-full border border-[#1b1917]/15 px-3.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-[#1b1917]/70 transition-all duration-300 group-hover:border-[#967d53] group-hover:bg-[#1b1917] group-hover:text-white dark:group-hover:border-amber-400! dark:group-hover:bg-amber-400! dark:group-hover:text-charcoal!">
             Read full article
             <PiArrowUpRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>

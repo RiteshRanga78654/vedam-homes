@@ -21,6 +21,82 @@
 
   --background: var(--ivory);
   --foreground: var(--charcoal);
+
+  /* Semantic theme tokens — flip under [data-theme="dark"].
+     Light-palette surfaces track f#canvas/--surface; text and hairlines
+     track --ink/--border; the bronze accent becomes a warm amber. Constant
+     values (--night, --muted, --ivory, --charcoal) stay put so dark
+     sections / chips render identically in both themes. */
+  --canvas: var(--ivory);
+  --surface: var(--paper);
+  --surface-2: #ffffff;
+  --ink: var(--charcoal);
+  --night: var(--charcoal);
+  --accent: var(--bronze);
+  --accent-soft: var(--bronze-light);
+  --border: var(--charcoal);
+  --muted: var(--stone);
+
+  /* Bespoke page palettes (contact / article detail) — resolved through
+     vars so dark mode can keep their exact light rendering untouched. */
+  --contact-canvas: #eae3d2;
+  --contact-ink: #221d15;
+  --contact-card: #f4efe3;
+  --contact-accent: #22423f;
+  --contact-accent-text: #f4efe3;
+  --contact-flame: #96432b;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+[data-theme="dark"] {
+  --canvas: #0a0a0c;
+  --surface: #0d0e12;
+  --surface-2: #0e0f12;
+  --ink: #f5f1e8;
+  --accent: #fcd34d;
+  --accent-soft: #fde68a;
+  --border: #f5f1e8;
+
+  --background: #0a0a0c;
+  --foreground: #f5f1e8;
+
+  color-scheme: dark;
+
+  --contact-canvas: #0a0a0c;
+  --contact-ink: #f5f1e8;
+  --contact-card: #0d0e12;
+  --contact-accent: #fcd34d;
+  --contact-accent-text: #15140f;
+  --contact-flame: #fde68a;
+}
+
+[data-theme="dark"] ::selection {
+  background: #fcd34d;
+  color: #15140f;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #2a2a2e;
+}
+
+/* Transient class added by the ThemeProvider while a theme change animates.
+   Only colorising properties transition (transforms/opacity from framer &
+   GSAP are untouched), and it is removed ~500ms after the toggle. */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color 0.5s ease,
+    background 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease !important;
+  transition-delay: 0s !important;
 }
 
 @theme inline {
@@ -36,6 +112,15 @@
   --color-foreground: var(--foreground);
   --color-dark: var(--charcoal);
   --color-light: var(--white);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-night: var(--night);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-manrope);
@@ -312,4 +397,189 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* ===================================================================
+   DARK MODE — scoped overrides for bespoke palettes
+   These classes only exist in one page/component each, so the overrides
+   cannot leak into shared styles. Light rendering is byte-identical;
+   only [data-theme="dark"] changes the resolved colours.
+
+   Header — frosted chrome pill (Homepage Header)
+=================================================================== */
+[data-theme="dark"] .bg-\[\#f9f7f2\]\/85 {
+  background-color: rgba(14, 15, 18, 0.85);
+}
+[data-theme="dark"] .border-white\/60 {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ===================================================================
+   Article cards — warm monolith palette (#1b1917 / #fdfbf7 / #967d53)
+=================================================================== */
+[data-theme="dark"] .border-\[\#1b1917\]\/8,
+[data-theme="dark"] .border-\[\#1b1917\]\/10,
+[data-theme="dark"] .divide-\[\#1b1917\]\/10 {
+  border-color: rgba(245, 241, 232, 0.1);
+}
+[data-theme="dark"] .border-\[\#1b1917\]\/15 {
+  border-color: rgba(245, 241, 232, 0.15);
+}
+[data-theme="dark"] .border-\[\#1b1917\]\/20 {
+  border-color: rgba(245, 241, 232, 0.2);
+}
+[data-theme="dark"] .border-\[\#1b1917\]\/5 {
+  border-color: rgba(245, 241, 232, 0.05);
+}
+[data-theme="dark"] .bg-\[\#fdfbf7\] {
+  background-color: #0d0e12;
+}
+[data-theme="dark"] .bg-\[\#fdfbf7\]\/95 {
+  background-color: rgba(13, 14, 18, 0.95);
+}
+[data-theme="dark"] .bg-\[\#1b1917\] {
+  background-color: #0a0a0c;
+}
+[data-theme="dark"] .bg-\[\#1b1917\]\/70 {
+  background-color: rgba(13, 14, 18, 0.7);
+}
+[data-theme="dark"] .bg-\[\#e8e4dc\],
+[data-theme="dark"] .bg-\[\#e5dfd5\],
+[data-theme="dark"] .bg-\[\#f4efe4\],
+[data-theme="dark"] .bg-\[\#fbf9f5\] {
+  background-color: #0d0e12;
+}
+[data-theme="dark"] .text-\[\#1b1917\] {
+  color: #f5f1e8;
+}
+[data-theme="dark"] .text-\[\#1b1917\]\/60,
+[data-theme="dark"] .text-\[\#1b1917\]\/70 {
+  color: rgba(245, 241, 232, 0.6);
+}
+[data-theme="dark"] .hover\:text-\[\#1b1917\]:hover {
+  color: #f5f1e8;
+}
+[data-theme="dark"] .text-\[\#f7f4ed\] {
+  color: #f5f1e8;
+}
+[data-theme="dark"] .text-\[\#3d3830\],
+[data-theme="dark"] .text-\[\#544f47\] {
+  color: rgba(245, 241, 232, 0.72);
+}
+[data-theme="dark"] .text-\[\#877e70\],
+[data-theme="dark"] .text-\[\#7a7265\],
+[data-theme="dark"] .text-\[\#8c8273\] {
+  color: rgba(245, 241, 232, 0.55);
+}
+[data-theme="dark"] .text-\[\#967d53\] {
+  color: #fcd34d;
+}
+[data-theme="dark"] .bg-\[\#967d53\]\/60 {
+  background-color: rgba(252, 211, 77, 0.55);
+}
+[data-theme="dark"] .bg-\[\#967d53\] {
+  background-color: #fcd34d;
+}
+[data-theme="dark"] .first-letter\:text-\[\#967d53\]::first-letter {
+  color: #fcd34d;
+}
+[data-theme="dark"] .border-\[\#967d53\] {
+  border-color: #fcd34d;
+}
+[data-theme="dark"] .border-\[\#967d53\]\/40 {
+  border-color: rgba(252, 211, 77, 0.4);
+}
+[data-theme="dark"] .hover\:border-\[\#967d53\]\/40:hover,
+[data-theme="dark"] .hover\:border-\[\#967d53\]:hover {
+  border-color: rgba(252, 211, 77, 0.4);
+}
+[data-theme="dark"] .text-\[\#967d53\]\/25 {
+  color: rgba(252, 211, 77, 0.25);
+}
+[data-theme="dark"] .bg-\[\#c9a869\] {
+  background-color: #fde68a;
+}
+[data-theme="dark"] .group:hover .group-hover\:text-\[\#6b5a3d\] {
+  color: #fde68a;
+}
+
+/* ===================================================================
+   Contact studio page — bespoke ink/teal/terracotta palette
+=================================================================== */
+[data-theme="dark"] .text-\[\#221D15\] {
+  color: #f5f1e8;
+}
+[data-theme="dark"] .text-\[\#221D15\]\/45,
+[data-theme="dark"] .text-\[\#221D15\]\/50 {
+  color: rgba(245, 241, 232, 0.5);
+}
+[data-theme="dark"] .text-\[\#221D15\]\/55 {
+  color: rgba(245, 241, 232, 0.55);
+}
+[data-theme="dark"] .text-\[\#221D15\]\/60 {
+  color: rgba(245, 241, 232, 0.6);
+}
+[data-theme="dark"] .text-\[\#221D15\]\/70 {
+  color: rgba(245, 241, 232, 0.7);
+}
+[data-theme="dark"] .text-\[\#221D15\]\/85 {
+  color: rgba(245, 241, 232, 0.85);
+}
+[data-theme="dark"] .hover\:text-\[\#221D15\]:hover {
+  color: #f5f1e8;
+}
+[data-theme="dark"] .border-\[\#221D15\]\/10 {
+  border-color: rgba(245, 241, 232, 0.1);
+}
+[data-theme="dark"] .border-\[\#221D15\]\/12 {
+  border-color: rgba(245, 241, 232, 0.12);
+}
+[data-theme="dark"] .border-\[\#221D15\]\/15 {
+  border-color: rgba(245, 241, 232, 0.15);
+}
+[data-theme="dark"] .border-\[\#221D15\]\/25 {
+  border-color: rgba(245, 241, 232, 0.25);
+}
+[data-theme="dark"] .bg-\[\#221D15\]\/\[0\.03\] {
+  background-color: rgba(245, 241, 232, 0.03);
+}
+[data-theme="dark"] .bg-\[\#221D15\]\/\[0\.045\] {
+  background-color: rgba(245, 241, 232, 0.045);
+}
+[data-theme="dark"] .bg-\[\#221D15\]\/\[0\.05\] {
+  background-color: rgba(245, 241, 232, 0.05);
+}
+[data-theme="dark"] .bg-\[\#221D15\]\/\[0\.09\] {
+  background-color: rgba(245, 241, 232, 0.09);
+}
+[data-theme="dark"] .hover\:bg-\[\#221D15\]\/\[0\.03\]:hover {
+  background-color: rgba(245, 241, 232, 0.03);
+}
+[data-theme="dark"] .hover\:bg-\[\#221D15\]\/\[0\.09\]:hover {
+  background-color: rgba(245, 241, 232, 0.1);
+}
+[data-theme="dark"] .hover\:bg-\[\#221D15\]:hover {
+  background-color: #f5f1e8;
+}
+[data-theme="dark"] .placeholder-\[\#221D15\]\/30::placeholder {
+  color: rgba(245, 241, 232, 0.3);
+}
+[data-theme="dark"] .focus\:bg-white:focus {
+  background-color: #0e0f12;
+}
+[data-theme="dark"] .bg-\[\#F4EFE3\] {
+  background-color: #0d0e12;
+}
+[data-theme="dark"] .text-\[\#F4EFE3\] {
+  color: #15140f;
+}
+[data-theme="dark"] .bg-\[\#22423F\],
+[data-theme="dark"] .hover\:bg-\[\#22423F\]:hover {
+  background-color: #fcd34d;
+}
+[data-theme="dark"] .text-\[\#22423F\] {
+  color: #fcd34d;
+}
+[data-theme="dark"] .text-\[\#96432B\] {
+  color: #fde68a;
 }

@@ -44,7 +44,7 @@ function FeaturedArticle({ article }) {
         aria-label={`Read featured article: ${article.title}`}
         className="block"
       >
-        <div className="relative h-[70vh] min-h-[480px] overflow-hidden rounded-[20px] border border-[#15140f]/10 bg-[#15140f] shadow-[0_30px_80px_-20px_rgba(21,20,15,0.45)] sm:h-[66vh] sm:min-h-[540px] sm:rounded-[32px]">
+        <div className="relative h-[70vh] min-h-[480px] overflow-hidden rounded-[20px] border border-night/10 bg-night shadow-[0_30px_80px_-20px_rgba(21,20,15,0.45)] sm:h-[66vh] sm:min-h-[540px] sm:rounded-[32px]">
           <Image
             src={article.image}
             alt={article.title}
@@ -55,13 +55,13 @@ function FeaturedArticle({ article }) {
             className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#15140f]/95 via-[#15140f]/30 to-[#15140f]/5 transition-opacity duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-t from-night/95 via-night/30 to-night/5 transition-opacity duration-700" />
 
           {/* Featured badge */}
           <div className="absolute left-5 top-5 sm:left-8 sm:top-8">
             <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/45 px-4 py-1.5 backdrop-blur-md">
-              <PiSparkleFill className="text-xs text-[#a68a5c]" />
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#f5f1e8]">
+              <PiSparkleFill className="text-xs text-accent-soft" />
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-ivory">
                 Featured Monograph
               </span>
             </div>
@@ -69,13 +69,13 @@ function FeaturedArticle({ article }) {
 
           {/* Editorial meta */}
           <div className="absolute right-5 top-5 hidden items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70 sm:right-8 sm:top-8 sm:flex">
-            <PiBookOpenTextLight size={13} className="text-[#a68a5c]" />
+            <PiBookOpenTextLight size={13} className="text-accent-soft" />
             <span>{article.readingTime}</span>
           </div>
 
           {/* Bottom content */}
           <div className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#a68a5c]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent-soft">
               {article.category} • {article.date}
             </p>
 
@@ -102,7 +102,7 @@ function FeaturedArticle({ article }) {
                 </div>
               </div>
 
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-6 py-3 font-mono text-xs uppercase tracking-widest text-white backdrop-blur-md transition-all duration-300 group-hover:border-[#a68a5c] group-hover:bg-[#6e5a3c] group-hover:text-[#f5f1e8]">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-6 py-3 font-mono text-xs uppercase tracking-widest text-white backdrop-blur-md transition-all duration-300 group-hover:border-[#a68a5c] group-hover:bg-[#6e5a3c] group-hover:text-ivory dark:group-hover:border-amber-400! dark:group-hover:bg-amber-400! dark:group-hover:text-charcoal!">
                 <span>Read Article</span>
                 <PiArrowUpRightLight
                   size={14}
@@ -122,19 +122,19 @@ function EmptyState({ onClear }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex min-h-[320px] flex-col items-center justify-center rounded-[28px] border border-dashed border-[#15140f]/15 bg-white/40 px-6 text-center"
+      className="flex min-h-[320px] flex-col items-center justify-center rounded-[28px] border border-dashed border-border/15 bg-surface-2/40 px-6 text-center"
     >
-      <PiBookOpenTextLight size={30} className="text-[#948a76]" />
-      <h3 className="font-display mt-5 text-2xl font-light text-[#15140f]">
+      <PiBookOpenTextLight size={30} className="text-muted" />
+      <h3 className="font-display mt-5 text-2xl font-light text-ink">
         No essays match your search
       </h3>
-      <p className="mt-2 max-w-sm text-sm font-light text-[#15140f]/55">
+      <p className="mt-2 max-w-sm text-sm font-light text-ink/55">
         Try a different keyword or clear the filters to browse the full journal.
       </p>
       <button
         type="button"
         onClick={onClear}
-        className="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-full border border-[#15140f]/15 bg-white px-6 py-2.5 font-mono text-xs uppercase tracking-widest text-[#15140f] transition-all duration-300 hover:bg-[#15140f] hover:text-[#f5f1e8]"
+        className="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-full border border-border/15 bg-surface-2 px-6 py-2.5 font-mono text-xs uppercase tracking-widest text-ink transition-all duration-300 hover:bg-night hover:text-ivory"
       >
         <PiXBold size={12} />
         Clear filters
@@ -186,12 +186,12 @@ export default function ArticleIndex({ articles }) {
           backgroundSize: "80px 80px",
         }}
       />
-      <div className="pointer-events-none absolute -right-40 top-16 h-[460px] w-[460px] rounded-full bg-[#6e5a3c]/[0.08] blur-[130px] ambient-orb" />
-      <div className="pointer-events-none absolute -left-40 top-[45%] h-[420px] w-[420px] rounded-full bg-[#948a76]/[0.1] blur-[130px] ambient-orb" />
+      <div className="pointer-events-none absolute -right-40 top-16 h-[460px] w-[460px] rounded-full bg-accent/[0.08] blur-[130px] ambient-orb" />
+      <div className="pointer-events-none absolute -left-40 top-[45%] h-[420px] w-[420px] rounded-full bg-muted/[0.1] blur-[130px] ambient-orb" />
 
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         {/* Header */}
-        <div className="flex flex-col gap-8 border-b border-[#15140f]/10 pb-12 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-8 border-b border-border/10 pb-12 lg:flex-row lg:items-end lg:justify-between">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
@@ -199,16 +199,16 @@ export default function ArticleIndex({ articles }) {
             className="max-w-3xl"
           >
             <div className="mb-4 flex items-center gap-2">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#6e5a3c]" />
-              <span className="eyebrow font-mono text-xs text-[#948a76]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+              <span className="eyebrow font-mono text-xs text-muted">
                 The Vedam Journal
               </span>
             </div>
-            <h1 className="font-display text-[40px] font-normal leading-[1.02] tracking-tight text-[#15140f] sm:text-6xl lg:text-7xl">
+            <h1 className="font-display text-[40px] font-normal leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-7xl">
               Essays on living
-              <span className="italic font-light text-[#15140f]/55"> well.</span>
+              <span className="italic font-light text-ink/55"> well.</span>
             </h1>
-            <p className="mt-5 max-w-[52ch] text-sm font-light leading-relaxed text-[#15140f]/65 sm:text-base">
+            <p className="mt-5 max-w-[52ch] text-sm font-light leading-relaxed text-ink/65 sm:text-base">
               Architecture, investment, and the considered details of a well-made
               home — written by the studio, from the work itself.
             </p>
@@ -218,10 +218,10 @@ export default function ArticleIndex({ articles }) {
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.12, ease: easeOut }}
-            className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em] text-[#15140f]/50"
+            className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50"
           >
             <span>{String(articles.length).padStart(2, "0")} essays</span>
-            <span className="h-px w-10 bg-[#15140f]/15" />
+            <span className="h-px w-10 bg-border/15" />
             <span>Published seasonally</span>
           </motion.div>
         </div>
@@ -235,21 +235,21 @@ export default function ArticleIndex({ articles }) {
         >
           {/* Search */}
           <div className="relative order-2 w-full max-w-sm lg:order-1">
-            <PiMagnifyingGlassLight className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[15px] text-[#948a76]" />
+            <PiMagnifyingGlassLight className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[15px] text-muted" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search essays…"
               aria-label="Search essays"
-              className="w-full rounded-full border border-[#15140f]/10 bg-white/70 py-3 pl-11 pr-11 font-mono text-xs uppercase tracking-widest text-[#15140f] placeholder-[#948a76] outline-none backdrop-blur-md transition-all duration-300 focus:border-[#6e5a3c]/40 focus:bg-white focus:shadow-[0_0_0_2px_rgba(110,90,60,0.15)]"
+              className="w-full rounded-full border border-border/10 bg-surface-2/70 py-3 pl-11 pr-11 font-mono text-xs uppercase tracking-widest text-ink placeholder:text-muted outline-none backdrop-blur-md transition-all duration-300 focus:border-accent/40 focus:bg-surface-2 focus:shadow-[0_0_0_2px_rgba(110,90,60,0.15)]"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label="Clear search"
-                className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-[#948a76] transition-colors hover:bg-[#15140f]/5 hover:text-[#15140f]"
+                className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-muted transition-colors hover:bg-ink/5 hover:text-ink"
               >
                 <PiXBold size={12} />
               </button>
@@ -265,8 +265,8 @@ export default function ArticleIndex({ articles }) {
                 onClick={() => setCategory(cat)}
                 className={`cursor-pointer rounded-full border px-5 py-2 font-mono text-[10px] uppercase tracking-[0.2em] transition-all duration-300 sm:text-xs sm:tracking-widest ${
                   category === cat
-                    ? "border-[#15140f] bg-[#15140f] font-semibold text-[#f5f1e8]"
-                    : "border-transparent bg-white/70 text-[#15140f]/55 backdrop-blur-md hover:bg-white hover:text-[#15140f]"
+                    ? "border-[#15140f] bg-[#15140f] font-semibold text-ivory dark:border-amber-400! dark:bg-amber-400! dark:text-charcoal!"
+                    : "border-transparent bg-surface-2/70 text-ink/55 backdrop-blur-md hover:bg-surface-2 hover:text-ink"
                 }`}
               >
                 {cat}
@@ -275,14 +275,14 @@ export default function ArticleIndex({ articles }) {
           </div>
 
           {/* Sort */}
-          <div className="order-3 flex items-center gap-2 rounded-full border border-[#15140f]/10 bg-white/70 p-1.5 backdrop-blur-md">
+          <div className="order-3 flex items-center gap-2 rounded-full border border-border/10 bg-surface-2/70 p-1.5 backdrop-blur-md">
             <button
               type="button"
               onClick={() => setSort("latest")}
               className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 font-mono text-[10px] uppercase tracking-widest transition-all duration-300 ${
                 sort === "latest"
-                  ? "bg-[#15140f] text-[#f5f1e8]"
-                  : "text-[#15140f]/55 hover:text-[#15140f]"
+                  ? "bg-[#15140f] text-ivory dark:bg-amber-400! dark:text-charcoal!"
+                  : "text-ink/55 hover:text-ink"
               }`}
             >
               <PiClockLight size={13} />
@@ -293,8 +293,8 @@ export default function ArticleIndex({ articles }) {
               onClick={() => setSort("popular")}
               className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 font-mono text-[10px] uppercase tracking-widest transition-all duration-300 ${
                 sort === "popular"
-                  ? "bg-[#15140f] text-[#f5f1e8]"
-                  : "text-[#15140f]/55 hover:text-[#15140f]"
+                  ? "bg-[#15140f] text-ivory dark:bg-amber-400! dark:text-charcoal!"
+                  : "text-ink/55 hover:text-ink"
               }`}
             >
               <PiFlameLight size={13} />
@@ -306,14 +306,14 @@ export default function ArticleIndex({ articles }) {
         {/* Result meta */}
         {hasActiveFilters && (
           <div className="flex items-center justify-between pb-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#948a76]">
+            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
               {String(results.length).padStart(2, "0")} result
               {results.length === 1 ? "" : "s"}
             </p>
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#6e5a3c] transition-colors hover:text-[#15140f]"
+              className="inline-flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-accent transition-colors hover:text-ink"
             >
               <PiFunnelLight size={13} />
               Clear

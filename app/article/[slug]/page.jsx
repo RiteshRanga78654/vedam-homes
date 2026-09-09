@@ -37,7 +37,7 @@ export default async function ArticlePage({ params }) {
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen bg-[#f5f1e8] text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8]">
+      <div className="min-h-screen bg-canvas text-ink selection:bg-[#15140f] selection:text-[#f5f1e8]">
         <Navbar />
         <ArticleDetail article={article} related={related} />
         <Footer />

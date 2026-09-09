@@ -40,7 +40,7 @@ function GalleryCard({ item, index, onSelect }) {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           onClick={() => onSelect(item)}
-          className="group relative cursor-pointer overflow-hidden rounded-[24px] border border-[#15140f]/10 bg-[#fbf9f4] shadow-[0_4px_20px_rgba(21,20,15,0.04)] transition-all duration-700 hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)] hover:border-[#6e5a3c]/30"
+          className="group relative cursor-pointer overflow-hidden rounded-[24px] border border-border/10 bg-surface shadow-[0_4px_20px_rgba(21,20,15,0.04)] transition-all duration-700 hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)] hover:border-accent/30"
         >
           <div className="relative overflow-hidden">
             <motion.div
@@ -57,22 +57,22 @@ function GalleryCard({ item, index, onSelect }) {
             </motion.div>
           </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#15140f]/85 via-[#15140f]/20 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/20 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
 
           <div className="absolute left-4 top-4 flex -translate-y-2 items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1 backdrop-blur-md opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-            <PiSparkleFill className="text-[#a68a5c] text-[9px]" />
-            <span className="font-mono text-[9px] uppercase tracking-widest text-[#f5f1e8]">
+            <PiSparkleFill className="text-accent-soft text-[9px]" />
+            <span className="font-mono text-[9px] uppercase tracking-widest text-ivory">
               {item.category || "Detail"}
             </span>
           </div>
 
-          <div className="absolute right-4 top-4 flex h-8 w-8 translate-y-2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:hover:bg-[#6e5a3c] group-hover:hover:border-[#6e5a3c]">
+          <div className="absolute right-4 top-4 flex h-8 w-8 translate-y-2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:hover:bg-accent group-hover:hover:border-accent">
             <PiArrowsOutSimpleLight size={14} />
           </div>
 
-          <div className="absolute inset-x-5 bottom-5 flex items-end justify-between text-[#f5f1e8]">
+          <div className="absolute inset-x-5 bottom-5 flex items-end justify-between text-ivory">
             <div className="translate-y-3 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#a68a5c]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent-soft">
                 0{index + 1}
               </span>
               <h3 className="font-display mt-0.5 text-lg font-light tracking-wide text-white">
@@ -80,7 +80,7 @@ function GalleryCard({ item, index, onSelect }) {
               </h3>
             </div>
 
-            <div className="flex h-9 w-9 shrink-0 translate-y-3 items-center justify-center rounded-full border border-white/30 bg-white/15 backdrop-blur-md opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:hover:bg-[#6e5a3c]">
+            <div className="flex h-9 w-9 shrink-0 translate-y-3 items-center justify-center rounded-full border border-white/30 bg-white/15 backdrop-blur-md opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:hover:bg-accent">
               <PiArrowUpRightLight size={16} />
             </div>
           </div>
@@ -109,25 +109,25 @@ export default function GallerySection() {
   return (
     <section
       id="gallery"
-      className="relative overflow-hidden bg-[#f5f1e8] pt-7 pb-7 text-[#15140f] selection:bg-[#15140f] selection:text-[#f5f1e8] sm:pt-16 lg:pt-10 lg:pb-16"
+      className="relative overflow-hidden bg-canvas pt-7 pb-7 text-ink selection:bg-[#15140f] selection:text-ivory sm:pt-16 lg:pt-10 lg:pb-16"
     >
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 lg:mb-12 border-b border-[#15140f]/10 pb-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 lg:mb-12 border-b border-border/10 pb-8">
           <Reveal y={20}>
             <div className="flex items-center gap-2 mb-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#6e5a3c] animate-pulse" />
-              <span className="eyebrow text-[#948a76] font-mono text-xs uppercase tracking-[0.35em]">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="eyebrow text-muted font-mono text-xs uppercase tracking-[0.35em]">
                 Visual Journal
               </span>
             </div>
-            <h2 className="font-display max-w-2xl text-4xl leading-[1.05] tracking-tight text-[#15140f] sm:text-5xl lg:text-6xl">
+            <h2 className="font-display max-w-2xl text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
               Exteriors, interiors,{" "}
-              <span className="italic font-light text-[#15140f]/60">and the space between.</span>
+              <span className="italic font-light text-ink/60">and the space between.</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1} y={20}>
-            <div className="flex flex-wrap items-center gap-2 rounded-full border border-[#15140f]/10 bg-white/70 p-1.5 backdrop-blur-md shadow-sm">
+            <div className="flex flex-wrap items-center gap-2 rounded-full border border-border/10 bg-surface-2/70 p-1.5 backdrop-blur-md shadow-sm">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
@@ -137,8 +137,8 @@ export default function GallerySection() {
                   }}
                   className={`rounded-full px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${
                     activeCategory === cat
-                      ? "bg-[#15140f] text-[#f5f1e8] font-semibold shadow-sm"
-                      : "text-[#15140f]/60 hover:text-[#15140f] hover:bg-black/5"
+                      ? "bg-night text-ivory font-semibold shadow-sm dark:bg-amber-400! dark:text-charcoal!"
+                      : "text-ink/60 hover:text-ink hover:bg-ink/5"
                   }`}
                 >
                   {cat}
@@ -166,7 +166,7 @@ export default function GallerySection() {
             <div className="mt-12 flex justify-center">
               <button
                 onClick={() => setShowAll(true)}
-                className="group flex items-center gap-3 rounded-full border border-[#15140f]/15 bg-white/70 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-[#15140f] backdrop-blur-md transition-all duration-300 hover:border-[#6e5a3c]/40 hover:bg-[#15140f] hover:text-[#f5f1e8] hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)]"
+                className="group flex items-center gap-3 rounded-full border border-border/15 bg-surface-2/70 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-ink backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-night hover:text-ivory hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)] dark:hover:border-amber-400! dark:hover:bg-amber-400! dark:hover:text-charcoal!"
               >
                 See More
                 <PiCaretDownLight
@@ -183,7 +183,7 @@ export default function GallerySection() {
             <div className="mt-12 flex justify-center">
               <button
                 onClick={() => setShowAll(false)}
-                className="group flex items-center gap-3 rounded-full border border-[#15140f]/15 bg-white/70 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-[#15140f] backdrop-blur-md transition-all duration-300 hover:border-[#6e5a3c]/40 hover:bg-[#15140f] hover:text-[#f5f1e8] hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)]"
+                className="group flex items-center gap-3 rounded-full border border-border/15 bg-surface-2/70 px-8 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-ink backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-night hover:text-ivory hover:shadow-[0_20px_50px_rgba(21,20,15,0.12)] dark:hover:border-amber-400! dark:hover:bg-amber-400! dark:hover:text-charcoal!"
               >
                 <PiCaretDownLight
                   size={14}
@@ -208,7 +208,7 @@ export default function GallerySection() {
             <button
               onClick={() => setSelectedImage(null)}
               aria-label="Close image preview"
-              className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white hover:text-[#15140f]"
+              className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white hover:text-ink"
             >
               <PiXLight size={22} />
             </button>
@@ -226,9 +226,9 @@ export default function GallerySection() {
                 alt={selectedImage.title}
                 className="max-h-[72vh] w-full object-contain"
               />
-              <div className="flex items-center justify-between border-t border-white/10 bg-[#15140f]/90 px-8 py-5 text-[#f5f1e8]">
+              <div className="flex items-center justify-between border-t border-white/10 bg-[#15140f]/90 px-8 py-5 text-ivory">
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#a68a5c]">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-accent-soft">
                     {selectedImage.category || "Architecture"}
                   </span>
                   <h4 className="font-display text-2xl font-light text-white">

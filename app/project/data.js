@@ -18,14 +18,8 @@ export const project = {
   configurations: "4 BHK Garden Floor · 4 BHK Sky Terrace · Royal Duplex Penthouse",
   totalUnits: "65 Villas · 883 Luxury Floors",
   possession: "Ready to Move (Phases I–III) · Dec 2026 (select phases)",
-  rera: [
-    "GGM/624/356/2022/99 — Phase III (27.10.2022)",
-    "GGM/562/294/2022/37 — Phase II (16.05.2022)",
-    "GGM/395/127/2020/11 — Phase I (18.03.2020)",
-    "95 of 2017 — Phase I Registry",
-    "150 of 2017 — Phase II Registry",
-  ],
-  heroImage: "/flower-valley/building.png",
+  
+  heroImage: "/project-img/project-elevations.png",
   heroVideo: "/flower-valley/Central Park Flower Valley.mp4",
   introImage: "/flower-valley/scrollselene5.png",
   introImageSecondary: "/flower-valley/flower3.png",
@@ -53,7 +47,7 @@ export const facts = [
   { label: "Units", value: "65 Villas · 883 Floors" },
   { label: "Status", value: "Now Selling · Ready to Move" },
   { label: "Possession", value: "Phases I–III Ready · Dec 2026" },
-  { label: "RERA", value: "GGM/624/356/2022/99 · Phase-wise Registered" },
+  // { label: "RERA", value: "GGM/624/356/2022/99 · Phase-wise Registered" },
 ];
 
 export const highlights = [
@@ -214,6 +208,108 @@ export const masterplanImages = [
   { src: "/project-img/project-stilt-3.png", label: "Stilt-Level Residence Section" },
 ];
 
+// Category-drive tabbed gallery — like the project record
+export const galleryCategories = [
+  {
+    id: "elevation",
+    label: "Elevation",
+    images: [
+      { src: "/project-img/project-elevations.png", caption: "Masterplan elevation — central spine" },
+      { src: "/project-img/project-elevations-2.png", caption: "Architectural elevation study" },
+      { src: "/flower-valley/building.png", caption: "Residence building within the township" },
+    ],
+  },
+  {
+    id: "stilt",
+    label: "Stilt",
+    images: [
+      { src: "/project-img/project-stilt-3.png", caption: "Stilt-level residence section" },
+      { src: "/flower-valley/car.png", caption: "Private covered parking — four-way entry" },
+    ],
+  },
+  {
+    id: "living",
+    label: "Living",
+    images: [
+      { src: "/flower-valley/scrollselene5.png", caption: "Interior living room — elevated floor" },
+      { src: "/flower-valley/scrollselene3.png", caption: "Private lounge — direct elevator arrival" },
+      { src: "/flower-valley/scrollselene.png", caption: "Principal bedroom — warm timber tones" },
+    ],
+  },
+  {
+    id: "gardens",
+    label: "Gardens",
+    images: [
+      { src: "/flower-valley/flower3.png", caption: "The botanical reserves at golden hour" },
+      { src: "/flower-valley/flower1.png", caption: "Lotus pond at the garden reserve" },
+      { src: "/flower-valley/flower4.png", caption: "Curated planting along the parkways" },
+    ],
+  },
+  {
+    id: "villa",
+    label: "Villa",
+    images: [
+      { src: "/flower-valley/Fleur Villa.png", caption: "Villa facade at Club Capri" },
+      { src: "/flower-valley/scrollselene2.png", caption: "Terrace garden with Aravalli views" },
+    ],
+  },
+  {
+    id: "wellness",
+    label: "Wellness",
+    images: [
+      { src: "/flower-valley/Steam.png", caption: "Thermal & hydro suites" },
+      { src: "/flower-valley/Sauna.png", caption: "Finnish cedar saunas" },
+      { src: "/flower-valley/Body-Massage.png", caption: "Wellness & spa pavilions" },
+    ],
+  },
+];
+
+// Our Homes — image-led showcase, mangalrealty.com/projects style
+export const ourHomes = [
+  {
+    id: "living-room",
+    title: "The Living Room",
+    tag: "Light & Flow",
+    desc: "Broad floor plates, maximised natural light, and a calm ivory and timber palette — designed for both family evenings and spirited entertaining.",
+    image: "/flower-valley/scrollselene5.png",
+  },
+  {
+    id: "master-suite",
+    title: "The Master Suite",
+    tag: "Private Retreat",
+    desc: "A serene principal bedroom with warm timber tones, plush furnishings and abundant light — your personal escape after a long day.",
+    image: "/flower-valley/scrollselene.png",
+  },
+  {
+    id: "lounge",
+    title: "The Private Lounge",
+    tag: "Direct Arrival",
+    desc: "Direct elevator arrival into a foyer where yours is the only floor you ever hear — privacy, by design.",
+    image: "/flower-valley/scrollselene3.png",
+  },
+  {
+    id: "terrace",
+    title: "The Terrace Garden",
+    tag: "Open Aravalli Views",
+    desc: "Upper levels unfold to a planted terrace with open hill panoramas — an outdoor oasis for relaxation, entertaining or gardening.",
+    image: "/flower-valley/scrollselene2.png",
+  },
+  {
+    id: "villa",
+    title: "The Villa Facade",
+    tag: "Courtyard Elegance",
+    desc: "Modelled on fine European courtyards, a villa frontage at Club Capri that balances beauty and function in equal measure.",
+    image: "/flower-valley/Fleur Villa.png",
+  },
+  {
+    id: "aquatic",
+    title: "The Aquatic Reserve",
+    tag: "The Estate's Slowest Corner",
+    desc: "An open-air lap pool lined with aged palms and deep sun loungers — morning laps or slow, golden afternoons.",
+    image: "/flower-valley/scrollselene4.png",
+  },
+];
+
 // Curated from the real Flower Valley asset library
 export const gallery = [
   { src: "/flower-valley/building.png", alt: "Residence building within the township", wide: true },
@@ -323,4 +419,37 @@ export const navItems = [
   { id: "plans", label: "Plans" },
   { id: "location", label: "Location" },
   { id: "faq", label: "FAQ" },
+];
+
+// data.js — add alongside your existing exports
+
+export const projectOptions = [
+  { typology: "4 BHK Floor in Gurgaon", size: "300 Sq. Yards" },
+  { typology: "3.5 BHK Builder Floor in Gurgaon", size: "250 Sq. Yards" },
+];
+
+export const paymentPlans = [
+  {
+    name: "Option 1",
+    items: ["25% on Booking", "25% on Superstructure", "50% on Possession"],
+  },
+  {
+    name: "Option 2",
+    items: ["40% on Booking", "60% on Possession"],
+  },
+];
+
+export const keyFeatures = [
+  { label: "Interior", value: "Fully Designer Floors" },
+  { label: "Room Size", value: "Bigger Room Sizes with Lounge" },
+  { label: "Drawing Room", value: "Dedicated Drawing Room" },
+  { label: "Parking", value: "4 Lane Parking (8 Covered)" },
+  { label: "Mandir", value: "Dedicated Mandir Area" },
+  { label: "Balcony", value: "Running Balcony with Utility Area" },
+  { label: "Servant Room", value: "Separate Servant Rooms" },
+  { label: "Washroom", value: "Steam Unit with Sitting Area" },
+  { label: "Kitchen", value: "Fully Modular Kitchen" },
+  { label: "Flooring", value: "Italian Flooring" },
+  { label: "Sanitary", value: "Kohler Luxury Fittings" },
+  { label: "Party Terrace", value: "Jacuzzi, Pantry, Bar, Gazebo" },
 ];

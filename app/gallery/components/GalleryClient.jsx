@@ -56,7 +56,7 @@ function GalleryCard({ image, index, aspect, onSelect }) {
         type="button"
         onClick={() => onSelect(index)}
         aria-label={`Open image: ${image.alt}`}
-        className={`group relative block w-full ${aspect} cursor-pointer overflow-hidden rounded-2xl border border-[#15140f]/10 bg-[#fbf9f4] text-left shadow-[0_2px_12px_rgba(21,20,15,0.04)] transition-[border-color,box-shadow] duration-700 will-change-transform hover:border-[#6e5a3c]/30 hover:shadow-[0_28px_60px_-12px_rgba(21,20,15,0.22)] sm:rounded-3xl`}
+        className={`group relative block w-full ${aspect} cursor-pointer overflow-hidden rounded-2xl border border-border/10 bg-surface text-left shadow-[0_2px_12px_rgba(21,20,15,0.04)] transition-[border-color,box-shadow] duration-700 will-change-transform hover:border-accent/30 hover:shadow-[0_28px_60px_-12px_rgba(21,20,15,0.22)] sm:rounded-3xl`}
       >
         <Image
           src={image.src}
@@ -68,28 +68,28 @@ function GalleryCard({ image, index, aspect, onSelect }) {
         />
 
         {/* Permanent soft sheen + reveal gradient on hover */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#15140f]/70 via-transparent to-[#15140f]/10 opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/70 via-transparent to-night/10 opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
 
         {/* Folder badge */}
         <div className="pointer-events-none absolute left-4 top-4 flex -translate-y-2 items-center gap-1.5 rounded-full border border-white/25 bg-black/45 px-3 py-1.5 opacity-0 backdrop-blur-md transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-          <PiSparkleFill className="text-[9px] text-[#a68a5c]" />
-          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#f5f1e8]">
+          <PiSparkleFill className="text-[9px] text-accent-soft" />
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-ivory">
             {image.label}
           </span>
         </div>
 
         {/* Expand icon */}
-        <div className="pointer-events-none absolute right-4 top-4 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full border border-white/25 bg-black/40 text-[#f5f1e8] opacity-0 backdrop-blur-md transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="pointer-events-none absolute right-4 top-4 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full border border-white/25 bg-black/40 text-ivory opacity-0 backdrop-blur-md transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
           <PiArrowsOutSimpleLight size={15} />
         </div>
 
         {/* Caption */}
         <div className="pointer-events-none absolute inset-x-5 bottom-5 flex translate-y-3 items-end justify-between gap-3 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
           <div>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#a68a5c]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent-soft">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3 className="font-display mt-1 text-base font-light leading-snug text-[#f5f1e8] sm:text-lg">
+            <h3 className="font-display mt-1 text-base font-light leading-snug text-ivory sm:text-lg">
               {image.alt}
             </h3>
           </div>
@@ -132,7 +132,7 @@ function Lightbox({ items, current, direction, onNavigate, onClose }) {
         type="button"
         onClick={onClose}
         aria-label="Close lightbox"
-        className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:scale-105 hover:bg-white hover:text-[#15140f] sm:right-8 sm:top-8"
+        className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:rotate-90 hover:scale-105 hover:bg-white hover:text-night sm:right-8 sm:top-8"
       >
         <PiXLight size={22} />
       </button>
@@ -152,7 +152,7 @@ function Lightbox({ items, current, direction, onNavigate, onClose }) {
           onNavigate(-1);
         }}
         aria-label="Previous image"
-        className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white hover:text-[#15140f] sm:left-8 sm:h-14 sm:w-14"
+        className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white hover:text-night sm:left-8 sm:h-14 sm:w-14"
       >
         <PiArrowLeftLight size={20} />
       </button>
@@ -163,7 +163,7 @@ function Lightbox({ items, current, direction, onNavigate, onClose }) {
           onNavigate(1);
         }}
         aria-label="Next image"
-        className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white hover:text-[#15140f] sm:right-8 sm:h-14 sm:w-14"
+        className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white hover:text-night sm:right-8 sm:h-14 sm:w-14"
       >
         <PiArrowRightLight size={20} />
       </button>
@@ -200,7 +200,7 @@ function Lightbox({ items, current, direction, onNavigate, onClose }) {
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="mt-5 flex items-center gap-3"
         >
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#a68a5c]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent-soft">
             {image.label}
           </span>
           <span className="h-1 w-1 rounded-full bg-white/30" />
@@ -270,12 +270,12 @@ export default function GalleryClient({ images }) {
   return (
     <section className="relative overflow-hidden pt-32 sm:pt-40">
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute -right-32 top-10 h-[420px] w-[420px] rounded-full bg-[#6e5a3c]/[0.07] blur-[120px] ambient-orb" />
-      <div className="pointer-events-none absolute -left-32 top-[40%] h-[360px] w-[360px] rounded-full bg-[#a68a5c]/[0.06] blur-[120px] ambient-orb" />
+      <div className="pointer-events-none absolute -right-32 top-10 h-[420px] w-[420px] rounded-full bg-accent/[0.07] blur-[120px] ambient-orb" />
+      <div className="pointer-events-none absolute -left-32 top-[40%] h-[360px] w-[360px] rounded-full bg-accent-soft/[0.06] blur-[120px] ambient-orb" />
 
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         {/* Header */}
-        <div className="flex flex-col gap-8 border-b border-[#15140f]/10 pb-10 lg:flex-row lg:items-end lg:justify-between lg:pb-12">
+        <div className="flex flex-col gap-8 border-b border-border/10 pb-10 lg:flex-row lg:items-end lg:justify-between lg:pb-12">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
@@ -283,16 +283,16 @@ export default function GalleryClient({ images }) {
             className="max-w-3xl"
           >
             <div className="mb-4 flex items-center gap-2">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#6e5a3c]" />
-              <span className="eyebrow font-mono text-xs text-[#948a76]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+              <span className="eyebrow font-mono text-xs text-muted">
                 The Visual Index
               </span>
             </div>
-            <h1 className="font-display text-[40px] font-normal leading-[1.02] tracking-tight text-[#15140f] sm:text-6xl lg:text-7xl">
+            <h1 className="font-display text-[40px] font-normal leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-7xl">
               Light, material,
-              <span className="italic font-light text-[#15140f]/55"> and the space between.</span>
+              <span className="italic font-light text-ink/55"> and the space between.</span>
             </h1>
-            <p className="mt-5 max-w-[46ch] text-sm font-light leading-relaxed text-[#15140f]/65 sm:text-base">
+            <p className="mt-5 max-w-[46ch] text-sm font-light leading-relaxed text-ink/65 sm:text-base">
               A curated study of the Flower Valley estate and our project elevations — every
               frame drawn from the built work itself.
             </p>
@@ -305,16 +305,16 @@ export default function GalleryClient({ images }) {
             transition={{ duration: 0.8, delay: 0.12, ease: easeOut }}
             className="flex flex-col gap-5"
           >
-            <div className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em] text-[#15140f]/50">
+            <div className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">
               <span>{String(images.length).padStart(2, "0")} frames</span>
-              <span className="h-px w-10 bg-[#15140f]/15" />
+              <span className="h-px w-10 bg-border/15" />
               <span className="hidden items-center gap-1.5 sm:flex">
                 <PiSlidersHorizontalLight size={13} />
                 Select a collection
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 rounded-full border border-[#15140f]/10 bg-white/70 p-1.5 shadow-sm backdrop-blur-md">
+            <div className="flex flex-wrap items-center gap-2 rounded-full border border-border/10 bg-surface-2/70 p-1.5 shadow-sm backdrop-blur-md">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -325,8 +325,8 @@ export default function GalleryClient({ images }) {
                   }}
                   className={`cursor-pointer rounded-full px-5 py-2 font-mono text-[10px] uppercase tracking-[0.2em] transition-all duration-300 sm:text-xs sm:tracking-widest ${
                     activeFilter === category
-                      ? "bg-[#15140f] font-semibold text-[#f5f1e8] shadow-sm"
-                      : "text-[#15140f]/60 hover:bg-black/5 hover:text-[#15140f]"
+                      ? "bg-night font-semibold text-ivory shadow-sm dark:bg-amber-400! dark:text-charcoal!"
+                      : "text-ink/60 hover:bg-black/5 hover:text-ink"
                   }`}
                 >
                   {category}
@@ -350,7 +350,7 @@ export default function GalleryClient({ images }) {
         </div>
 
         <div className="mt-14 pb-6 flex justify-center">
-          <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-[#948a76]">
+          <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
             <PiCaretDownLight size={13} className="animate-bounce" />
             End of collection
           </span>
