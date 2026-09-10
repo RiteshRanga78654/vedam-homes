@@ -116,10 +116,10 @@ export default function ProjectOverview() {
                     RERA Registered &mdash; Phase-wise
                   </p>
                 </div>
-                <p className="mt-3 font-mono text-xs leading-relaxed tracking-wide text-[#f4efe3]/60">
+                {/* <p className="mt-3 font-mono text-xs leading-relaxed tracking-wide text-[#f4efe3]/60">
                   GGM/624/356/2022/99 &middot; GGM/562/294/2022/37 &middot; GGM/395/127/2020/11 and
                   earlier 2017 phase registries.
-                </p>
+                </p> */}
               </div>
             </Reveal>
           </div>

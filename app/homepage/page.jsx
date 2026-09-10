@@ -4,7 +4,8 @@ import AboutSection from "@/app/homepage/components/AboutSection";
 import ProjectSection from "@/app/homepage/components/ProjectSection";    
 import HorizontalShowcaseGSAP from "@/app/homepage/components/HorizontalShowcase";        
 import PhilosophySection from "@/app/homepage/components/PhilosophySection";                              
-import AmenitiesSection from "@/app/homepage/components/AmenitiesSection";                
+import AmenitiesSection from "@/app/homepage/components/AmenitiesSection";
+import VedamAmenities from "@/app/homepage/components/VedamAmenities";
 import GallerySection from "@/app/homepage/components/GallerySection";                            
 import TestimonialsSection from "@/app/homepage/components/TestimonialsSection";          
 import MaterialsSection from "@/app/homepage/components/MaterialsSection";                                
@@ -22,7 +23,7 @@ export default function HomePage() {
         <ProjectSection />
         <PhilosophySection />
         <HorizontalShowcaseGSAP />
-        <AmenitiesSection />
+        <AmenitiesSection/>
         <GallerySection />
         <ArticlesSection />
         <MaterialsSection />

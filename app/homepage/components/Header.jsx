@@ -18,7 +18,7 @@ import { useTheme } from "@/app/theme/ThemeProvider";
 const NAV_LINKS = [
   { label: "Projects", href: "./project", count: "05 Properties" },
   { label: "Philosophy", href: "#philosophy", count: "04 Principles" },
-  { label: "Amenities", href: "#amenities", count: "Full Suite" },
+  { label: "Amenities", href: "./amenities", count: "Full Suite" },
   { label: "Gallery", href: "./gallery", count: "Visual Journal" },
   { label: "Articles", href: "./article", count: "Editorial" },
   { label: "Contact", href: "./contact", count: "Get in Touch" },
