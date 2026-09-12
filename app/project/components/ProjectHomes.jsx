@@ -85,21 +85,21 @@ export default function ProjectHomes() {
           </Reveal>
         </div>
 
-        {/* Image-led masonry — mangalrealty.com/projects spirit */}
-        <div ref={gridRef} className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Image-led masonry — large editorial cards */}
+        <div ref={gridRef} className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
           {ourHomes.map((home, i) => (
             <article
               key={home.id}
-              className="homes-card group relative overflow-hidden rounded-[26px] border border-ink/10 bg-[#0a221b] will-change-transform"
+              className="homes-card group relative overflow-hidden rounded-[30px] border border-ink/10 bg-[#0a221b] will-change-transform lg:min-h-[34rem]"
             >
               {/* Image */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[4/5]">
+              <div className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[4/5] lg:absolute lg:inset-0 lg:aspect-auto">
                 <Image
                   src={home.image}
                   alt={home.title}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  quality={86}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                  quality={88}
                   loading={i < 3 ? "eager" : "lazy"}
                   className="homes-img object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.07]"
                 />
@@ -112,11 +112,11 @@ export default function ProjectHomes() {
                 </span>
 
                 {/* Masonry-caption block */}
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                   <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#dcbd85]">
                     {home.tag}
                   </p>
-                  <h3 className="font-display mt-2 text-2xl font-light leading-tight text-[#f4efe3] sm:text-[1.7rem]">
+                  <h3 className="font-display mt-2 text-2xl font-light leading-tight text-[#f4efe3] sm:text-3xl">
                     {home.title}
                   </h3>
                   <p className="mt-3 max-h-0 overflow-hidden text-sm font-light leading-[1.7] text-[#f4efe3]/80 opacity-0 transition-all duration-700 ease-out group-hover:max-h-40 group-hover:opacity-100">

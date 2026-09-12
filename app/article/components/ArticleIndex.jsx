@@ -322,7 +322,7 @@ export default function ArticleIndex({ articles }) {
         )}
 
         {/* Featured */}
-        <div className="pt-2">
+        {/* <div className="pt-2">
           <AnimatePresence mode="popLayout">
             {featured ? (
               <motion.div
@@ -335,7 +335,7 @@ export default function ArticleIndex({ articles }) {
               </motion.div>
             ) : null}
           </AnimatePresence>
-        </div>
+        </div> */}
 
         {/* Grid */}
         {gridArticles.length === 0 ? (

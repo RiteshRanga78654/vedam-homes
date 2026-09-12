@@ -139,7 +139,7 @@ export default function ArticlesSection() {
           </div>
 
           <a
-            href="#journal"
+            href="./article"
             className="magnetic-btn group inline-flex items-center gap-2.5 rounded-full border border-border/15 bg-surface-2 px-6 py-3 font-mono text-xs uppercase tracking-widest text-ink shadow-sm backdrop-blur-md transition-all duration-300 hover:border-night hover:bg-night hover:text-ivory dark:hover:border-amber-400! dark:hover:bg-amber-400! dark:hover:text-charcoal!"
           >
             <PiBookOpenTextLight size={16} />

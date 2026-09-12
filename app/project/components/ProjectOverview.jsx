@@ -7,7 +7,7 @@ export default function ProjectOverview() {
   return (
     <section id="overview" className="relative bg-[#0d2b22] py-20 text-[#f4efe3] sm:py-24">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           {/* Heading + option cards */}
           <div className="lg:col-span-5">
             <Reveal>
@@ -82,31 +82,37 @@ export default function ProjectOverview() {
             </Reveal>
           </div>
 
-          {/* Key Features ledger */}
+          {/* Key Features — card grid */}
           <div className="lg:col-span-7">
             <Reveal delay={0.1}>
-              <h3 className="font-display text-3xl font-light tracking-tight text-[#c6a15b] sm:text-4xl">
-                Key Features
-              </h3>
+              <div className="flex flex-wrap items-baseline justify-between gap-4">
+                <h3 className="font-display text-3xl font-light tracking-tight text-[#c6a15b] sm:text-4xl">
+                  Key Features
+                </h3>
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4efe3]/45">
+                  12 Specifications
+                </span>
+              </div>
             </Reveal>
 
-            <Reveal delay={0.16}>
-              <dl className="mt-8 divide-y divide-[#f4efe3]/10 border-t border-[#f4efe3]/10">
-                {keyFeatures.map((feature) => (
-                  <div
-                    key={feature.label}
-                    className="group grid grid-cols-1 gap-1 px-1 py-4 transition-colors duration-300 hover:bg-[#c6a15b]/[0.06] sm:grid-cols-12 sm:items-baseline sm:gap-6 sm:px-2"
-                  >
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c6a15b] sm:col-span-4">
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {keyFeatures.map((feature, i) => (
+                <Reveal key={feature.label} delay={0.04 * i}>
+                  <div className="group relative h-full overflow-hidden rounded-2xl border border-[#f4efe3]/10 bg-[#f4efe3]/[0.03] p-6 transition-all duration-500 hover:border-[#c6a15b]/40 hover:bg-[#c6a15b]/[0.07]">
+                    <span className="pointer-events-none absolute -right-2 -top-5 font-display text-7xl font-light italic leading-none text-[#c6a15b]/10 transition-colors duration-500 group-hover:text-[#c6a15b]/25">
+                      0{i + 1}
+                    </span>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#dcbd85]">
                       {feature.label}
-                    </dt>
-                    <dd className="font-display text-lg font-light leading-snug text-[#f4efe3] sm:col-span-8 sm:text-right sm:text-xl">
+                    </p>
+                    <p className="font-display mt-3 text-xl font-light leading-snug text-[#f4efe3]">
                       {feature.value}
-                    </dd>
+                    </p>
+                    <span className="mt-4 block h-px w-8 bg-[#c6a15b]/30 transition-all duration-500 group-hover:w-14 group-hover:bg-[#c6a15b]" />
                   </div>
-                ))}
-              </dl>
-            </Reveal>
+                </Reveal>
+              ))}
+            </div>
 
             <Reveal delay={0.22}>
               <div className="mt-6 rounded-2xl border border-[#c6a15b]/25 bg-[#c6a15b]/5 p-5">
@@ -116,10 +122,6 @@ export default function ProjectOverview() {
                     RERA Registered &mdash; Phase-wise
                   </p>
                 </div>
-                {/* <p className="mt-3 font-mono text-xs leading-relaxed tracking-wide text-[#f4efe3]/60">
-                  GGM/624/356/2022/99 &middot; GGM/562/294/2022/37 &middot; GGM/395/127/2020/11 and
-                  earlier 2017 phase registries.
-                </p> */}
               </div>
             </Reveal>
           </div>

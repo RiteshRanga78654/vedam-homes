@@ -50,7 +50,7 @@ export default function ArticleCard({ article, index = 0 }) {
         </div>
 
         {/* Header Metadata */}
-        <div className="mt-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-[#877e70]">
+        <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-[#877e70]">
           <span>{article.date}</span>
           <span className="flex items-center gap-1.5">
             <span className="h-1 w-1 rounded-full bg-[#967d53]/60" />
