@@ -342,6 +342,45 @@ img, video {
   display: none;
 }
 
+/* ===================================================================
+   ADMIN DASHBOARD — premium utility layer
+   Thin scrollbars, skeleton shimmer, and focus rings scoped to the
+   admin chrome so they can never leak into marketing pages.
+=================================================================== */
+.admin-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.admin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-scroll::-webkit-scrollbar-thumb {
+  background: var(--stone-light);
+  border-radius: 999px;
+}
+[data-theme="dark"] .admin-scroll::-webkit-scrollbar-thumb {
+  background: #2a2a2e;
+}
+
+@keyframes admin-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.admin-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(128, 120, 104, 0.14) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: admin-shimmer 1.4s linear infinite;
+}
+
 /* ---------- Focus states ---------- */
 a:focus-visible,
 button:focus-visible,
