@@ -11,9 +11,13 @@ import TestimonialsSection from "@/app/homepage/components/TestimonialsSection";
 import MaterialsSection from "@/app/homepage/components/MaterialsSection";                                
 import ArticlesSection from "@/app/homepage/components/ArticlesSection";                                          
 import CTASection from "@/app/homepage/components/CTASection";                                    
-import Footer from "@/app/homepage/components/Footer";                                
+import Footer from "@/app/homepage/components/Footer";
+import { getSiteArticles } from "@/lib/store";
+
+export const dynamic = "force-dynamic";
 
 export default function HomePage() {
+  const articles = getSiteArticles();
   return (
     <div className="bg-canvas text-ink">
   
@@ -25,7 +29,7 @@ export default function HomePage() {
         <HorizontalShowcaseGSAP />
         <AmenitiesSection/>
         <GallerySection />
-        <ArticlesSection />
+        <ArticlesSection articles={articles} />
         <MaterialsSection />
         <TestimonialsSection />
         <CTASection />

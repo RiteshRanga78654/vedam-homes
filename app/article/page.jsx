@@ -1,8 +1,10 @@
-import Navbar from "@/app/homepage/components/Header";
+﻿import Navbar from "@/app/homepage/components/Header";
 import Footer from "@/app/homepage/components/Footer";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";
 import ArticleIndex from "./components/ArticleIndex";
-import articles from "@/data/articles";
+import { getSiteArticles } from "@/lib/store";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Journal",
@@ -11,13 +13,14 @@ export const metadata = {
 };
 
 export default function ArticlePage() {
+  const articles = getSiteArticles();
   return (
     <SmoothScroll>
       <div className="min-h-screen bg-canvas text-ink selection:bg-[#15140f] selection:text-[#f5f1e8]">
         <Navbar />
         <ArticleIndex articles={articles} />
         <Footer />
-      </div>
+      </div> 
     </SmoothScroll>
   );
 }

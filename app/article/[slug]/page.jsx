@@ -3,17 +3,16 @@ import Navbar from "@/app/homepage/components/Header";
 import Footer from "@/app/homepage/components/Footer";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";
 import ArticleDetail from "../components/ArticleDetail";
-import articles from "@/data/articles";
+import { getSiteArticles } from "@/lib/store";
 
-export const dynamicParams = false;
+export const dynamic = "force-dynamic";
 
-export function generateStaticParams() {
-  return articles.map((article) => ({ slug: article.id }));
-}
+const findArticle = (articles, slug) =>
+  articles.find((a) => a.id === slug || a.slug === slug);
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const article = articles.find((a) => a.id === slug);
+  const article = findArticle(getSiteArticles(), slug);
   if (!article) return {};
 
   return {
@@ -30,7 +29,8 @@ export async function generateMetadata({ params }) {
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
-  const article = articles.find((a) => a.id === slug);
+  const articles = getSiteArticles();
+  const article = findArticle(articles, slug);
   if (!article) notFound();
 
   const related = articles.filter((a) => a.id !== article.id).slice(0, 3);

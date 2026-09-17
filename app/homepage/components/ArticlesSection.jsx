@@ -4,13 +4,13 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PiArrowUpRightLight, PiBookOpenTextLight, PiCompassLight } from "react-icons/pi";
-import articles from "@/data/articles";
+import siteArticles from "@/data/articles";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function ArticlesSection() {
+export default function ArticlesSection({ articles = siteArticles }) {
   const containerRef = useRef(null);
   const featuredCardRef = useRef(null);
   const [featured, ...rest] = articles;
