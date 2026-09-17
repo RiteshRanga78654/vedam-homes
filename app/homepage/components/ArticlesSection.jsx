@@ -1,16 +1,15 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PiArrowUpRightLight, PiBookOpenTextLight, PiCompassLight } from "react-icons/pi";
-import articles from "@/data/articles";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function ArticlesSection() {
+export default function ArticlesSection({ articles }) {
   const containerRef = useRef(null);
   const featuredCardRef = useRef(null);
   const [featured, ...rest] = articles;
@@ -181,7 +180,7 @@ export default function ArticlesSection() {
                 <div className="absolute inset-x-6 bottom-6 flex items-end justify-between text-white">
                   <div className="max-w-lg">
                     <p className="font-mono text-[10px] uppercase tracking-widest text-accent-soft">
-                      {featured.category || "Architecture"} • {featured.date || "Spring 2026"}
+                      {featured.category || "Architecture"} â€¢ {featured.date || "Spring 2026"}
                     </p>
                     <h3 className="font-display mt-1 text-2xl sm:text-3xl font-light text-white group-hover:text-ivory transition-colors leading-snug">
                       {featured.title}
@@ -216,7 +215,7 @@ export default function ArticlesSection() {
                 <div className="flex flex-1 flex-col justify-center">
                   <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
                     <span>{a.category}</span>
-                    <span className="text-ink/20">•</span>
+                    <span className="text-ink/20">â€¢</span>
                     <span className="text-muted">{a.date}</span>
                   </div>
 

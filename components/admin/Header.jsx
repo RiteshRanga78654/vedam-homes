@@ -138,7 +138,7 @@ export default function Header({ onMobileMenu }) {
     let alive = true;
     (async () => {
       try {
-        const res = await fetch("/api/admin/overview");
+        const res = await fetch("/api/v1/overview");
         const json = await res.json();
         if (alive && json.ok) {
           setNotifications({
@@ -163,7 +163,7 @@ export default function Header({ onMobileMenu }) {
   }, []);
 
   async function logout() {
-    await fetch("/api/admin/auth/logout", { method: "POST" });
+    await fetch("/api/v1/auth/logout", { method: "POST" });
     window.location.href = "/admin/login";
   }
 

@@ -43,3 +43,8 @@ next-env.d.ts
 # Admin uploads
 /public/uploads
 /data/store
+
+# Express backend uploads + env
+/backend/uploads
+/backend/.env
+/backend/node_modules

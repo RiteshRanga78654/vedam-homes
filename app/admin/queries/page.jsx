@@ -14,7 +14,7 @@ import { btnPrimary, btnGhost, QUERY_STATUSES, inputCls, formatDate, timeAgo } f
 import { useToast } from "@/components/admin/toast";
 
 export default function QueriesPage() {
-  const { items: queries, loading, update, remove } = useCrud("/api/admin/queries");
+  const { items: queries, loading, update, remove } = useCrud("/api/v1/queries");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");

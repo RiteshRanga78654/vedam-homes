@@ -14,7 +14,7 @@ import { btnPrimary, btnGhost, inputCls, formatDate, timeAgo } from "@/component
 import { useToast } from "@/components/admin/toast";
 
 export default function TeamPage() {
-  const { items: team, loading, create, update, remove } = useCrud("/api/admin/team");
+  const { items: team, loading, create, update, remove } = useCrud("/api/v1/team");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [editItem, setEditItem] = useState(null);

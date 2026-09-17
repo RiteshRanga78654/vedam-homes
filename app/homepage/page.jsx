@@ -1,3 +1,4 @@
+﻿import { getPublishedArticles } from "@/lib/content";
 import Header from "@/app/homepage/components/Header";                        
 import HeroSection from "@/app/homepage/components/HeroSection";                                  
 import AboutSection from "@/app/homepage/components/AboutSection";
@@ -13,7 +14,8 @@ import ArticlesSection from "@/app/homepage/components/ArticlesSection";
 import CTASection from "@/app/homepage/components/CTASection";                                    
 import Footer from "@/app/homepage/components/Footer";                                
 
-export default function HomePage() {
+export default async function HomePage() {
+  const articles = await getPublishedArticles();
   return (
     <div className="bg-canvas text-ink">
   
@@ -25,7 +27,7 @@ export default function HomePage() {
         <HorizontalShowcaseGSAP />
         <AmenitiesSection/>
         <GallerySection />
-        <ArticlesSection />
+        <ArticlesSection articles={articles} />
         <MaterialsSection />
         <TestimonialsSection />
         <CTASection />

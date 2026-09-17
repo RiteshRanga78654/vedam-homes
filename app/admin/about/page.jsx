@@ -10,7 +10,7 @@ import { useToast } from "@/components/admin/toast";
 import LoadingSkeleton from "@/components/admin/LoadingSkeleton";
 
 export default function AboutPage() {
-  const { data: about, loading, refetch } = useJson("/api/admin/about");
+  const { data: about, loading, refetch } = useJson("/api/v1/about");
   const { toast } = useToast();
   const [form, setForm] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -40,7 +40,7 @@ export default function AboutPage() {
   async function handleSave() {
     setSaving(true);
     try {
-      await apiFetch("/api/admin/about", {
+      await apiFetch("/api/v1/about", {
         method: "PUT",
         body: JSON.stringify(form),
       });

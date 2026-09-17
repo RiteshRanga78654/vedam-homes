@@ -13,7 +13,7 @@ import { btnPrimary, btnGhost, PROJECT_STATUSES, inputCls, formatDate } from "@/
 import { useToast } from "@/components/admin/toast";
 
 export default function ProjectsPage() {
-  const { items: projects, loading, create, update, remove } = useCrud("/api/admin/projects");
+  const { items: projects, loading, create, update, remove } = useCrud("/api/v1/projects");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [editItem, setEditItem] = useState(null);

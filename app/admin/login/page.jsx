@@ -37,7 +37,7 @@ function LoginForm() {
       const saved = localStorage.getItem("vedam-admin-email");
       if (saved) setForm((f) => ({ ...f, email: saved }));
     } catch { /* ignore */ }
-    fetch("/api/admin/auth/session")
+    fetch("/api/v1/auth/session")
       .then((r) => r.json())
       .then((json) => {
         if (active && json.ok) router.replace("/admin");
@@ -53,7 +53,7 @@ function LoginForm() {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/auth/login", {
+      const res = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

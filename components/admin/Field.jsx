@@ -89,7 +89,7 @@ export function ImagePicker({
         for (const file of files) {
           const form = new FormData();
           form.append("file", file);
-          const data = await apiFetch("/api/admin/upload", {
+          const data = await apiFetch("/api/v1/upload", {
             method: "POST",
             headers: {},
             body: form,
