@@ -3,18 +3,16 @@ import Navbar from "@/app/homepage/components/Header";
 import Footer from "@/app/homepage/components/Footer";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";
 import ArticleDetail from "../components/ArticleDetail";
-import { getPublishedArticle, getPublishedArticles } from "@/lib/content";
+import { getSiteArticles } from "@/lib/store";
 
-export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
-export async function generateStaticParams() {
-  const list = await getPublishedArticles();
-  return list.map((article) => ({ slug: article.slug || article.id }));
-}
+const findArticle = (articles, slug) =>
+  articles.find((a) => a.id === slug || a.slug === slug);
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const article = await getPublishedArticle(slug);
+  const article = findArticle(getSiteArticles(), slug);
   if (!article) return {};
 
   return {
@@ -31,11 +29,11 @@ export async function generateMetadata({ params }) {
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
-  const article = await getPublishedArticle(slug);
+  const articles = getSiteArticles();
+  const article = findArticle(articles, slug);
   if (!article) notFound();
 
-  const list = await getPublishedArticles();
-  const related = list.filter((a) => a.id !== article.id && a.slug !== article.id && a.id !== article.slug).slice(0, 3);
+  const related = articles.filter((a) => a.id !== article.id).slice(0, 3);
 
   return (
     <SmoothScroll>

@@ -1,5 +1,4 @@
-﻿import { getPublishedArticles } from "@/lib/content";
-import Header from "@/app/homepage/components/Header";                        
+﻿import Header from "@/app/homepage/components/Header";                        
 import HeroSection from "@/app/homepage/components/HeroSection";                                  
 import AboutSection from "@/app/homepage/components/AboutSection";
 import ProjectSection from "@/app/homepage/components/ProjectSection";    
@@ -12,10 +11,13 @@ import TestimonialsSection from "@/app/homepage/components/TestimonialsSection";
 import MaterialsSection from "@/app/homepage/components/MaterialsSection";                                
 import ArticlesSection from "@/app/homepage/components/ArticlesSection";                                          
 import CTASection from "@/app/homepage/components/CTASection";                                    
-import Footer from "@/app/homepage/components/Footer";                                
+import Footer from "@/app/homepage/components/Footer";
+import { getSiteArticles } from "@/lib/store";
 
-export default async function HomePage() {
-  const articles = await getPublishedArticles();
+export const dynamic = "force-dynamic";
+
+export default function HomePage() {
+  const articles = getSiteArticles();
   return (
     <div className="bg-canvas text-ink">
   
