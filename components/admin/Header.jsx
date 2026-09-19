@@ -12,6 +12,7 @@ const PATH_TITLES = {
   "/admin/articles": "Articles",
   "/admin/blogs": "Blogs",
   "/admin/projects": "Projects",
+  "/admin/gallery": "Gallery",
   "/admin/about": "About Us",
   "/admin/team": "Team Access",
   "/admin/queries": "Queries",

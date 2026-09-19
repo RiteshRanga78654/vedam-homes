@@ -12,7 +12,8 @@ const findArticle = (articles, slug) =>
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const article = findArticle(getSiteArticles(), slug);
+  const articles = await getSiteArticles();
+  const article = findArticle(articles, slug);
   if (!article) return {};
 
   return {
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
-  const articles = getSiteArticles();
+  const articles = await getSiteArticles();
   const article = findArticle(articles, slug);
   if (!article) notFound();
 

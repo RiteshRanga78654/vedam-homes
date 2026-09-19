@@ -11,7 +11,7 @@ export const labelCls =
   "mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted";
 
 export const btnPrimary =
-  "inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-sm font-semibold text-canvas transition-all duration-300 hover:bg-accent hover:text-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.98] disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-sm font-semibold text-canvas transition-all duration-300 hover:bg-accent hover:shadow-accent/25 transition";
 
 export const btnAccent =
   "inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-[#15140f] transition-all duration-300 hover:shadow-[0_8px_24px_-8px_rgba(110,90,60,0.7)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.98] disabled:opacity-50";
@@ -41,6 +41,7 @@ export const navigation = [
       { href: "/admin/articles", label: "Articles", icon: "Newspaper", end: false },
       { href: "/admin/blogs", label: "Blogs", icon: "NotebookPen", end: false },
       { href: "/admin/projects", label: "Projects", icon: "Building2", end: false },
+      { href: "/admin/gallery", label: "Gallery", icon: "Images", end: false },
       { href: "/admin/about", label: "About Us", icon: "Info", end: false },
     ],
   },
@@ -122,3 +123,4 @@ export function timeAgo(iso) {
   }
   return "just now";
 }
+

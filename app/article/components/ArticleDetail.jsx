@@ -258,9 +258,23 @@ export default function ArticleDetail({ article, related = [] }) {
           {/* Reading Column */}
           <main className="order-1 lg:order-2 lg:col-span-8">
             <div className="max-w-[70ch]">
-              {article.content.map((block, idx) => (
-                <ContentRenderer key={idx} block={block} />
-              ))}
+              {article.content && article.content.length > 0 ? (
+                article.content.map((block, idx) => (
+                  <ContentRenderer key={idx} block={block} />
+                ))
+              ) : (
+                (article.excerpt || "")
+                  .split(/\n{2,}|\n/)
+                  .filter(Boolean)
+                  .map((paragraph, idx) => (
+                    <p
+                      key={idx}
+                      className="mt-6 text-base sm:text-lg font-light leading-[1.9] text-[#3d3830]"
+                    >
+                      {paragraph}
+                    </p>
+                  ))
+              )}
             </div>
           </main>
         </div>
