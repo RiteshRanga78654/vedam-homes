@@ -1,61 +1,48 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Plus, MoreHorizontal, Eye, Pencil, Trash2, ExternalLink, Newspaper } from "lucide-react";
+import { Plus, Pencil, Trash2, Newspaper } from "lucide-react";
 import { useCrud } from "@/components/admin/hooks";
 import DataTable from "@/components/admin/DataTable";
 import StatusBadge from "@/components/admin/StatusBadge";
-import Avatar from "@/components/admin/Avatar";
 import EmptyState from "@/components/admin/EmptyState";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
-import { Drawer, Modal } from "@/components/admin/Modal";
-import { TextInput, TextArea, Select, Toggle, ImagePicker } from "@/components/admin/Field";
-import { btnPrimary, btnGhost, btnDanger, ARTICLE_CATEGORIES, inputCls, labelCls, formatDate } from "@/components/admin/ui";
+import { Drawer } from "@/components/admin/Modal";
+import { TextInput, TextArea, Select, ImagePicker, Toggle } from "@/components/admin/Field";
+import { btnPrimary, btnGhost, ARTICLE_CATEGORIES, inputCls, formatDate, labelCls } from "@/components/admin/ui";
 import { useToast } from "@/components/admin/toast";
+
+const ARTICLE_BLOCK_TYPES = [
+  { value: "p", label: "Paragraph" },
+  { value: "h2", label: "Heading" },
+  { value: "quote", label: "Quote" },
+  { value: "bullets", label: "Bullets" },
+  { value: "lead", label: "Lead" },
+];
 
 export default function ArticlesPage() {
   const { items: articles, loading, create, update, remove } = useCrud("/api/v1/articles");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All");
-  const [statusFilter, setStatusFilter] = useState("All");
   const [editItem, setEditItem] = useState(null);
   const [editorOpen, setEditorOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  const categories = useMemo(() => {
-    if (!articles) return ARTICLE_CATEGORIES;
-    const fromData = [...new Set(articles.map((a) => a.category).filter(Boolean))];
-    return ["All", ...new Set([...ARTICLE_CATEGORIES, ...fromData])];
-  }, [articles]);
-
   const filtered = useMemo(() => {
     if (!articles) return [];
-    return articles.filter((a) => {
-      if (search) {
-        const q = search.toLowerCase();
-        if (
-          !a.title?.toLowerCase().includes(q) &&
-          !a.author?.toLowerCase().includes(q) &&
-          !a.category?.toLowerCase().includes(q)
-        )
-          return false;
-      }
-      if (categoryFilter !== "All" && a.category !== categoryFilter) return false;
-      if (statusFilter !== "All" && a.status !== statusFilter) return false;
-      return true;
-    });
-  }, [articles, search, categoryFilter, statusFilter]);
+    if (!search) return articles;
+    const q = search.toLowerCase();
+    return articles.filter(
+      (a) =>
+        a.title?.toLowerCase().includes(q) ||
+        a.category?.toLowerCase().includes(q) ||
+        a.author?.toLowerCase().includes(q)
+    );
+  }, [articles, search]);
 
   function openCreate() {
     setEditItem(null);
-    setEditorOpen(true);
-  }
-
-  function openEdit(item) {
-    setEditItem(item);
     setEditorOpen(true);
   }
 
@@ -89,20 +76,6 @@ export default function ArticlesPage() {
     }
   }
 
-  async function togglePublish(item) {
-    try {
-      await update(item.id, {
-        status: item.status === "published" ? "draft" : "published",
-      });
-      toast({
-        title: item.status === "published" ? "Unpublished" : "Published",
-        tone: "success",
-      });
-    } catch (err) {
-      toast({ title: "Error", description: err.message, tone: "error" });
-    }
-  }
-
   const columns = [
     {
       key: "image",
@@ -128,45 +101,48 @@ export default function ArticlesPage() {
       render: (_, row) => (
         <div className="min-w-0 max-w-[280px]">
           <p className="truncate font-medium text-ink">{row.title}</p>
-          <p className="mt-0.5 truncate text-xs text-muted">{row.excerpt?.slice(0, 60) || row.category}</p>
+          <p className="mt-0.5 truncate text-xs text-muted">{row.excerpt?.slice(0, 50) || row.author}</p>
         </div>
       ),
     },
     { key: "category", label: "Category", render: (v) => <span className="text-ink/70">{v}</span> },
     {
-      key: "author",
-      label: "Author",
-      render: (_, row) => (
-        <div className="flex items-center gap-2.5">
-          <Avatar name={row.author} size={26} />
-          <span className="truncate text-sm text-ink/70">{row.author}</span>
-        </div>
+      key: "status",
+      label: "Status",
+      render: (v) => <StatusBadge value={v || "draft"} />,
+    },
+    {
+      key: "featured",
+      label: "Featured",
+      sortable: false,
+      render: (v) => (
+        <span className="text-ink/70">{v ? <span className="text-accent">Featured</span> : "—"}</span>
       ),
     },
     {
-      key: "status",
-      label: "Status",
-      render: (v) => <StatusBadge value={v === "published" ? "Published" : "Draft"} />,
-    },
-    {
-      key: "publishedAt",
-      label: "Published",
+      key: "createdAt",
+      label: "Created",
       render: (v) => <span className="whitespace-nowrap text-sm text-muted">{formatDate(v)}</span>,
     },
     {
       key: "actions",
       label: "",
       sortable: false,
-      headerClass: "w-[100px]",
+      headerClass: "w-[80px]",
       render: (_, row) => (
         <div className="flex items-center gap-1">
-          <button onClick={() => togglePublish(row)} className="rounded-lg p-1.5 text-muted transition hover:bg-ink/5 hover:text-ink" title={row.status === "published" ? "Unpublish" : "Publish"}>
-            <Eye size={14} className={row.status === "published" ? "text-emerald-600" : ""} />
-          </button>
-          <button onClick={() => openEdit(row)} className="rounded-lg p-1.5 text-muted transition hover:bg-ink/5 hover:text-ink" title="Edit">
+          <button
+            onClick={() => { setEditItem(row); setEditorOpen(true); }}
+            className="rounded-lg p-1.5 text-muted transition hover:bg-ink/5 hover:text-ink"
+            title="Edit"
+          >
             <Pencil size={14} />
           </button>
-          <button onClick={() => setConfirmDelete(row)} className="rounded-lg p-1.5 text-muted transition hover:bg-red-500/5 hover:text-red-600" title="Delete">
+          <button
+            onClick={() => setConfirmDelete(row)}
+            className="rounded-lg p-1.5 text-muted transition hover:bg-red-500/5 hover:text-red-600"
+            title="Delete"
+          >
             <Trash2 size={14} />
           </button>
         </div>
@@ -176,46 +152,20 @@ export default function ArticlesPage() {
 
   return (
     <div className="space-y-5 pt-1 pb-8">
-      {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-0 flex-1 sm:max-w-xs">
-          <input
-            type="text"
-            placeholder="Search articles…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className={inputCls}
-          />
-        </div>
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-          className={inputCls + " w-auto"}
-        >
-          {categories.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className={inputCls + " w-auto"}
-        >
-          {["All", "published", "draft"].map((s) => (
-            <option key={s} value={s}>
-              {s === "All" ? "All Statuses" : s.charAt(0).toUpperCase() + s.slice(1)}
-            </option>
-          ))}
-        </select>
+        <input
+          type="text"
+          placeholder="Search articles…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className={inputCls + " sm:max-w-xs min-w-0 flex-1"}
+        />
         <div className="flex-1" />
         <button onClick={openCreate} className={btnPrimary}>
           <Plus size={16} /> New Article
         </button>
       </div>
 
-      {/* Table */}
       {loading ? (
         <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -226,18 +176,13 @@ export default function ArticlesPage() {
         <EmptyState
           icon={Newspaper}
           title="No articles yet"
-          description="Create your first journal article to begin building content for the Vedam Homes website."
-          action={
-            <button onClick={openCreate} className={btnPrimary}>
-              <Plus size={15} /> Create Article
-            </button>
-          }
+          description="Publish insights, updates, and stories for your audience, or save drafts for later."
+          action={<button onClick={openCreate} className={btnPrimary}><Plus size={15} /> Create Article</button>}
         />
       ) : (
         <DataTable columns={columns} data={filtered} rowKey="id" />
       )}
 
-      {/* Editor Drawer */}
       <ArticleEditor
         open={editorOpen}
         onClose={() => { setEditorOpen(false); setEditItem(null); }}
@@ -246,7 +191,6 @@ export default function ArticlesPage() {
         saving={saving}
       />
 
-      {/* Delete Confirm */}
       <ConfirmDialog
         open={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}
@@ -258,10 +202,6 @@ export default function ArticlesPage() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Article Editor (inline component)                                   */
-/* ------------------------------------------------------------------ */
-
 function ArticleEditor({ open, onClose, item, onSave, saving }) {
   const [form, setForm] = useState({
     title: "",
@@ -269,15 +209,13 @@ function ArticleEditor({ open, onClose, item, onSave, saving }) {
     image: "",
     category: "Real Estate",
     author: "Vedam Studio",
-    authorRole: "",
     readingTime: "3 min read",
-    status: "draft",
     featured: false,
     popular: false,
+    status: "draft",
     content: [],
   });
 
-  // Reset form when item changes
   useEffect(() => {
     if (!open) return;
     setForm({
@@ -286,11 +224,10 @@ function ArticleEditor({ open, onClose, item, onSave, saving }) {
       image: "",
       category: "Real Estate",
       author: "Vedam Studio",
-      authorRole: "",
       readingTime: "3 min read",
-      status: "draft",
       featured: false,
       popular: false,
+      status: "draft",
       content: [],
       ...(item || {}),
     });
@@ -300,107 +237,92 @@ function ArticleEditor({ open, onClose, item, onSave, saving }) {
     setForm((f) => ({ ...f, [field]: value }));
   }
 
-  function addBlock(type) {
-    const blocks = [...(form.content || []), { type, text: "", items: [] }];
-    set("content", blocks);
-  }
-
-  function updateBlock(index, patch) {
+  function setBlock(i, field, value) {
     const blocks = [...(form.content || [])];
-    blocks[index] = { ...blocks[index], ...patch };
+    blocks[i] = { ...(blocks[i] || {}), [field]: value };
     set("content", blocks);
   }
 
-  function removeBlock(index) {
+  function addBlock(type = "p") {
+    set("content", [
+      ...(form.content || []),
+      { type, text: "", items: [] },
+    ]);
+  }
+
+  function removeBlock(i) {
     const blocks = [...(form.content || [])];
-    blocks.splice(index, 1);
+    blocks.splice(i, 1);
     set("content", blocks);
   }
 
-  function moveBlock(index, dir) {
-    const blocks = [...(form.content || [])];
-    const target = index + dir;
-    if (target < 0 || target >= blocks.length) return;
-    [blocks[index], blocks[target]] = [blocks[target], blocks[index]];
-    set("content", blocks);
-  }
-
-  const drawerFooter = (
+  const footer = (
     <div className="flex gap-2">
-      <button onClick={onClose} className={btnGhost}>
-        Cancel
-      </button>
-      <button
-        onClick={() => onSave(form)}
-        disabled={saving || !form.title}
-        className={btnPrimary}
-      >
+      <button onClick={onClose} className={btnGhost}>Cancel</button>
+      <button onClick={() => onSave(form)} disabled={saving || !form.title} className={btnPrimary}>
         {saving ? "Saving…" : item ? "Save Changes" : "Create Article"}
       </button>
     </div>
   );
 
   return (
-    <Drawer open={open} onClose={onClose} title={item ? "Edit Article" : "Create Article"} footer={drawerFooter}>
+    <Drawer open={open} onClose={onClose} title={item ? "Edit Article" : "Create Article"} footer={footer}>
       <div className="space-y-5">
         <TextInput label="Title" value={form.title || ""} onChange={(e) => set("title", e.target.value)} placeholder="Article title" />
         <TextArea label="Excerpt" value={form.excerpt || ""} onChange={(e) => set("excerpt", e.target.value)} rows={2} placeholder="Brief summary" />
         <ImagePicker label="Cover Image" value={form.image} onChange={(v) => set("image", v)} />
-
         <div className="grid grid-cols-2 gap-4">
           <Select label="Category" value={form.category || "Real Estate"} onChange={(e) => set("category", e.target.value)} options={ARTICLE_CATEGORIES} />
-          <TextInput label="Reading Time" value={form.readingTime || ""} onChange={(e) => set("readingTime", e.target.value)} placeholder="5 min read" />
-          <TextInput label="Author" value={form.author || ""} onChange={(e) => set("author", e.target.value)} />
-          <TextInput label="Author Role" value={form.authorRole || ""} onChange={(e) => set("authorRole", e.target.value)} />
+          <TextInput label="Reading Time" value={form.readingTime || ""} onChange={(e) => set("readingTime", e.target.value)} placeholder="3 min read" />
+        </div>
+        <TextInput label="Author" value={form.author || ""} onChange={(e) => set("author", e.target.value)} />
+        <Select label="Status" value={form.status || "draft"} onChange={(e) => set("status", e.target.value)} options={["draft", "published"]} />
+        <div className="flex flex-wrap gap-8">
+          <Toggle label="Featured" checked={!!form.featured} onChange={(checked) => set("featured", checked)} />
+          <Toggle label="Popular" checked={!!form.popular} onChange={(checked) => set("popular", checked)} />
         </div>
 
-        <div className="flex gap-6">
-          <Toggle label="Featured" checked={!!form.featured} onChange={(v) => set("featured", v)} />
-          <Toggle label="Popular" checked={!!form.popular} onChange={(v) => set("popular", v)} />
-        </div>
-
-        {/* Content Blocks */}
         <div>
           <label className={labelCls}>Content Blocks</label>
           <div className="space-y-3">
             {(form.content || []).map((block, i) => (
-              <div key={i} className="rounded-xl border border-ink/10 bg-surface-2/60 p-3">
+              <div key={i} className="rounded-xl border border-ink/10 bg-surface-2/50 p-4">
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
-                    {block.type}
-                  </span>
-                  <div className="flex items-center gap-1">
-                    <button onClick={() => moveBlock(i, -1)} disabled={i === 0} className="rounded p-1 text-xs text-muted hover:text-ink disabled:opacity-30">↑</button>
-                    <button onClick={() => moveBlock(i, 1)} disabled={i === (form.content?.length || 0) - 1} className="rounded p-1 text-xs text-muted hover:text-ink disabled:opacity-30">↓</button>
-                    <button onClick={() => removeBlock(i)} className="rounded p-1 text-xs text-red-500/70 hover:text-red-600">✕</button>
-                  </div>
+                  <Select
+                    label=""
+                    value={block.type || "p"}
+                    onChange={(e) => setBlock(i, "type", e.target.value)}
+                    options={ARTICLE_BLOCK_TYPES}
+                    className="w-40"
+                  />
+                  <button onClick={() => removeBlock(i)} className="rounded p-1 text-xs text-red-500/70 transition hover:text-red-600">
+                    <Trash2 size={12} />
+                  </button>
                 </div>
                 {block.type === "bullets" ? (
-                  <textarea
-                    rows={3}
+                  <TextArea
+                    label="Items (one per line)"
                     value={(block.items || []).join("\n")}
-                    onChange={(e) => updateBlock(i, { items: e.target.value.split("\n") })}
-                    className={inputCls}
-                    placeholder="One item per line"
+                    onChange={(e) => setBlock(i, "items", e.target.value.split("\n").filter(Boolean))}
+                    rows={3}
                   />
                 ) : (
-                  <textarea
-                    rows={2}
+                  <TextArea
+                    label="Text"
                     value={block.text || ""}
-                    onChange={(e) => updateBlock(i, { text: e.target.value })}
-                    className={inputCls}
-                    placeholder={`${block.type} content…`}
+                    onChange={(e) => setBlock(i, "text", e.target.value)}
+                    rows={block.type === "h2" ? 1 : 3}
                   />
                 )}
               </div>
             ))}
-          </div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {["lead", "p", "h2", "quote", "bullets"].map((type) => (
-              <button key={type} onClick={() => addBlock(type)} className={btnGhost + " text-xs py-1.5 px-3"}>
-                + {type}
-              </button>
-            ))}
+            <div className="flex flex-wrap gap-2">
+              {["p", "h2", "quote", "bullets", "lead"].map((t) => (
+                <button key={t} onClick={() => addBlock(t)} className={btnGhost + " text-xs py-2"}>
+                  <Plus size={12} /> {ARTICLE_BLOCK_TYPES.find((b) => b.value === t)?.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -16,8 +16,8 @@ import { getSiteArticles } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
-export default function HomePage() {
-  const articles = getSiteArticles();
+export default async function HomePage() {
+  const articles = await getSiteArticles();
   return (
     <div className="bg-canvas text-ink">
   
