@@ -36,7 +36,7 @@ export default function OverviewPage() {
     let alive = true;
     (async () => {
       try {
-        const json = await apiFetch("/api/admin/overview");
+        const json = await apiFetch("/api/v1/overview");
         if (alive) setData(json);
       } catch (err) {
         if (alive) setError(err.message);

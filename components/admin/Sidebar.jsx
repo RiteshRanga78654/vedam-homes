@@ -109,7 +109,7 @@ export function NavContent({ collapsed, onLinkClick }) {
 
 export function LogoutButton({ collapsed }) {
   async function logout() {
-    await fetch("/api/admin/auth/logout", { method: "POST" });
+    await fetch("/api/v1/auth/logout", { method: "POST" });
     window.location.href = "/admin/login";
   }
   return (

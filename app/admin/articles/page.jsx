@@ -15,7 +15,7 @@ import { btnPrimary, btnGhost, btnDanger, ARTICLE_CATEGORIES, inputCls, labelCls
 import { useToast } from "@/components/admin/toast";
 
 export default function ArticlesPage() {
-  const { items: articles, loading, create, update, remove } = useCrud("/api/admin/articles");
+  const { items: articles, loading, create, update, remove } = useCrud("/api/v1/articles");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");

@@ -1,4 +1,4 @@
-import Header from "@/app/homepage/components/Header";                        
+﻿import Header from "@/app/homepage/components/Header";                        
 import HeroSection from "@/app/homepage/components/HeroSection";                                  
 import AboutSection from "@/app/homepage/components/AboutSection";
 import ProjectSection from "@/app/homepage/components/ProjectSection";    

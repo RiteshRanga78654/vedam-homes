@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+﻿import { notFound } from "next/navigation";
 import Navbar from "@/app/homepage/components/Header";
 import Footer from "@/app/homepage/components/Footer";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";

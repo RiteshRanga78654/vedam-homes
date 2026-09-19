@@ -6,6 +6,7 @@ import { Fraunces, Work_Sans } from 'next/font/google';
 import Navbar from '@/app/homepage/components/Header';
 import Footer from '@/app/homepage/components/Footer';
 import SmoothScroll from '@/app/homepage/components/SmoothScroll';
+import { queryApi, ApiError } from '@/lib/api-client';
 import {
   PiArrowUpRightLight,
   PiPhoneLight,
@@ -104,30 +105,39 @@ export default function ContactPage() {
     setErrors({});
     setLoading(true);
 
-    try {
-      const response = await fetch('/api/v1/mail', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          message: form.message || 'Private commission inquiry',
-          requestHeading: `Vedam Homes inquiry — ${form.interest}`,
-          keyRequest: form.interest,
-          source: 'Contact page',
-          interest: form.interest
-        })
-      });
+    const payload = {
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      message: form.message || 'Private commission inquiry',
+      interest: form.interest,
+      source: 'Contact page'
+    };
 
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        alert('Something went wrong sending your message. Please call the studio directly.');
-      }
+    try {
+      // Primary path — the Express backend (POST /api/queries)
+      await queryApi.create(payload);
+      setSubmitted(true);
     } catch (err) {
-      console.error(err);
-      alert('Network error. Please try again.');
+      // Fallback — if the backend isn't reachable, keep the existing
+      // Next.js mail route working so enquiries are never lost.
+      if (err instanceof ApiError && err.status === 0) {
+        try {
+          const response = await fetch('/api/v1/mail', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...payload,
+              requestHeading: `Vedam Homes inquiry — ${form.interest}`,
+              keyRequest: form.interest,
+            })
+          });
+          if (response.ok) return setSubmitted(true);
+        } catch {
+          /* fall through to the error message below */
+        }
+      }
+      alert('Something went wrong sending your message. Please call the studio directly.');
     } finally {
       setLoading(false);
     }

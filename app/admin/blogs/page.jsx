@@ -15,7 +15,7 @@ import { btnPrimary, btnGhost, BLOG_CATEGORIES, inputCls, formatDate } from "@/c
 import { useToast } from "@/components/admin/toast";
 
 export default function BlogsPage() {
-  const { items: blogs, loading, create, update, remove } = useCrud("/api/admin/blogs");
+  const { items: blogs, loading, create, update, remove } = useCrud("/api/v1/blogs");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [editItem, setEditItem] = useState(null);
