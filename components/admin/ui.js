@@ -4,6 +4,8 @@
  * language and no class combinations drift between pages.
  */
 
+import { hasPermission } from "@/lib/permissions";
+
 export const inputCls =
   "w-full rounded-xl border border-ink/10 bg-surface-2/60 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 transition focus:border-accent/50 focus:outline-none focus:ring-2 focus:ring-accent/20";
 
@@ -30,29 +32,45 @@ export const sectionTitle = "font-display text-xl tracking-tight text-ink";
 export const eyebrow =
   "font-mono text-[10px] uppercase tracking-[0.3em] text-muted";
 
+/*
+ * `permission` maps each nav item to a permission key from
+ * lib/permissions.js. `null` means visible to any signed-in member.
+ * The sidebar filters items by the current session role.
+ */
 export const navigation = [
   {
     section: "Main",
-    items: [{ href: "/admin", label: "Overview", icon: "LayoutDashboard", end: true }],
+    items: [{ href: "/admin", label: "Overview", icon: "LayoutDashboard", end: true, permission: null }],
   },
   {
     section: "Content",
     items: [
-      { href: "/admin/articles", label: "Articles", icon: "Newspaper", end: false },
-      { href: "/admin/blogs", label: "Blogs", icon: "NotebookPen", end: false },
-      { href: "/admin/projects", label: "Projects", icon: "Building2", end: false },
-      { href: "/admin/gallery", label: "Gallery", icon: "Images", end: false },
-      { href: "/admin/about", label: "About Us", icon: "Info", end: false },
+      { href: "/admin/articles", label: "Articles", icon: "Newspaper", end: false, permission: "content" },
+      { href: "/admin/blogs", label: "Blogs", icon: "NotebookPen", end: false, permission: "content" },
+      { href: "/admin/projects", label: "Projects", icon: "Building2", end: false, permission: "projects" },
+      { href: "/admin/gallery", label: "Gallery", icon: "Images", end: false, permission: "content" },
+      { href: "/admin/about", label: "About Us", icon: "Info", end: false, permission: "content" },
     ],
   },
   {
     section: "Management",
     items: [
-      { href: "/admin/team", label: "Team Access", icon: "Users", end: false },
-      { href: "/admin/queries", label: "Queries", icon: "Inbox", end: false },
+      { href: "/admin/team", label: "Team Access", icon: "Users", end: false, permission: "team" },
+      { href: "/admin/queries", label: "Queries", icon: "Inbox", end: false, permission: "queries" },
     ],
   },
 ];
+
+/** Filter navigation sections down to the items a role may access. */
+export function navigationForRole(role) {
+  const can = (permission) => permission == null || hasPermission(role, permission);
+  return navigation
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => can(item.permission)),
+    }))
+    .filter((section) => section.items.length > 0);
+}
 
 export const chartPalette = ["#6e5a3c", "#a68a5c", "#948a76", "#42574b", "#8a6d43", "#b3402a", "#4a5a6e"];
 

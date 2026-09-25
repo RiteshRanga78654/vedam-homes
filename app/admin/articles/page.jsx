@@ -112,14 +112,6 @@ export default function ArticlesPage() {
       render: (v) => <StatusBadge value={v || "draft"} />,
     },
     {
-      key: "featured",
-      label: "Featured",
-      sortable: false,
-      render: (v) => (
-        <span className="text-ink/70">{v ? <span className="text-accent">Featured</span> : "—"}</span>
-      ),
-    },
-    {
       key: "createdAt",
       label: "Created",
       render: (v) => <span className="whitespace-nowrap text-sm text-muted">{formatDate(v)}</span>,
@@ -210,7 +202,6 @@ function ArticleEditor({ open, onClose, item, onSave, saving }) {
     category: "Real Estate",
     author: "Vedam Studio",
     readingTime: "3 min read",
-    featured: false,
     popular: false,
     status: "draft",
     content: [],
@@ -225,7 +216,6 @@ function ArticleEditor({ open, onClose, item, onSave, saving }) {
       category: "Real Estate",
       author: "Vedam Studio",
       readingTime: "3 min read",
-      featured: false,
       popular: false,
       status: "draft",
       content: [],
@@ -278,7 +268,6 @@ function ArticleEditor({ open, onClose, item, onSave, saving }) {
         <TextInput label="Author" value={form.author || ""} onChange={(e) => set("author", e.target.value)} />
         <Select label="Status" value={form.status || "draft"} onChange={(e) => set("status", e.target.value)} options={["draft", "published"]} />
         <div className="flex flex-wrap gap-8">
-          <Toggle label="Featured" checked={!!form.featured} onChange={(checked) => set("featured", checked)} />
           <Toggle label="Popular" checked={!!form.popular} onChange={(checked) => set("popular", checked)} />
         </div>
 

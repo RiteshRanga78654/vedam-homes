@@ -28,6 +28,7 @@ const { default: Admin } = await import("../lib/models/Admin.js");
 const { default: Project } = await import("../lib/models/Project.js");
 const { default: Article } = await import("../lib/models/Article.js");
 const { default: Blog } = await import("../lib/models/Blog.js");
+const { default: Gallery } = await import("../lib/models/Gallery.js");
 const { default: Team } = await import("../lib/models/Team.js");
 const { default: Query } = await import("../lib/models/Query.js");
 const { default: About } = await import("../lib/models/About.js");
@@ -109,6 +110,7 @@ async function main() {
   await seedCollection(Project, "projects", "projects");
   await seedCollection(Article, "articles", "articles");
   await seedCollection(Blog, "blogs", "blogs");
+  await seedCollection(Gallery, "gallery", "gallery images");
   await seedCollection(Team, "team", "team members");
   await seedCollection(Query, "queries", "queries");
   await seedCollection(Activity, "activity", "activity entries");

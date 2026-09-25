@@ -1,17 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  PiArrowUpRightLight,
   PiBookOpenTextLight,
   PiClockLight,
   PiFlameLight,
   PiFunnelLight,
   PiMagnifyingGlassLight,
-  PiSparkleFill,
   PiXBold,
 } from "react-icons/pi";
 import ArticleCard from "./ArticleCard";
@@ -29,92 +25,6 @@ function sortArticles(list, sort) {
     sorted.sort((a, b) => b.dateISO.localeCompare(a.dateISO));
   }
   return sorted;
-}
-
-function FeaturedArticle({ article }) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.9, ease: easeOut }}
-      className="group relative"
-    >
-      <Link
-        href={`/article/${article.id}`}
-        aria-label={`Read featured article: ${article.title}`}
-        className="block"
-      >
-        <div className="relative h-[70vh] min-h-[480px] overflow-hidden rounded-[20px] border border-night/10 bg-night shadow-[0_30px_80px_-20px_rgba(21,20,15,0.45)] sm:h-[66vh] sm:min-h-[540px] sm:rounded-[32px]">
-          <Image
-            src={article.image}
-            alt={article.title}
-            fill
-            priority
-            sizes="100vw"
-            quality={90}
-            className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-night/95 via-night/30 to-night/5 transition-opacity duration-700" />
-
-          {/* Featured badge */}
-          <div className="absolute left-5 top-5 sm:left-8 sm:top-8">
-            <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/45 px-4 py-1.5 backdrop-blur-md">
-              <PiSparkleFill className="text-xs text-accent-soft" />
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-ivory">
-                Featured Monograph
-              </span>
-            </div>
-          </div>
-
-          {/* Editorial meta */}
-          <div className="absolute right-5 top-5 hidden items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70 sm:right-8 sm:top-8 sm:flex">
-            <PiBookOpenTextLight size={13} className="text-accent-soft" />
-            <span>{article.readingTime}</span>
-          </div>
-
-          {/* Bottom content */}
-          <div className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent-soft">
-              {article.category} • {article.date}
-            </p>
-
-            <h2 className="font-display mt-3 max-w-4xl text-3xl font-light leading-[1.08] text-white sm:text-5xl lg:text-6xl">
-              {article.title}
-            </h2>
-
-            <p className="mt-4 max-w-2xl text-sm font-light leading-relaxed text-white/70 sm:text-base">
-              {article.excerpt}
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/15 font-display text-sm text-white backdrop-blur-md">
-                  {article.author.charAt(0)}
-                </span>
-                <div className="leading-tight">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
-                    By {article.author}
-                  </p>
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-white/30">
-                    {article.authorRole}
-                  </p>
-                </div>
-              </div>
-
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-6 py-3 font-mono text-xs uppercase tracking-widest text-white backdrop-blur-md transition-all duration-300 group-hover:border-[#a68a5c] group-hover:bg-[#6e5a3c] group-hover:text-ivory dark:group-hover:border-amber-400! dark:group-hover:bg-amber-400! dark:group-hover:text-charcoal!">
-                <span>Read Article</span>
-                <PiArrowUpRightLight
-                  size={14}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Link>
-    </motion.article>
-  );
 }
 
 function EmptyState({ onClear }) {
@@ -168,8 +78,7 @@ export default function ArticleIndex({ articles }) {
     return sortArticles(list, sort);
   }, [articles, query, category, sort]);
 
-  const featured = hasActiveFilters ? null : results[0];
-  const gridArticles = hasActiveFilters ? results : results.slice(1);
+  const gridArticles = results;
 
   const clearFilters = () => {
     setQuery("");
@@ -320,22 +229,6 @@ export default function ArticleIndex({ articles }) {
             </button>
           </div>
         )}
-
-        {/* Featured */}
-        <div className="pt-2">
-          <AnimatePresence mode="popLayout">
-            {featured ? (
-              <motion.div
-                key={`featured-${featured.id}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <FeaturedArticle article={featured} />
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
-        </div>
 
         {/* Grid */}
         {gridArticles.length === 0 ? (

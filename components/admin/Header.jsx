@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Sun, Moon, Bell, Menu, LogOut, ChevronDown } from "lucide-react";
 import { useTheme } from "@/app/theme/ThemeProvider";
 import Avatar from "./Avatar";
+import { navigationForRole } from "./ui";
+import { useSession } from "./SessionProvider";
 
 const PATH_TITLES = {
   "/admin": "Overview",
@@ -38,18 +40,9 @@ function breadcrumb(pathname) {
   );
 }
 
-function SearchOverlay({ open, onClose, onNavigate }) {
+function SearchOverlay({ open, onClose, onNavigate, items = [] }) {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(0);
-  const items = [
-    { label: "Overview", href: "/admin" },
-    { label: "Articles", href: "/admin/articles" },
-    { label: "Blogs", href: "/admin/blogs" },
-    { label: "Projects", href: "/admin/projects" },
-    { label: "About Us", href: "/admin/about" },
-    { label: "Team Access", href: "/admin/team" },
-    { label: "Queries", href: "/admin/queries" },
-  ];
   const filtered = query ? items.filter(i => i.label.toLowerCase().includes(query.toLowerCase())) : items;
 
   useEffect(() => {
@@ -129,7 +122,11 @@ function SearchOverlay({ open, onClose, onNavigate }) {
 
 export default function Header({ onMobileMenu }) {
   const { theme, toggleTheme } = useTheme();
+  const { session } = useSession();
   const pathname = usePathname();
+  const searchItems = navigationForRole(session?.role).flatMap((section) =>
+    section.items.map((item) => ({ label: item.label, href: item.href }))
+  );
   const [searchOpen, setSearchOpen] = useState(false);
   const [notifications, setNotifications] = useState({ newQueries: 0, recent: [] });
   const [showNotif, setShowNotif] = useState(false);
@@ -176,6 +173,7 @@ export default function Header({ onMobileMenu }) {
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
         onNavigate={(href) => { window.location.href = href; }}
+        items={searchItems}
       />
       <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-ink/10 bg-canvas/80 backdrop-blur-md px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
@@ -265,8 +263,10 @@ export default function Header({ onMobileMenu }) {
               onClick={() => { setShowProfile(!showProfile); setShowNotif(false); }}
               className="inline-flex items-center gap-2 rounded-xl border border-ink/8 px-2.5 py-1.5 transition hover:bg-ink/[0.04]"
             >
-              <Avatar name="Vedam Studio" size={28} />
-              <span className="hidden text-xs font-medium text-ink sm:block">Studio</span>
+              <Avatar name={session?.name || "Vedam Studio"} size={28} />
+              <span className="hidden text-xs font-medium text-ink sm:block">
+                {(session?.name || "Studio").split(" ")[0]}
+              </span>
               <ChevronDown size={13} className="hidden text-muted sm:block" />
             </button>
             <AnimatePresence>
@@ -279,8 +279,13 @@ export default function Header({ onMobileMenu }) {
                   className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-ink/10 bg-surface shadow-2xl"
                 >
                   <div className="border-b border-ink/8 px-4 py-3">
-                    <p className="text-sm font-semibold text-ink">Vedam Studio</p>
-                    <p className="mt-0.5 text-xs text-muted">admin@vedamhomes.com</p>
+                    <p className="text-sm font-semibold text-ink">{session?.name || "Vedam Studio"}</p>
+                    <p className="mt-0.5 text-xs text-muted">{session?.email || "admin@vedamhomes.com"}</p>
+                    {session?.role && (
+                      <span className="mt-1.5 inline-block rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-semibold text-accent">
+                        {session.role}
+                      </span>
+                    )}
                   </div>
                   <div className="p-1.5">
                     <button

@@ -1,41 +1,90 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Trash2, Images, Upload } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { Trash2, Images, Upload, Plus, Pencil } from "lucide-react";
 import { useCrud } from "@/components/admin/hooks";
-import StatusBadge from "@/components/admin/StatusBadge";
 import EmptyState from "@/components/admin/EmptyState";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
-import { ImagePicker } from "@/components/admin/Field";
-import { btnGhost, inputCls } from "@/components/admin/ui";
+import { Drawer } from "@/components/admin/Modal";
+import { ImagePicker, TextInput, Select } from "@/components/admin/Field";
+import { btnPrimary, btnGhost, inputCls } from "@/components/admin/ui";
 import { useToast } from "@/components/admin/toast";
 
+const GALLERY_CATEGORIES = ["Architecture", "Interiors", "Exteriors", "Details", "Amenities"];
+const GALLERY_SIZES = ["regular", "wide", "tall"];
+
 export default function GalleryPage() {
-  const { items: projects, loading, update } = useCrud("/api/v1/projects");
+  const { items, loading, create, update, remove } = useCrud("/api/v1/gallery");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
-  const [saving, setSaving] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [uploading, setUploading] = useState(false);
   const [removeTarget, setRemoveTarget] = useState(null);
+  const [editItem, setEditItem] = useState(null);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const categories = useMemo(() => {
+    const set = new Set((items || []).map((i) => i.category).filter(Boolean));
+    return ["All", ...Array.from(set)];
+  }, [items]);
 
   const filtered = useMemo(() => {
-    if (!projects) return [];
-    if (!search) return projects;
-    const q = search.toLowerCase();
-    return projects.filter(
-      (p) => p.name?.toLowerCase().includes(q) || p.type?.toLowerCase().includes(q)
-    );
-  }, [projects, search]);
+    let list = items || [];
+    if (activeCategory !== "All") list = list.filter((i) => i.category === activeCategory);
+    if (search) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (i) => i.title?.toLowerCase().includes(q) || i.category?.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [items, search, activeCategory]);
 
-  const allImages = useMemo(
-    () => (projects || []).flatMap((p) => (p.gallery || []).map((url) => ({ url, project: p }))),
-    [projects]
-  );
+  // Direct upload: new photos are added to the gallery immediately.
+  async function onAdd(urls) {
+    if (!urls?.length) return;
+    setUploading(true);
+    try {
+      for (const url of urls) {
+        await create({ src: url, title: "Untitled", category: activeCategory === "All" ? "Architecture" : activeCategory });
+      }
+      toast({ title: `${urls.length} photo${urls.length > 1 ? "s" : ""} added`, tone: "success" });
+    } catch (err) {
+      toast({ title: "Upload failed", description: err.message, tone: "error" });
+    } finally {
+      setUploading(false);
+    }
+  }
 
-  async function saveGallery(project, gallery) {
+  async function handleRemove() {
+    if (!removeTarget) return;
+    try {
+      await remove(removeTarget.id);
+      toast({ title: "Photo removed", tone: "success" });
+      setRemoveTarget(null);
+    } catch (err) {
+      toast({ title: "Error", description: err.message, tone: "error" });
+    }
+  }
+
+  async function handleSave(body) {
     setSaving(true);
     try {
-      await update(project.id, { gallery });
-      toast({ title: "Gallery updated", description: project.name, tone: "success" });
+      if (Array.isArray(body)) {
+        for (const item of body) {
+          await create(item);
+        }
+        toast({ title: `${body.length} photo${body.length > 1 ? "s" : ""} added`, tone: "success" });
+      } else if (editItem) {
+        await update(editItem.id, body);
+        toast({ title: "Photo updated", tone: "success" });
+      } else {
+        await create(body);
+        toast({ title: "Photo added", tone: "success" });
+      }
+      setEditorOpen(false);
+      setEditItem(null);
     } catch (err) {
       toast({ title: "Error", description: err.message, tone: "error" });
     } finally {
@@ -43,34 +92,56 @@ export default function GalleryPage() {
     }
   }
 
-  async function onAdd(project, urls) {
-    const merged = [...(project.gallery || []), ...urls];
-    await saveGallery(project, merged);
-  }
-
-  async function handleRemove() {
-    if (!removeTarget) return;
-    const { project, index } = removeTarget;
-    const gallery = [...(project.gallery || [])];
-    gallery.splice(index, 1);
-    setRemoveTarget(null);
-    await saveGallery(project, gallery);
-  }
-
   return (
     <div className="space-y-6 pt-1 pb-8">
       <div className="flex flex-wrap items-center gap-3">
         <input
           type="text"
-          placeholder="Search projects…"
+          placeholder="Search photos…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className={inputCls + " sm:max-w-xs min-w-0 flex-1"}
         />
         <div className="flex-1" />
         <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
-          {allImages.length} {allImages.length === 1 ? "image" : "images"} across {projects?.length || 0} projects
+          {filtered.length} {filtered.length === 1 ? "image" : "images"}
         </span>
+        <button onClick={() => { setEditItem(null); setEditorOpen(true); }} className={btnPrimary}>
+          <Plus size={16} /> Add Photo
+        </button>
+      </div>
+
+      {/* Category filter */}
+      {categories.length > 1 && (
+        <div className="flex flex-wrap items-center gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] transition ${
+                activeCategory === cat
+                  ? "bg-ink text-canvas"
+                  : "border border-ink/10 text-muted hover:bg-ink/[0.04] hover:text-ink"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Quick uploader */}
+      <div className="rounded-2xl border border-ink/8 bg-surface p-4">
+        <ImagePicker
+          label="Upload photos (added instantly)"
+          multiple
+          value={[]}
+          onChange={onAdd}
+          className="w-full"
+        />
+        <div className="mt-3 flex items-center gap-1.5 text-xs text-muted">
+          <Upload size={11} /> {uploading ? "Uploading…" : "Drop or choose files to add to the gallery"}
+        </div>
       </div>
 
       {loading ? (
@@ -83,78 +154,149 @@ export default function GalleryPage() {
         <EmptyState
           icon={Images}
           title="No gallery images"
-          description="Project galleries live inside each project. Add photos there and manage them from this library."
+          description="Upload photos here and they will instantly appear on the public /gallery page."
+          action={
+            <button onClick={() => { setEditItem(null); setEditorOpen(true); }} className={btnPrimary}>
+              <Plus size={15} /> Add Photo
+            </button>
+          }
         />
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((project) => {
-            const gallery = project.gallery || [];
-            return (
-              <div key={project.id} className="overflow-hidden rounded-2xl border border-ink/8 bg-surface shadow-[0_1px_2px_rgba(21,20,15,0.04)]">
-                <div className="flex items-center justify-between border-b border-ink/5 px-4 py-3">
-                  <div className="min-w-0">
-                    <p className="truncate font-medium text-ink">{project.name}</p>
-                    <p className="truncate text-xs text-muted">{project.location}</p>
-                  </div>
-                  <StatusBadge value={project.status || "Active"} />
-                </div>
-
-                <div className="p-4">
-                  {gallery.length === 0 ? (
-                    <div className="flex h-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-ink/10 text-center text-muted">
-                      <Images size={20} />
-                      <p className="text-xs">No gallery images yet</p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-3 gap-2">
-                      {gallery.map((url, i) => (
-                        <div key={url} className="group relative aspect-square overflow-hidden rounded-xl border border-ink/10 bg-ink/[0.04]">
-                          <img src={url} alt="" className="h-full w-full object-cover" />
-                          <button
-                            onClick={() => setRemoveTarget({ project, index: i })}
-                            disabled={saving}
-                            className="absolute inset-0 hidden items-center justify-center bg-night/50 text-white transition group-hover:flex"
-                            title="Remove image"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="mt-4">
-                    <ImagePicker
-                      label="Add images"
-                      multiple
-                      value={[]}
-                      onChange={(urls) => onAdd(project, urls)}
-                      className="w-full"
-                    />
-                  </div>
-
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-xs text-muted">
-                      {gallery.length} {gallery.length === 1 ? "photo" : "photos"}
-                    </span>
-                    <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${saving ? "text-accent" : "text-muted"}`}>
-                      <Upload size={11} /> {saving ? "Saving…" : "Saved"}
-                    </span>
-                  </div>
-                </div>
+          {filtered.map((item) => (
+            <div
+              key={item.id}
+              className="group overflow-hidden rounded-2xl border border-ink/8 bg-surface shadow-[0_1px_2px_rgba(21,20,15,0.04)]"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-ink/[0.04]">
+                <img src={item.src} alt={item.title || ""} className="h-full w-full object-cover" />
+                <button
+                  onClick={() => setRemoveTarget(item)}
+                  className="absolute inset-0 hidden items-center justify-center bg-night/50 text-white transition group-hover:flex"
+                  title="Remove image"
+                >
+                  <Trash2 size={18} />
+                </button>
+                <span className="absolute left-3 top-3 rounded-full border border-white/25 bg-black/45 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-white backdrop-blur">
+                  {item.category || "Architecture"}
+                </span>
               </div>
-            );
-          })}
+              <div className="flex items-center justify-between gap-2 px-4 py-3">
+                <p className="min-w-0 truncate text-sm font-medium text-ink">{item.title || "Untitled"}</p>
+                <button
+                  onClick={() => { setEditItem(item); setEditorOpen(true); }}
+                  className="shrink-0 rounded-lg p-1.5 text-muted transition hover:bg-ink/5 hover:text-ink"
+                  title="Edit details"
+                >
+                  <Pencil size={14} />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
+
+      <GalleryEditor
+        open={editorOpen}
+        onClose={() => { setEditorOpen(false); setEditItem(null); }}
+        item={editItem}
+        onSave={handleSave}
+        saving={saving}
+      />
 
       <ConfirmDialog
         open={!!removeTarget}
         onClose={() => setRemoveTarget(null)}
         onConfirm={handleRemove}
-        title="Remove image?"
-        description={`This photo will be removed from "${removeTarget?.project?.name}".`}
+        title="Remove photo?"
+        description={`"${removeTarget?.title || "This photo"}" will be removed from the gallery.`}
       />
     </div>
+  );
+}
+
+function GalleryEditor({ open, onClose, item, onSave, saving }) {
+  const [form, setForm] = useState({
+    src: "",
+    srcs: [],
+    title: "",
+    category: "Architecture",
+    size: "regular",
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    setForm({
+      src: "",
+      srcs: [],
+      title: "",
+      category: "Architecture",
+      size: "regular",
+      ...(item || {}),
+    });
+  }, [item?.id, open]);
+
+  function set(field, value) {
+    setForm((f) => ({ ...f, [field]: value }));
+  }
+
+  const isEdit = !!item;
+  const srcs = isEdit
+    ? [form.src].filter(Boolean)
+    : Array.isArray(form.srcs) && form.srcs.length
+    ? form.srcs
+    : form.src
+    ? [form.src]
+    : [];
+  const canSave = isEdit ? !!form.src : srcs.length > 0;
+
+  function submit() {
+    if (isEdit) {
+      onSave(form);
+      return;
+    }
+    onSave(
+      srcs.map((src) => ({
+        src,
+        title: form.title || "",
+        category: form.category || "Architecture",
+        size: form.size || "regular",
+      }))
+    );
+  }
+
+  const footer = (
+    <div className="flex gap-2">
+      <button onClick={onClose} className={btnGhost}>Cancel</button>
+      <button
+        onClick={submit}
+        disabled={saving || !canSave}
+        className={btnPrimary}
+      >
+        {saving
+          ? "Saving…"
+          : item
+          ? "Save Changes"
+          : `Add Photo${srcs.length > 1 ? "s" : ""}`}
+      </button>
+    </div>
+  );
+
+  return (
+    <Drawer open={open} onClose={onClose} title={item ? "Edit Photo" : "Add Photos"} footer={footer}>
+      <div className="space-y-5">
+        <ImagePicker
+          label={item ? "Image" : "Images (choose one or many)"}
+          multiple={!isEdit}
+          value={isEdit ? form.src : form.srcs}
+          onChange={(v) => set(isEdit ? "src" : "srcs", v)}
+        />
+        <TextInput label="Title" value={form.title || ""} onChange={(e) => set("title", e.target.value)} placeholder="e.g. Living, Vedam Vista" />
+        <div className="grid grid-cols-2 gap-4">
+          <Select label="Category" value={form.category || "Architecture"} onChange={(e) => set("category", e.target.value)} options={GALLERY_CATEGORIES} />
+          <Select label="Layout size" value={form.size || "regular"} onChange={(e) => set("size", e.target.value)} options={GALLERY_SIZES} />
+        </div>
+      </div>
+    </Drawer>
   );
 }

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PiArrowUpRightLight, PiBookOpenTextLight, PiCompassLight } from "react-icons/pi";
+import { PiArrowUpRightLight, PiBookOpenTextLight } from "react-icons/pi";
 import siteArticles from "@/data/articles";
 
 if (typeof window !== "undefined") {
@@ -166,16 +166,6 @@ export default function ArticlesSection({ articles = siteArticles }) {
 
                 {/* Scrim Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/25 to-transparent pointer-events-none" />
-
-                {/* Badge */}
-                <div className="absolute top-5 left-5 z-10">
-                  <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 backdrop-blur-md">
-                    <PiCompassLight className="text-accent-soft text-xs" />
-                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-ivory">
-                      Featured Monograph
-                    </span>
-                  </div>
-                </div>
 
                 {/* Bottom Story Detail */}
                 <div className="absolute inset-x-6 bottom-6 flex items-end justify-between text-white">

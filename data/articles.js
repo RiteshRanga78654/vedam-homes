@@ -11,7 +11,6 @@ const articles = [
     author: "Ar. Adarsh K.",
     authorRole: "Principal Architect, Vedam Homes",
     readingTime: "7 min read",
-    featured: true,
     popular: true,
     content: [
       {

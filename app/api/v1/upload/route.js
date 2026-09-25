@@ -5,7 +5,7 @@ import path from "path";
 import { uid } from "@/lib/store";
 
 const ALLOWED = ["jpg", "jpeg", "png", "webp", "gif"];
-const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_SIZE = 50 * 1024 * 1024; // 5MB
 const UPLOAD_DIR = "public/uploads";
 
 export async function POST(request) {

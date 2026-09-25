@@ -4,6 +4,9 @@ import Navbar from "@/app/homepage/components/Header";
 import Footer from "@/app/homepage/components/Footer";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";
 import GalleryClient from "./components/GalleryClient";
+import { getSiteGallery } from "@/lib/store";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Gallery",
@@ -23,6 +26,7 @@ function humanize(filename) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+/** Fallback: read any images that live in the bundled /public folders. */
 function readImages(folder, label) {
   const dir = path.join(process.cwd(), "public", folder);
   if (!existsSync(dir)) return [];
@@ -39,11 +43,24 @@ function readImages(folder, label) {
     }));
 }
 
-export default function GalleryPage() {
-  const images = [
-    ...readImages("flower-valley", "Flower Valley"),
-    ...readImages("project-img", "Project Elevations"),
-  ];
+export default async function GalleryPage() {
+  const stored = await getSiteGallery();
+
+  const images =
+    stored && stored.length > 0
+      ? stored
+          .filter((img) => img.src)
+          .map((img, i) => ({
+            id: img.id || `gallery-${i}`,
+            src: img.src,
+            alt: img.title || `Gallery image ${i + 1}`,
+            label: img.category || "Architecture",
+            folder: img.category || "gallery",
+          }))
+      : [
+          ...readImages("flower-valley", "Flower Valley"),
+          ...readImages("project-img", "Project Elevations"),
+        ];
 
   return (
     <SmoothScroll>

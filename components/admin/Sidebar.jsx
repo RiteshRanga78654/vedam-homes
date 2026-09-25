@@ -16,7 +16,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { navigation } from "./ui";
+import { navigationForRole } from "./ui";
+import { useSession } from "./SessionProvider";
 
 const ICONS = {
   LayoutDashboard,
@@ -28,6 +29,17 @@ const ICONS = {
   Users,
   Inbox,
 };
+
+function initials(name = "") {
+  return (
+    name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0]?.toUpperCase() || "")
+      .join("") || "VS"
+  );
+}
 
 function NavLink({ item, collapsed, isActive }) {
   const Icon = ICONS[item.icon] || LayoutDashboard;
@@ -61,6 +73,8 @@ function NavLink({ item, collapsed, isActive }) {
 
 export function NavContent({ collapsed, onLinkClick }) {
   const pathname = usePathname();
+  const { session } = useSession();
+  const sections = navigationForRole(session?.role);
 
   function matchItem(item) {
     if (item.end) return pathname === item.href;
@@ -70,7 +84,7 @@ export function NavContent({ collapsed, onLinkClick }) {
   return (
     <>
       <nav className="flex-1 overflow-y-auto px-3 py-4">
-        {navigation.map((section, si) => (
+        {sections.map((section, si) => (
           <div key={section.section} className={si > 0 ? "mt-6" : ""}>
             {!collapsed && (
               <p className="mb-2 px-3 font-mono text-[10px] uppercase tracking-[0.26em] text-white/25">
@@ -95,12 +109,14 @@ export function NavContent({ collapsed, onLinkClick }) {
       <div className="border-t border-white/[0.06] px-4 pt-4 pb-3">
         <div className="flex items-center gap-3">
           <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent text-xs font-semibold">
-            VS
+            {initials(session?.name)}
           </div>
           {!collapsed && (
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-white/90">Vedam Studio</p>
-              <p className="text-[11px] text-white/35">Super Admin</p>
+              <p className="truncate text-sm font-medium text-white/90">
+                {session?.name || "Vedam Studio"}
+              </p>
+              <p className="text-[11px] text-white/35">{session?.role || "Super Admin"}</p>
             </div>
           )}
         </div>
