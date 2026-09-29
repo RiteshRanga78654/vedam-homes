@@ -44,3 +44,4 @@ export default function CountUp({
     </span>
   );
 }
+// this is a aupdated version

@@ -71,4 +71,6 @@ export default async function GalleryPage() {
       </div>
     </SmoothScroll>
   );
+
+  
 }
