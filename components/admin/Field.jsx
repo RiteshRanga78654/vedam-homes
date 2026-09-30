@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { inputCls, labelCls } from "./ui";
 import { apiFetch } from "./hooks";
+import { useToast } from "./toast";
 
 export function TextInput({ label, className = "", ...props }) {
   return (
@@ -80,34 +81,51 @@ export function ImagePicker({
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const { toast } = useToast();
 
   const doUpload = useCallback(
     async (files) => {
       setUploading(true);
-      const urls = value ? (Array.isArray(value) ? [...value] : [value]) : [];
+      const existing = value ? (Array.isArray(value) ? [...value] : [value]) : [];
+      const uploaded = [];
       try {
         for (const file of files) {
           const form = new FormData();
           form.append("file", file);
+          // apiFetch omits Content-Type for FormData so the browser can
+          // set the multipart boundary.
           const data = await apiFetch("/api/v1/upload", {
             method: "POST",
-            headers: {},
             body: form,
           });
-          urls.push(data.url);
+          uploaded.push(data.url);
         }
-        onChange(multiple ? urls : urls[urls.length - 1]);
+        // Awaited: onChange is async (it creates the gallery record), and
+        // clearing `uploading` before it settles shows a finished state
+        // while the image still isn't in the gallery.
+        await onChange(multiple ? [...existing, ...uploaded] : uploaded[0]);
       } catch (err) {
-        alert(err.message || "Upload failed");
+        if (uploaded.length) {
+          toast({
+            title: `${uploaded.length} of ${files.length} uploaded`,
+            description: err.message,
+            tone: "error",
+          });
+        } else {
+          toast({ title: "Upload failed", description: err.message, tone: "error" });
+        }
       } finally {
         setUploading(false);
       }
     },
-    [value, onChange, multiple]
+    [value, onChange, multiple, toast]
   );
 
   function handleFiles(e) {
-    if (e.target.files?.length) doUpload(Array.from(e.target.files));
+    const files = Array.from(e.target.files || []);
+    // Reset so picking the same file twice in a row still fires onChange.
+    e.target.value = "";
+    if (files.length) doUpload(files);
   }
 
   function removeImage(idx) {

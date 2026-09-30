@@ -343,7 +343,7 @@ export default function GalleryClient({ images }) {
               key={`${activeFilter}-${image.id}`}
               image={image}
               index={index}
-              aspect={ASPECTS[index % ASPECTS.length]}
+              aspect={image.aspect || ASPECTS[index % ASPECTS.length]}
               onSelect={setLightboxIndex}
             />
           ))}

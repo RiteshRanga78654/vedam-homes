@@ -16,6 +16,33 @@ export const metadata = {
 
 const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"]);
 
+/** Aspect class per stored layout size, so the admin's choice is honoured. */
+const SIZE_ASPECT = {
+  regular: "aspect-[4/3]",
+  wide: "aspect-[16/11]",
+  tall: "aspect-[3/4]",
+};
+
+/**
+ * next/image throws during render when a src points at a host that is not
+ * in next.config images.remotePatterns, which 500s the entire page. One bad
+ * legacy record must not take the gallery down, so filter to what we know
+ * we can actually render.
+ */
+function isRenderableSrc(src) {
+  if (typeof src !== "string" || !src) return false;
+  if (src.startsWith("/")) return true;
+  try {
+    const url = new URL(src);
+    if (url.protocol !== "https:") return false;
+    return (
+      url.hostname === "res.cloudinary.com" || url.hostname === "images.unsplash.com"
+    );
+  } catch {
+    return false;
+  }
+}
+
 function humanize(filename) {
   return filename
     .replace(/\.[^.]+$/, "")
@@ -38,8 +65,8 @@ function readImages(folder, label) {
       id: `${folder}/${file}`,
       src: `/${folder}/${file}`,
       alt: humanize(file),
-      folder,
       label,
+      aspect: SIZE_ASPECT.regular,
     }));
 }
 
@@ -49,13 +76,13 @@ export default async function GalleryPage() {
   const images =
     stored && stored.length > 0
       ? stored
-          .filter((img) => img.src)
+          .filter((img) => isRenderableSrc(img.src))
           .map((img, i) => ({
             id: img.id || `gallery-${i}`,
             src: img.src,
             alt: img.title || `Gallery image ${i + 1}`,
             label: img.category || "Architecture",
-            folder: img.category || "gallery",
+            aspect: SIZE_ASPECT[img.size] || SIZE_ASPECT.regular,
           }))
       : [
           ...readImages("flower-valley", "Flower Valley"),

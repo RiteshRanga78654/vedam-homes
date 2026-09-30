@@ -14,7 +14,7 @@ const GALLERY_CATEGORIES = ["Architecture", "Interiors", "Exteriors", "Details",
 const GALLERY_SIZES = ["regular", "wide", "tall"];
 
 export default function GalleryPage() {
-  const { items, loading, create, update, remove } = useCrud("/api/v1/gallery");
+  const { items, loading, error, create, update, remove } = useCrud("/api/v1/gallery");
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
@@ -149,6 +149,11 @@ export default function GalleryPage() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="h-72 rounded-2xl border border-ink/8 bg-surface admin-shimmer" />
           ))}
+        </div>
+      ) : error ? (
+        <div className="rounded-2xl border border-red-500/25 bg-red-500/[0.04] p-6">
+          <p className="text-sm font-semibold text-red-600">Could not load the gallery</p>
+          <p className="mt-1 text-sm text-muted">{error}</p>
         </div>
       ) : filtered.length === 0 ? (
         <EmptyState

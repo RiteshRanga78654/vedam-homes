@@ -3,23 +3,41 @@
 import { useCallback, useEffect, useState } from "react";
 
 async function apiFetch(path, options = {}) {
+  // A FormData body must NOT carry an explicit Content-Type — the browser
+  // has to append the multipart boundary itself. Setting it to
+  // application/json makes the server's formData() throw, which surfaces
+  // as a bare 500.
+  const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
+
   const config = {
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     ...options,
+    headers: {
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+      ...(options.headers || {}),
+    },
   };
-  const res = await fetch(path, config);
+
+  let res;
+  try {
+    res = await fetch(path, config);
+  } catch {
+    throw new Error("Could not reach the server. Check your connection and try again.");
+  }
+
   if (res.status === 401) {
     window.location.href = "/admin/login";
     throw new Error("Session expired");
   }
+
   let json = null;
   try {
     json = await res.json();
   } catch {
     /* non-json body */
   }
+
   if (!res.ok) {
-    throw new Error(json?.error || "Request failed");
+    throw new Error(json?.error || `Request failed (HTTP ${res.status})`);
   }
   return json?.data;
 }
