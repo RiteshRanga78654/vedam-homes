@@ -9,7 +9,7 @@ const FRAME_COUNT = 140;
 
 // Path mapping for .png
 const getFramePath = (index) =>
-  `/keyframes/ezgif-frame-${String(index).padStart(3, "0")}.png`;
+  `/keyframes/ezgif-frame-${String(index).padStart(3, "0")}.webp`;
 
 export default function HeroSection() {
   const containerRef = useRef(null);
