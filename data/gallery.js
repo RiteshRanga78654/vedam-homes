@@ -1,4 +1,5 @@
 const gallery = [
+<<<<<<< HEAD
   { src: "/project-living-5.png", title: "Living, Vedam Vista", size: "tall" },
   { src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1400&auto=format&fit=crop", title: "Facade, Vedam Heights", size: "wide" },
   { src: "/project-kitchen-3.png", title: "Kitchen Detail", size: "regular" },
@@ -7,6 +8,16 @@ const gallery = [
   { src: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop", title: "Meadows at Dusk", size: "regular" },
   { src: "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=1200&auto=format&fit=crop", title: "Stair Detail", size: "regular" },
   { src: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1200&auto=format&fit=crop", title: "Tower Elevation", size: "tall" },
+=======
+  { src: "/assets/osiyan/1.jpeg", title: "Living, Vedam Vista", size: "tall" },
+  { src: "/assets/osiyan/1.jpeg", title: "Facade, Vedam Heights", size: "wide" },
+  { src: "/assets/osiyan/1.jpeg", title: "Kitchen Detail", size: "regular" },
+  { src: "/assets/osiyan/1.jpeg", title: "Courtyard, Vedam Greens", size: "tall" },
+  { src: "/assets/osiyan/1.jpeg", title: "Exterior, Vedam Urban", size: "wide" },
+  { src: "/assets/osiyan/1.jpeg", title: "Meadows at Dusk", size: "regular" },
+  { src: "/assets/osiyan/1.jpeg", title: "Stair Detail", size: "regular" },
+  { src: "/assets/osiyan/1.jpeg", title: "Tower Elevation", size: "tall" },
+>>>>>>> 80fe187 (ghjk)
 ];
 
 export default gallery;

@@ -1,9 +1,13 @@
 import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+<<<<<<< HEAD
 // import CustomCursor from "@/components/CustomCursor";
 import PageLoader from "@/app/homepage/components/PageLoader";
 import SmoothScroll from "@/app/homepage/components/SmoothScroll";
 import { ThemeProvider } from "@/app/theme/ThemeProvider";
+=======
+import PageLoader from "@/components/PageLoader";
+>>>>>>> 80fe187 (ghjk)
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -96,6 +100,7 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       className={`${fraunces.variable} ${manrope.variable} ${jetbrainsMono.variable} antialiased`}
     >
+<<<<<<< HEAD
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -111,6 +116,11 @@ export default function RootLayout({ children }) {
             <main className="flex-1">{children}</main>
           </SmoothScroll>
         </ThemeProvider>
+=======
+      <body className="flex min-h-screen flex-col bg-[#faf8f5] text-[#14120f] selection:bg-[#14120f] selection:text-[#faf8f5]">
+        <PageLoader />
+        <main className="flex-1">{children}</main>
+>>>>>>> 80fe187 (ghjk)
       </body>
     </html>
   );
