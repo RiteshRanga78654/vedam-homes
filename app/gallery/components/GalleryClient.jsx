@@ -13,14 +13,6 @@ import {
   PiSlidersHorizontalLight,
 } from "react-icons/pi";
 
-const ASPECTS = [
-  "aspect-[3/4]",
-  "aspect-[4/3]",
-  "aspect-square",
-  "aspect-[4/5]",
-  "aspect-[16/11]",
-];
-
 const GRID_SIZES =
   "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw";
 
@@ -42,7 +34,7 @@ const imageVariants = {
   exit: (direction) => ({ x: direction * -90, opacity: 0, scale: 0.985 }),
 };
 
-function GalleryCard({ image, index, aspect, onSelect }) {
+function GalleryCard({ image, index, onSelect }) {
   return (
     <motion.div
       variants={cardVariants}
@@ -56,7 +48,7 @@ function GalleryCard({ image, index, aspect, onSelect }) {
         type="button"
         onClick={() => onSelect(index)}
         aria-label={`Open image: ${image.alt}`}
-        className={`group relative block w-full ${aspect} cursor-pointer overflow-hidden rounded-2xl border border-border/10 bg-surface text-left shadow-[0_2px_12px_rgba(21,20,15,0.04)] transition-[border-color,box-shadow] duration-700 will-change-transform hover:border-accent/30 hover:shadow-[0_28px_60px_-12px_rgba(21,20,15,0.22)] sm:rounded-3xl`}
+        className="group relative block aspect-[4/3] w-full cursor-pointer overflow-hidden rounded-2xl border border-border/15 bg-surface text-left shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_22px_55px_-18px_rgba(21,20,15,0.28)] sm:rounded-3xl"
       >
         <Image
           src={image.src}
@@ -68,10 +60,10 @@ function GalleryCard({ image, index, aspect, onSelect }) {
         />
 
         {/* Permanent soft sheen + reveal gradient on hover */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/70 via-transparent to-night/10 opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent opacity-75 transition-opacity duration-500 group-hover:opacity-100" />
 
         {/* Folder badge */}
-        <div className="pointer-events-none absolute left-4 top-4 flex -translate-y-2 items-center gap-1.5 rounded-full border border-white/25 bg-black/45 px-3 py-1.5 opacity-0 backdrop-blur-md transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/25 bg-black/45 px-3 py-1.5 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
           <PiSparkleFill className="text-[9px] text-accent-soft" />
           <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-ivory">
             {image.label}
@@ -79,12 +71,12 @@ function GalleryCard({ image, index, aspect, onSelect }) {
         </div>
 
         {/* Expand icon */}
-        <div className="pointer-events-none absolute right-4 top-4 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full border border-white/25 bg-black/40 text-ivory opacity-0 backdrop-blur-md transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="pointer-events-none absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/40 text-ivory opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
           <PiArrowsOutSimpleLight size={15} />
         </div>
 
         {/* Caption */}
-        <div className="pointer-events-none absolute inset-x-5 bottom-5 flex translate-y-3 items-end justify-between gap-3 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="pointer-events-none absolute inset-x-5 bottom-5 flex items-end justify-between gap-3 opacity-0 transition-all duration-300 group-hover:opacity-100">
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent-soft">
               {String(index + 1).padStart(2, "0")}
@@ -336,14 +328,13 @@ export default function GalleryClient({ images }) {
           </motion.div>
         </div>
 
-        {/* Masonry grid */}
-        <div className="columns-1 gap-4 pt-10 sm:columns-2 sm:gap-5 lg:columns-3 xl:columns-4">
+        {/* Uniform image grid: every card uses the same 4:3 ratio */}
+        <div className="grid grid-cols-1 gap-5 pt-10 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {visibleImages.map((image, index) => (
             <GalleryCard
               key={`${activeFilter}-${image.id}`}
               image={image}
               index={index}
-              aspect={image.aspect || ASPECTS[index % ASPECTS.length]}
               onSelect={setLightboxIndex}
             />
           ))}
