@@ -10,7 +10,7 @@ export default function ProjectFaq() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="relative bg-canvas py-20 text-ink sm:py-24">
+    <section id="faq" className="relative bg-[#f6efe1] py-14 text-[#14201a] sm:py-16">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="grid gap-12 lg:grid-cols-12">
           {/* Sticky intro */}
@@ -22,9 +22,9 @@ export default function ProjectFaq() {
                 accent="answered."
               />
               <Reveal delay={0.16}>
-                <p className="mt-6 max-w-md font-light leading-relaxed text-ink/70">
-                  From RERA registration to possession timelines — the answers
-                  buyers most often ask, in plain language.
+                <p className="mt-6 max-w-md font-light leading-relaxed text-[#14201a]/70">
+                  From RERA approvals to the development-linked plan — the
+                  answers buyers most often ask, in plain language.
                 </p>
               </Reveal>
             </div>
@@ -32,8 +32,8 @@ export default function ProjectFaq() {
 
           {/* Accordion */}
           <div className="lg:col-span-7">
-            <div className="divide-y divide-ink/10 border-t border-ink/10">
-              {faqs.map((item, i) => {
+            <div className="divide-y divide-[#14201a]/10 border-t border-[#14201a]/10">
+              {faqs.slice(0, 5).map((item, i) => {
                 const isOpen = open === i;
                 return (
                   <Reveal key={item.q} delay={i * 0.04}>
@@ -46,7 +46,7 @@ export default function ProjectFaq() {
                       >
                         <span
                           className={`font-display text-lg font-light leading-snug transition-colors duration-300 sm:text-xl ${
-                            isOpen ? "text-[#c6a15b]" : "text-ink group-hover:text-[#c6a15b]"
+                            isOpen ? "text-[#c07a4e]" : "text-[#14201a] group-hover:text-[#c07a4e]"
                           }`}
                         >
                           {item.q}
@@ -54,8 +54,8 @@ export default function ProjectFaq() {
                         <span
                           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
                             isOpen
-                              ? "border-[#c6a15b] bg-[#c6a15b] text-[#0a221b]"
-                              : "border-ink/15 bg-surface-2 text-ink group-hover:border-[#c6a15b]/50"
+                              ? "border-[#c07a4e] bg-[#c07a4e] text-[#141210]"
+                              : "border-[#14201a]/15 bg-[#fdf9f0] text-[#14201a] group-hover:border-[#c07a4e]/50"
                           }`}
                         >
                           {isOpen ? <PiMinusLight size={16} /> : <PiPlusLight size={16} />}
@@ -70,7 +70,7 @@ export default function ProjectFaq() {
                             transition={{ duration: 0.45, ease: easeOut }}
                             className="overflow-hidden"
                           >
-                            <p className="pb-6 pr-6 text-sm font-light leading-[1.85] text-ink/65 sm:pr-16">
+                            <p className="pb-6 pr-6 text-sm font-light leading-[1.85] text-[#14201a]/65 sm:pr-16">
                               {item.a}
                             </p>
                           </motion.div>

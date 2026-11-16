@@ -1,142 +1,73 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { PiArrowUpRightLight } from "react-icons/pi";
 import { ourHomes } from "@/app/project/data";
 import { Reveal } from "./common";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 export default function ProjectHomes() {
-  const sectionRef = useRef(null);
-  const gridRef = useRef(null);
-
-  useGSAP(
-    () => {
-      // Staggered clip-path curtain reveal per card on first entry
-      gsap.fromTo(
-        ".homes-card",
-        { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)", y: 40 },
-        {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-          y: 0,
-          duration: 1.1,
-          stagger: 0.12,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-
-      // Slow image parallax inside each card
-      const imgs = gsap.utils.toArray(".homes-img");
-      imgs.forEach((img) => {
-        gsap.fromTo(
-          img,
-          { yPercent: -8 },
-          {
-            yPercent: 8,
-            ease: "none",
-            scrollTrigger: {
-              trigger: img.closest(".homes-card"),
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-      });
-    },
-    { scope: sectionRef }
-  );
-
   return (
-    <section id="homes" ref={sectionRef} className="relative overflow-hidden bg-canvas py-20 text-ink sm:py-28">
+    <section id="homes" className="relative overflow-hidden bg-[#f6efe1] py-16 text-[#14201a] sm:py-20">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-        {/* Heading */}
-        <div className="flex flex-wrap items-end justify-between gap-6 border-b border-ink/10 pb-8">
+        <div className="flex flex-wrap items-end justify-between gap-6 border-b border-[#14201a]/10 pb-6">
           <div>
             <Reveal>
-              <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.32em] text-[#c6a15b]">
+              <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.32em] text-[#c07a4e]">
                 <span className="h-px w-8 bg-current" />
-                Our Homes
+                The Township
               </span>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="font-display mt-5 text-4xl font-light leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl">
-                Suite by suite,
-                <span className="italic text-[#c6a15b]"> illustrated.</span>
+              <h2 className="font-display mt-4 text-3xl font-light leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
+                Plot by plot,
+                <span className="italic text-[#c07a4e]"> illustrated.</span>
               </h2>
             </Reveal>
           </div>
-          <Reveal delay={0.18}>
-            <p className="max-w-sm pb-1 text-sm font-light leading-relaxed text-ink/60">
-              Every space at Vedam is drawn around light, flow and quiet —
-              a visual index of the residence, right here.
+          <Reveal delay={0.16}>
+            <p className="max-w-sm pb-1 text-sm font-light leading-relaxed text-[#14201a]/60">
+              Build at your own pace on a plot that fits the life you want.
             </p>
           </Reveal>
         </div>
 
-        {/* Image-led masonry — large editorial cards */}
-        <div ref={gridRef} className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {ourHomes.map((home, i) => (
-            <article
-              key={home.id}
-              className="homes-card group relative overflow-hidden rounded-[30px] border border-ink/10 bg-[#0a221b] will-change-transform lg:min-h-[34rem]"
-            >
-              {/* Image */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[4/5] lg:absolute lg:inset-0 lg:aspect-auto">
+            <Reveal key={home.id} delay={i * 0.05}>
+              <article className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#14201a]/10 bg-[#171512]">
                 <Image
                   src={home.image}
                   alt={home.title}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
-                  quality={88}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={86}
                   loading={i < 3 ? "eager" : "lazy"}
-                  className="homes-img object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.07]"
+                  className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.07]"
                 />
-                {/* Scrim */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a221b]/95 via-[#0a221b]/15 to-transparent" />
 
-                {/* Index */}
-                <span className="absolute right-5 top-5 rounded-full border border-[#f4efe3]/25 bg-[#0a221b]/55 px-3 py-1.5 font-mono text-[10px] tracking-[0.25em] text-[#dcbd85] backdrop-blur-md">
-                  0{i + 1} / 0{ourHomes.length}
-                </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141210]/95 via-[#141210]/15 to-transparent" />
 
-                {/* Masonry-caption block */}
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#dcbd85]">
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#dda678]">
                     {home.tag}
                   </p>
-                  <h3 className="font-display mt-2 text-2xl font-light leading-tight text-[#f4efe3] sm:text-3xl">
+                  <h3 className="font-display mt-1.5 text-xl font-light leading-tight text-[#f6efe1] sm:text-2xl">
                     {home.title}
                   </h3>
-                  <p className="mt-3 max-h-0 overflow-hidden text-sm font-light leading-[1.7] text-[#f4efe3]/80 opacity-0 transition-all duration-700 ease-out group-hover:max-h-40 group-hover:opacity-100">
+                  <p className="mt-2 max-h-0 overflow-hidden text-sm font-light leading-[1.7] text-[#f6efe1]/80 opacity-0 transition-all duration-500 ease-out group-hover:max-h-32 group-hover:opacity-100">
                     {home.desc}
                   </p>
                 </div>
 
-                {/* Gold hairline on hover */}
-                <span className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-[#c6a15b] transition-transform duration-700 ease-out group-hover:scale-x-100" />
-              </div>
-            </article>
+                <span className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 text-[#f6efe1] transition-all duration-500 group-hover:border-[#c07a4e] group-hover:bg-[#c07a4e] group-hover:text-white">
+                  <PiArrowUpRightLight size={15} />
+                </span>
+
+                <span className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-[#c07a4e] transition-transform duration-700 ease-out group-hover:scale-x-100" />
+              </article>
+            </Reveal>
           ))}
         </div>
-
-        {/* Footnote */}
-        <Reveal delay={0.1}>
-          <p className="mt-8 text-center font-mono text-[10px] uppercase tracking-[0.28em] text-ink/40">
-            Visual index — interior renders from the Flower Valley archive
-          </p>
-        </Reveal>
       </div>
     </section>
   );
