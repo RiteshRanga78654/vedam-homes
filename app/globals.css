@@ -180,14 +180,6 @@ img, video {
   color: var(--ivory);
 }
 
-/* ---------- Custom cursor (desktop only) ---------- */
-@media (hover: hover) and (pointer: fine) {
-  .cursor-ready,
-  .cursor-ready * {
-    cursor: none !important;
-  }
-}
-
 /* ---------- Eyebrow / label ---------- */
 .eyebrow {
   font-size: 0.6875rem;

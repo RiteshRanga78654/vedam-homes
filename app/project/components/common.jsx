@@ -4,29 +4,28 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 // ============================================================
-//  FLOWER VALLEY — DESIGN SYSTEM
-//  Rich botanical palette: deep forest green, warm ivory,
-//  champagne gold, soft beige. Terracotta used as a whisper.
+//  OSIYAN HABITAT — DESIGN SYSTEM
+//  Warm sand, charcoal, and copper. Simple, quiet, editorial.
 // ============================================================
 
 export const palette = {
-  forest: "#0d2b22",
-  forestDeep: "#0a221b",
-  forestSoft: "#143b2e",
-  ivory: "#f4efe3",
-  beige: "#e7e0cf",
-  gold: "#c6a15b",
-  goldSoft: "#dcbd85",
-  terracotta: "#b06a4a",
-  ink: "#121b16",
-  sage: "#7d8f80",
+  forest: "#171512",
+  forestDeep: "#0f0e0c",
+  forestSoft: "#26231e",
+  ivory: "#f6efe1",
+  beige: "#e9dfc9",
+  gold: "#c07a4e",
+  goldSoft: "#dda678",
+  terracotta: "#a3542f",
+  ink: "#14201a",
+  sage: "#8a9a8c",
 };
 
 export const easeOut = [0.16, 1, 0.3, 1];
 
 export function eyebrow(text) {
   return (
-    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#c6a15b]">
+    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#c07a4e]">
       {text}
     </span>
   );
@@ -63,19 +62,19 @@ export function SectionHeading({
   center = false,
   className = "",
 }) {
-  const base = dark ? "text-[#f4efe3]" : "text-ink";
-  const accentColor = "text-[#c6a15b]";
+  const base = dark ? "text-[#f6efe1]" : "text-[#14201a]";
+  const accentColor = "text-[#c07a4e]";
   return (
     <div className={center ? "text-center" : ""}>
       <Reveal>
-        <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.32em] text-[#c6a15b]">
+        <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.32em] text-[#c07a4e]">
           <span className="h-px w-8 bg-current" />
           {eyebrowText}
         </span>
       </Reveal>
       <Reveal delay={0.08}>
         <h2
-          className={`mt-5 font-display text-4xl font-light leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl ${base} ${className}`}
+          className={`mt-4 font-display text-3xl font-light leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl ${base} ${className}`}
         >
           {title} {accent ? <span className={`italic ${accentColor}`}>{accent}</span> : null}
         </h2>
@@ -128,13 +127,13 @@ export function CountUp({ value, suffix = "", duration = 1.6, decimals = 0 }) {
 // Scroll indicator used at the base of the hero
 export function ScrollIndicator({ label = "Scroll" }) {
   return (
-    <div className="flex flex-col items-center gap-3 text-[#f4efe3]/70">
+    <div className="flex flex-col items-center gap-3 text-[#f6efe1]/70">
       <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{label}</span>
       <div className="relative h-14 w-px overflow-hidden bg-white/20">
         <motion.span
           animate={{ y: ["-100%", "100%"] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-x-0 h-1/2 bg-[#c6a15b]"
+          className="absolute inset-x-0 h-1/2 bg-[#c07a4e]"
         />
       </div>
     </div>

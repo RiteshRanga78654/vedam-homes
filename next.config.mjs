@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     // Qualities used by the gallery UI (grid + lightbox).
-    qualities: [75, 80, 92],
+    qualities: [75, 80, 86, 90, 92],
     remotePatterns: [
       {
         protocol: "https",
